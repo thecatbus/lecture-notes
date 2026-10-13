@@ -1,0 +1,51 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,
+            textheight=10in,
+            left=1in,
+            right=1in,
+            marginparwidth=0.5in,
+            marginparsep=0.3in]{geometry}
+\usepackage{parth-article}
+\usepackage{sensible-macros}
+\addbibresource{zotero-library.bib}
+
+\frenchspacing
+\relpenalty=10000
+\binoppenalty=10000
+\clubpenalty=10000
+
+
+\setlength{\parfillskip}{0pt plus 1fil}
+\hypersetup{ breaklinks=true }
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+%  \vskip 2em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\huge \bfseries{\@title}\par}%
+    \vskip .5em%
+    {\large
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip .5em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em
+}
+\makeatother
+
+
+%\cfoot{\thepage}
+%\rhead{Parth Shimpi}
+%\lhead{University of Glasgow}
+
+\begin{document}
+\input{note}
+\printbibliography
+\end{document}

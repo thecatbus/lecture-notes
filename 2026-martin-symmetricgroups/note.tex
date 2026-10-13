@@ -1,0 +1,142 @@
+\title{Representation theory of the symmetric groups}
+\author{\textit{Based on a lecture series by} Stuart Martin.}
+\date{Michaelmas 2026}
+\maketitle
+
+\newcommand{\mat}[1]{\left(\begin{smallmatrix} #1 \end{smallmatrix}\right)}
+\newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
+\newcommand{\adj}{\textnormal{ad}}
+\renewcommand{\gg}{\mathfrak{g}}
+\newcommand{\bb}{\mathfrak{b}}
+\newcommand{\nn}{\mathfrak{n}}
+\renewcommand{\gl}{\mathfrak{gl}}
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\so}{\mathfrak{so}}
+\renewcommand{\sp}{\mathfrak{sp}}
+\renewcommand{\sf}{\mathsf}
+
+\newcommand{\GL}[1]{\mathsf{GL}(#1)}
+
+\newcommand{\sym}[1]{\mathfrak{S}_{#1}}
+
+This is a fairly gentle introduction to the representation theory of the
+symmetric group. The flavour will be both algebraic and combinatorial, in
+particular a first course on representation theory is prerequisite.
+
+Why study representations of symmetric groups? Firstly it is a nice theory. For
+instance, there is a \emph{canonical} classification of the irreducibles ---
+irreducible representations of $\sym{n}$ over $\bbC$ are parametrised by
+\emph{partitions} of $n$. The construction works uniformly for all symmetric
+groups, much unlike the case of general finite groups where multiple ad hoc
+constructions are needed for each case. 
+
+Another reason is that the theory of symmetric groups serves as fodder for the
+theory for other algebras that are diagrammatic in flavour, such as (pure) braid
+groups. 
+
+\paragraph{Schur--Weyl duality.} Here is a third reason the representation theory
+of the symmetric group is nice. For $V$ a $\bbC$-vector space, the tensor power
+$V^{\otimes 2}$ is a representation of $\mathsf{GL}(V)\times \sym{2}$ where
+$\mathsf{GL}(V)$ acts on each factor, and $\sym{2}$ acts by permuting factors
+(i.e.\ $v\otimes w\mapsto w\otimes v$). Then $V^{\otimes 2}$ splits into
+irreducible representations as $\Sym^2 V \oplus \Exter^2 V$; there exists a
+correspondence between representations of $\sym{2}$ (namely the trivial and sign
+representation) and those of $\mathsf{GL}(V)$ (the two factors of $V^{\otimes
+2}$ respectively). \emph{Schur--Weyl duality} extends this theory from $\sym{2}$
+to $\sym{r}$. That is, consider the representation $V^{\otimes r}$ of
+$\GL{V}\times \sym{r}$ where $\GL{V}$ acts on each factor and $\sym{r}$ permutes
+the factors. Then Schur--Weyl duality shows $V^{\otimes r}=\bigoplus_i
+A_i\otimes B_i$ where $\{A_i\}$ are irreducible representations of $\GL{V}$ and
+$\{B_i\}$ are irreducible representations of $\sym{r}$. Again, there is a
+correspondence $A_i\leftrightarrow B_i$ between some representations of $\GL{V}$
+and some representations of $\sym{r}$.
+
+Alas this correspondence is not usually bijective --- one issue is that $\GL{V}$
+has infinitely many irreducible representations while $\sym{r}$ has a finite
+number has a finite number. Another problem is taking inverse powers of
+determinants. 
+
+But the correspondence is \emph{almost} bijective if we stabilise ---  if we let
+$\dim(V)$ be large then we recover all representations of $\sym{r}$, while if we
+let $r$ be large then we recover all representations of $\GL{V}$ up to powers of
+the determinant. We won't look at this.
+
+\paragraph{Topology.} A fourth reason comes by taking any topological space $X$
+and considering its \emph{configuration space} $\sf{C}^nX$ (i.e.\ the moduli of
+$n$ distinct unordered points in $X$). The group $\sym{n}$ naturally acts on
+$\sf{C}^n X$, giving a representation of $\sym{n}$ on $\HH^i(\sf{C}^nX, \bbC)$.
+
+\paragraph{In positive characteristic.} Representations over fields of
+prime characteristic can be constructed in a `similar' manner to the
+characteristic zero theory, which is again unlike the general case for finite
+groups (modular representation theory tends to be much, much harder in
+prime characteristic than over $\bbC$; even constructing characters is hard).
+
+\subsection{About} This course on symmetric groups is a part of Part III of the
+Mathematics tripos at the University of Cambridge. The lectures were delivered in-person, and were transcribed live. The notes can be found
+online at \url{https://pas201.user.srcf.net/documents/2026-symmetric-group.pdf}. 
+
+Errors and corrections should be communicated to by email to
+\url{pas201@srcf.net}.
+
+\section{Representations and modules}
+\marginpar{Lecture 1, 12/10/26} 
+We go over some standard results in the representation theory of a finite group
+$G$ over a field $\bbk$. By \emph{module}, we will always mean finite
+dimensional left modules.
+
+\begin{definition} 
+    A \emph{representation} of $G$ on a finite dimensional $\bbk$-vector space
+    $V$ is any (and all) of the following.
+    \begin{enumerate}[(i)]
+        \item a homomorphism $\rho\colon G\to \GL{V}$;
+        \item a linear action of $G$ on $V$, i.e.\ a map $G\times V \to V$ such
+            that for all $g,h\in G$ and $v,w\in V$ we have $(gh)(v)=g(h(v))$,
+            $1(v)=v$, $g(\alpha v + \beta w)=\alpha(gv)+\beta(gw)$;
+        \item a $\bbk G$-module structure on $V$, where $\bbk G$ is the
+            \emph{group algebra} (the free $\bbk$-module with basis $G$, with
+            product given by extending the multiplication in $G$ linearly). 
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    The one-dimensional trivial representation of $G$, denoted $\mathbf{1}_G$, is
+    given by $V=\bbk$ with $g(v)=v$ for all $g\in G$, $v\in V$.
+\end{example}
+
+If $W$ is a subrepresentation of $V$ (i.e.\ a $\bbk G$-submodule) then we write
+$W\leq V$. A representation $V$ is \emph{simple} (or \emph{irreducible}) if it
+is a simple $\bbk G$-module, i.e.\ it is non-zero and its only
+subrepresentations are $\mathbf{0}$ and $V$. We say $V$ is \emph{semisimple} (or
+\emph{complete reducible}) if it is a direct sum of simple representations (this
+property is closed under taking sub-objects and quotients). We say $V$ is
+\emph{indecomposable} if it is not a direct sum of proper subrepresentations, we
+say it is \emph{decomposable} otherwise. 
+
+\begin{theorem}[(Maschke)]
+    If $\bbk$ has characteristic zero, then every subrepresentation of $V$ is in
+    fact a direct summand. In other words, irreducible and indecomposable
+    representations of $V$ coincide.
+\end{theorem}
+
+A \emph{$G$-homomorphism} between two $\bbk G$-modules $V,W$ is a $\bbk G$-linear
+map $\alpha\colon V\to W$.
+
+Suppose $\{L_i\}$ is a collection of pairwise non-isomorphic irreducible
+representations of $G$. Suppose $V$ is semisimple. Then there is an isomorphism
+$f\colon \bigoplus L_i ^{\oplus n_i}\to V$ for some non-negative integers $n_i$. The
+isomorphism is not canonical; but the embedding $f(L_i^{\oplus n_i})\into V$
+\emph{is canonical} --- it is the sum of the images of all maps $L_i\to V$,
+called the \emph{$L_i$-isotypic piece}. Thus each $\bbk G$-module $V$ is
+\emph{canonically} isomorphic to the direct sum of its isotypic components, and
+each $L_i$-isotypic component admits a non-canonical decomposition into a direct sum
+of $L_i$s.
+
+\begin{theorem}[(Schur's lemma)]
+    Suppose $V,W$ are irreducible representations of $G$. Any $G$-homomorphism
+    $V\to W$ is either zero or is an isomorphism. In particular, $\End_GV$ is
+    a division algebra over $\bbk$ (if $\bbk$ is algebraically closed then
+    $\End_GV\simeq \bbk$).
+\end{theorem}
+
+\marginpar{Lecture 2, 14/10/26} 

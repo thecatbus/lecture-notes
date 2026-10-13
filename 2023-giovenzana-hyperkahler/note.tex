@@ -1,0 +1,793 @@
+\title{Introduction to hyperK\"ahler Geometry}
+\author{\textit{Based on a lecture series by }Luca Giovenzana.}
+\date{December 2023}
+\maketitle
+
+\newcommand{\Def}{\mathop{\mathcal{D\kern -0.5pt e\kern -0.5pt f\kern -1pt}}}
+\newcommand{\Moduli}{\ensuremath{\mathscr{M}}}
+
+HyperK\"ahler and K3 manifolds, being interesting objects to study in their own
+right, also provide an excellent playground to study ideas in Hodge theory and
+deformation/moduli theory. In these lectures we explore some of the
+classical theory surrounding the differential and algebraic geometry of these
+objects.
+
+\subsection{About} This course on hyperK\"ahler geometry was a part of a Winter School for early career researchers, organised by the UK Algebraic
+Geometry Network. The lectures were delivered in-person in the University of Warwick, and were transcribed by Parth Shimpi. These notes have undergone several amendments and are not a verbatim recall of the lectures, therefore discretion is advised when using this material. The notes are available online at
+\url{https://pas201.user.srcf.net/documents/2023-ukag-hyperkahler.pdf}. 
+
+All errors and corrections should be communicated to by email to
+\url{pas201@srcf.net}.
+
+\section{Basics on K3 surfaces and hyperK\"ahler manifolds}
+
+\begin{definition}
+    A compact complex surface \(X\) is a K3 if \(\HH^1(X,\mathscr{O}_X)=0\) and
+    \(\Omega^2_X\cong \mathscr{O}_X\).
+\end{definition}
+
+\begin{example}
+    There are many examples of K3 surfaces, with explicit equations. For
+    example, smooth quartic hypersurface \(X\subset \mathbb{P}^3\) is K3.
+    Indeed, we have an exact sequence
+    \[
+        0\to \mathscr{O}_{\mathbb{P}^3}(-3)\to \mathscr{O}_{\mathbb{P}^3}\to
+        \mathscr{O}_X\to 0
+    \]
+    so taking the long exact sequence of cohomology, we find
+    \(\HH^1(X,\mathscr{O}_X)=0\). Secondly, by adjunction we see that
+    \(K_X=(K_{\mathbb{P}^3}+X)|_X=(-4H+4H)|_X = 0\) so the canonical bundle of
+    \(X\) is trivial. A similar argument shows that a smooth surface defined by
+    a quadric and a cubic equation in \(\mathbb{P}^4\) is K3. Likewise for three
+    quadrics in \(\mathbb{P}^5\).
+\end{example}
+
+Generalising the example of a quartic, if \(Y\) is Fano, then a smooth surface
+\(X=D_1\cap ...  \cap D_n\) defined as an intersection of divisors is K3 if
+\(\sum D_i+K_Y=0\). Thus K3 surfaces often arise from fundamental linear systems
+of Fano 3-folds. As another example, if \(\mathbb{V}(f_6)\subset \mathbb{P}^2\)
+is a smooth sextic, then \(X=\mathbb{V}(y^2-f_6)\subset \mathbb{P}(1,1,1,3)\) is
+a K3 surface in the anticanonical linear system of the weighted projective
+space.
+
+\begin{example}
+    Another way to obtain K3 surfaces is as quotients of Abelian
+    varieties. Consider a complex \(2\)-dimensional torus \(A\), and the map
+    \((-1):A\to A\) which sends an element to its inverse under the group law.
+    The quotient \(A/\{\pm 1\}\) is singular at precisely the image of the
+    \(2\)-torsion subgroup \(A[2]\subset A\) which consists of sixteen points.
+    Blowing up at these, we get a K3 surface called the \textit{Kummer
+    surface}.
+\end{example}
+
+The differential geometry of K3 surfaces is well understood-- in particular they
+are all diffeomorphic as smooth \(\mathbb{R}\)-manifolds. Thus there is a unique
+lattice (i.e.\ a free abelian group equipped with a symmetric bilinear form)
+corresponding to the second integral cohomology of a K3 surface equipped with the
+intersection pairing, called the \textit{K3 lattice}. Before stating its
+form, we recall some notation from lattice theory-- we write \(U\cong (\mathbb{Z}^2, \left(\begin{smallmatrix} 0&1\\1&0
+\end{smallmatrix}\right))\) for the \textit{hyperbolic lattice}. The \(E_8\)
+lattice is characterised by its property of being the unique eight-dimensional
+lattice that is unimodular (i.e.\ has intersection matrix of determinant \(\pm
+1\).) Another lattice that will appear later is \(I_1\), the positive-definite
+one-dimensional unimodular lattice. The direct sum of two lattices is always
+orthogonal, and if \(\Lambda=(\mathbb{Z}^{\oplus n}, M)\) is a lattice and \(m\)
+is an integer, then we define the \textit{twisted lattice} \(\Lambda(m)\) as
+\(\mathbb{Z}^{\oplus n}\) equipped with the pairing \(mM\).
+
+\begin{proposition}
+    If \(X\) is a K3 surface, then the singular cohomology
+    \(\HH^2(X,\mathbb{Z})\) equipped with the intersection pairing is isomorphic
+    to the \(22\)-dimensional lattice \(\Lambda_{\textnormal{K3}}=U^{\oplus
+    3}\oplus E_8^{\oplus 2}(-1)\). This has signature \((3,19)\).
+\end{proposition}
+
+The Torelli theorem for K3 surfaces asserts that the complex structure is
+determined by how this sits inside the complex cohomology. This will help
+study deformations and moduli of K3 surfaces later.
+
+\subsection{HyperK\"ahler manifolds} K3 surfaces form the two-dimensional
+counterpart of a larger family of manifolds with trivial canonical bundles and
+symplectic structures, called hyperK\"ahler manifolds.
+
+\begin{definition}
+    A complex manifold \((M,I)\) is \textit{K\"ahler} if there exists a metric
+    \(g\) compatible with the complex structure \(I\) such that the
+    \((1,1)\)-form \(\omega=g(I\cdot -,-)\) is closed. A compact K\"ahler
+    manifold \(X\) is \textit{hyperK\"ahler} if it is simply connected (i.e.\
+    \(\pi_1(X)=0\)) and the group \(\HH^0(X,\Omega^2_X)\) is generated by a
+    holomorphic symplectic form.
+\end{definition}
+
+\begin{example}
+    \(\mathbb{P}^n_\mathbb{C}\) is a K\"ahler manifold, with K\"ahler form given
+    by the Fubini-Study metric \(\omega=\frac{i}{2}\partial \bar\partial
+    \log|z|^2\). Thus every projective manifold is also K\"ahler, and not much
+    is lost by thinking of the K\"ahler condition as a mild generalisation of
+    the projective condition.
+\end{example}
+
+Observe that the existence of a symplectic form \(\sigma:T_X\otimes T_X\to
+\mathscr{O}_X\) on a hyperK\"ahler manifold \(X\) implies the dimension of \(X\)
+is even. Moreover, can use \(\sigma\) to identify \(T_X\) with \(\Hom(T_X,\mathscr{O}_X)=\Omega^1_X\). Thus \(\sigma^{\wedge n}:\mathscr{O}_X\to \Omega^n_X\) gives a trivialisation of the canonical bundle.
+
+Indeed, two dimensional hyperK\"ahler manifolds are precisely K3 surfaces-- by a result of Siu, all K3 surfaces (even the
+non-algebraic ones) are K\"ahler. Since all K3 surfaces are diffeomorphic, it
+suffices to show any one of them is simply connected and one does this for a
+smooth quadric in \(\mathbb{P}^3\) using the hard Lefshetz theorem. Then the
+K3 condition implies any holomorphic global function gives a holomorphic
+symplectic form generating \(\HH^0(X,\Omega_X^2)\).
+
+In higher dimensions, there aren't many known examples for hyperK\"ahler
+manifolds and the ones we know arise from K3s.
+
+\begin{example}[Hilbert schemes of K3 surfaces]
+    Let \(S\) be a K3 surface and consider the product \(S^n=S\times...\times
+    S\). The symmetric group \(\Sigma_n\) acts on this, and the quotient
+    \(S^{(n)}=S^n/\Sigma_n\) is a variety singular along the image of the
+    \textit{big diagonal} \(\Delta=\{(x_1,...,x_n)\in S^n\;|\; x_i=x_j \text{
+    for some }i\neq j\}\). Beauville proved that there exists a crepant
+    resolution \(S^{[n]}\to S^{(n)}\) (called the \textit{Hilbert--Chow
+    morphism}), and the variety \(S^{[n]}\) (called the \textit{Hilbert scheme},
+    also written \(\text{Hilb}^n(S)\)) parametrises zero-dimensional subschemes
+    of length \(n\) in \(S\).
+
+    This is concretely realised in the special case \(n=2\), where we see that
+    the Hilbert--Chow morphism \(S^{[2]}\to S^2/\Sigma_2\) sends a length \(2\)
+    subscheme to its support (\(Z\mapsto \sum_{P\in
+    \text{Supp}Z}\text{length}\mathscr{O}_{Z,P}\cdot P\)) and is the blow-up of the
+    singular locus \(\Delta\subset S^2/\Sigma_2\). The exceptional locus
+    \(E\cong \mathbb{P}_S(TS)\) is precisely the preimage of points of form
+    \(2P\).
+
+    More importantly for us, \(S^{[n]}\) is hyperK\"ahler.
+    Indeed it is easy to show the existence of a holomorphic symplectic form--
+    since \(S\) is K3, there is a non-trivial element \(\sigma\in
+    \HH^0(S,\Omega^2_S)\) and we will use this to construct one on the Hilbert
+    scheme. If \(\pi_i:S^n\to S\) denotes the \(i\)th
+    projection, then \(\pi_i^\ast \sigma\) is symplectic on \(S^n\) and
+    \(\sum_i \pi_i^\ast \sigma\) is invariant under the \(\Sigma_n\)
+    action. Thus it descends to a symplectic form on \(S^{(n)}\), and can
+    be pulled back via the crepant resolution.
+\end{example}
+
+\begin{example}[Generalised Kummer manifolds]
+    If \(A\) is a \(2\)-dimensional complex torus, there is a natural map
+    \(\Sigma:A^{(n)}\to A\) which applies the group law to a tuple
+    \((a_1,...,a_n)\in A^n\). Then considering the composite map
+    \(f:A^{[n]}\to A^{(n)}\to A\), the preimage \(\text{Kum}_{n-1}(A)\coloneq
+    f^{-1}(0)\) is a \(2(n-1)\) dimensional K\"ahler manifold called the
+    \textit{generalised Kummer manifold}.
+\end{example}
+
+More examples were provided by O'Grady, who constructed a 6-fold and a 10-fold
+as the resolutions of moduli spaces of sheaves on K3 surfaces and abelian
+surfaces.
+
+\subsection{Other properties and names} HyperK\"ahler surfaces are so called
+because they are very K\"ahler-- we can use the K\"ahler structure \((M,I,g)\)
+to find two more complex structures \(J,K\) such that \(g\) is a K\"ahler metric
+for all complex structures \(aI+bJ+cK\) parametrised over the unit sphere
+\((a,b,c)\in S^2\subset \mathbb{R}^3\).
+
+HyperK\"ahler manifolds are also called \textit{irreducible holomorphically
+symplectic manifolds} (IHSMs), because of the result below.
+
+\begin{theorem}[(Beauville--Bogomolov)]
+    Let \(X\) be a compact K\"ahler manifold such that \(c_1(X)=0\). Then there
+    exists a finite \'etale morphism \(\tilde X\to X\) such that \(\tilde X =
+    T\times \prod_j Y_j \times \prod_j Z_j\),  where the factor \(T\) is a
+    complex torus, the \(Y_j\) are strict Calabi--Yau (i.e.\ \(K_{Y_j}=0\) and
+    \(\HH^0(Y_j, \Omega_{Y_j}^p)=0\) for all \(0<p<\dim Y_j\)) and the \(Z_j\)
+    are hyperK\"ahler.
+\end{theorem}
+
+\section{Deformations of hyperK\"ahler manifolds}
+Because the differential geometry of hyperK\"ahler manifolds is so rigid,
+the only thing that can change in a family is the complex structure, which
+is largely controlled by the Hodge theory of these manifolds. Being an algebraic
+construction, this makes hyperK\"ahler manifolds particularly suited for
+studying deformation and moduli problems.
+
+\subsection{Recap: Hodge theory} Recall that a (pure) Hodge structure of weight \(k\) on a finitely generated Abelian group \(H\) is a decomposition \(H\otimes \mathbb{C}=\bigoplus_{p+q=k} H^{p,q}\) such that \(\overline{H^{p,q}}= H^{p,q}\) where \(H\otimes \mathbb{C}\) has a canonical conjugation map given by \(h\otimes \lambda \mapsto h\otimes \bar\lambda\).
+
+If \(X\) is a complex manifold then we have \(\HH^k(X,\mathbb{C})=\HH^k(X,\mathbb{Z})\otimes \mathbb{C}\), and the Hodge decomposition theorem states that \(\HH^k(X,\mathbb{Z})\) has a pure Hodge structure of weight \(k\) whenever \(X\) is a compact K\"ahler manifold. The decomposition factors are given by \(\HH^{p,q}(X)=\HH^q(\Omega_X^p)\), and the Hodge decomposition respects the ring structure on cohomology in that \(\HH^{p,q}(X)\smile \HH^{r,s}(X)\subset \HH^{p+r,q+s}(X)\).
+
+Note also that the subspace \(\HH^{p,q}(X)\oplus \HH^{q,p}(X)\) is stable under
+complex conjugation, so considering \(\HH^n(X,\mathbb{R})\) as a subspace of
+\(\HH^n(X,\mathbb{C})\) we see that there is an induced decomposition
+\(\HH^n(X,\mathbb{R})=\bigoplus_{\begin{smallmatrix}{p+q=n}\\{p<q}\end{smallmatrix}}\HH^{p,q}(X,\mathbb{R})\)
+where we write \(\HH^{p,q}(X,\mathbb{R})=\HH^n(X,\mathbb{R})\cap
+(\HH^{p,q}(X)\oplus \HH^{q,p}(X))\).
+
+\subsection{The cohomology of hyperK\"ahler manifolds} We saw that the singular
+cohomology of a K3 surface is given by the K3 lattice, we will derive a similar
+structure if \(X\) is hyperK\"ahler of dimension \(2n\). In this situation, we
+have a symplectic form \(\sigma\) generating \(\HH^0(X,\Omega^2_X)\),
+normalised so that \(\int_X (\sigma\bar\sigma)^n=1\). This allows us to define a
+quadratic form on \(\HH^2(X,\mathbb{Z})\) as
+\[
+    q_X(\alpha)=\frac{n}{2}
+    \int_X \alpha^2(\sigma\bar\sigma)^{n-1}+(1-n)
+    \left(\int_X\alpha\sigma^n\bar\sigma^{n-1}\right)
+    \left(\int_X\alpha\sigma^{n-1}\bar\sigma^n\right).
+\]
+
+Note if \(n=1\) (i.e.\ \(X\) is a K3 surface) then \(q_X=\frac{1}{2}\int_X
+\alpha^2\) is proportional to the intersection form. This is true more
+generally, in the sense below.
+
+\begin{theorem}
+    If \(X\) is a hyperK\"ahler manifold of dimension \(2n\), then there exists
+    a \(C\in \mathbb{R}\) such that \(\forall \alpha\in \HH^2(X,\mathbb{Z})\) we
+    have \(q_X(\alpha)^n=C\int_X \alpha^{2n}\). In particular, \(q_X\)
+    can be rescaled to obtain an integral and primitive non-degenerate form
+    \(\HH^2(X,\mathbb{Z})\to \mathbb{Z}\) called the \emph{Beauville--Fujiki
+    form} which has signature \((3,\textnormal{b}_2(X)-3)\).
+\end{theorem}
+
+We will sketch explicit subspaces on which the form is
+positive and negative definite. Since \(\HH^{2,0}(X)\) is spanned by a holomorphic symplectic form \(\sigma\), any \(\alpha\in \HH^2(X,\mathbb{C})\) is of the form \(\alpha=\lambda \sigma + \beta + \mu\bar\sigma\) for \(\beta\in
+\HH^{1,1}(X)\) and we then have \(q_X(\alpha)=\lambda\mu + \frac{n}{2}\int_X
+\beta^2(\sigma\bar\sigma)^{n-1}.\) In particular \(\HH^{1,1}(X)\) is orthogonal
+to \(\HH^{2,0}(X)\oplus \HH^{0,2}(X)\) and \(q_X\) is positive definite on all
+forms \(\alpha=\lambda\sigma+\overline{\lambda \sigma}\). The formula also shows
+that \(q_X\) is positive definite on any K\"ahler class \([\omega]\in
+\HH^{1,1}(X,\mathbb{R})\), so \(q_X\) is positive definite on the three
+dimensional subspace \(\HH^{0,2}(X,\mathbb{R})\oplus \mathbb{R}[\omega]\subset
+\HH^2(X,\mathbb{R})\).
+
+To understand the orthogonal subspace on which the form is negative
+definite, recall that (the cohomology class of) a \(k\)-form \(\alpha\) is
+\textit{primitive} if \(\omega^{n-k+1}\cdot \alpha=0\). It follows that a
+\(2\)-form \(\alpha\) is primive if and only if \(q_X(\alpha,\omega)=0\), and
+hence \(q_X\) is negative definite precisely on the space
+\(\HH^{1,1}(X,\mathbb{R})_\text{prim}\) of primitive real (1,1)-forms.
+
+\begin{example}
+    If \(X=S^{[n]}\) for \(S\) a K3 surface, then \(\HH^2(X,\mathbb{Z})\cong
+    U^{\oplus 3} \oplus E_8(-1)^{\oplus 2} \oplus I_1(2-2n)\) where the lattice
+    \(I_1(2-2n)\) is generated by \(\frac{1}{2}[E]\) for \(E\) the exceptional
+    divisor of the Hilbert--Chow morphism \(S^{[n]}\to S^{(n)}\).
+    On the other hand if \(X=\text{Kum}_n(A)\) for a 2-dimensional complex torus
+    \(A\), we have \(\HH^2(X,\mathbb{Z})=U^{\oplus 3}\oplus I_1(-2-2n)\).
+\end{example}
+
+\begin{remark}
+    For every known example, the form \(q_X:\HH^2(X,\mathbb{Z})\to \mathbb{Z}\)
+    is even (i.e.\ has image in \(2\mathbb{Z}\)) but the proof for general
+    hyperK\"ahler manifolds remains open.
+\end{remark}
+
+\subsection{Deformation families} We can now discuss the main content of this
+section, the study of hyperK\"ahler manifolds in families.
+
+\begin{definition}
+    A \textit{deformation} of a manifold \(X\) is a smooth proper morphism of
+    complex spaces \(\mathcal{X}\to S\), where \(s\in S\) is a distinguished
+    point and \(\mathcal{X}|_s\cong X\). The deformation is said to be
+    \textit{infinitesimal} if \(S=\Spec \mathbb{C}[\epsilon]/(\epsilon^2)\).
+
+    A deformation \(\mathcal{X}\to S\) is said to be \textit{universal} if for
+    any other deformation \(\mathcal{X}'\to S'\ni s'\), there is a unique map
+    \((S',s')\to (S,s)\) such that \(\mathcal{X}'\cong \mathcal{X}\times_S
+    S'\).
+\end{definition}
+
+\begin{remark}
+    Note we are working with smooth (not just flat) deformations, and this
+    allows a lot of differential geometric tools to come into play. In
+    particular by Ehresmann's theorem, whenever \(\mathcal{X}\to S\) is a
+    deformation of \(X\), we have an open cover \(S=\bigcup_\alpha U_\alpha\)
+    such that \(\mathcal{X}|_{U_\alpha}\) is diffeomorphic to \(X\times
+    U_\alpha\). Thus only the complex structure is deformed.
+\end{remark}
+
+\begin{theorem}
+    The set of infinitesimal deformations of \(X\) up to equivalence is in
+    bijection with the space \(\HH^1(X,T_X)\).
+
+    \begin{proof}[Sketch]
+        Let \(\mathcal{X}\to \Spec \mathbb{C}[\epsilon]/(\epsilon^2)\) be an
+        infinitesimal deformation. By Ehressmann's theorem the normal bundle of
+        the central fiber \(X\) is trivial, hence the normal sequence \[0\to
+        T_X\to T_{\mathcal{X}}|_X\to \mathscr{O}_X\to 0\] gives an element in
+        \(\Ext^1(\mathscr{O}_X, T_X)=\HH^1(X,T_X)\). The inverse map sends an
+        element \(v\in \HH^1(X,T_X)\) represented by a 1-cocycle \(\{v_{ij}\in
+        \HH^0(U_i\cap U_j, T_X)\}\) to the family \(\mathcal{X}\to
+        \Spec\mathbb{C}[\epsilon]/(\epsilon^2)\) constructed by gluing the
+        trivial deformations \(U_i\times \Spec
+        \mathbb{C}[\epsilon]/(\epsilon^2)\) along the maps \((\text{id}+\epsilon
+        v_{ij}):\mathscr{O}_{U_i\cap U_j}[\epsilon]\to\mathscr{O}_{U_i\cap
+        U_j}[\epsilon]\).
+    \end{proof}
+\end{theorem}
+
+Thus the set of infinitesimal deformations is naturally a vector space. It is in
+fact the tangent space to the base of the universal deformation \(\mathcal{X}\to
+\Def X\ni 0\), if it exists. Indeed in this case infinitesimal deformations are
+given by pointed morphisms \(\Spec \mathbb{C}[\epsilon]/(\epsilon^2)\to \Def
+X\), and the space of such maps \(\text{Mor}_\ast(\Spec
+\mathbb{C}[\epsilon]/(\epsilon^2), \Def X)\) is the tangent space \(T_0\Def
+X\).
+
+We will now see that hyperK\"ahler manifolds always have universal deformations
+and locally they are simply the affine space \(\mathbb{C}^n\).
+
+\begin{theorem}
+    For any complex manifold \(X\), if \(\HH^0(X,T_X)=0\) then a universal
+    deformation \(\mathcal{X}\to \Def X\) exists. Moreover for all \(t\in \Def
+    X\), this is a universal deformation of \(X_t=\mathcal{X}|_t\).
+\end{theorem}
+
+\begin{corollary}
+    HyperK\"ahler manifolds have universal deformations.
+    \begin{proof}
+        If \(X\) is a hyperK\"ahler manifold, then the symplectic form
+        \(\sigma:T_X\times T_X\to \mathscr{O}_X\) induces an isomorphism
+        \(T_X\cong \Omega_X\) and hence \(\HH^0(X,T_X)=\HH^0(X,\Omega_X)\).
+        By Hodge symmetry this has the same dimension as
+        \(\HH^1(X,\mathscr{O}_X)\), but this space vanishes for hyperK\"ahler
+        manifolds.
+    \end{proof}
+\end{corollary}
+
+\begin{theorem}[(Bogomolov--Tian--Todorov)]
+    If \(X\) is hyperK\"ahler, then the universal deformation space \(\Def X\)
+    is smooth (and hence equal to \(\HH^1(X,T_X)\)).
+\end{theorem}
+
+\begin{example}
+    If \(S\) is a K3 surface, then note that
+    \(\text{h}^1(S,T_S)=\text{h}^{1,1}(S)=20\). Can all deformations arise as
+    smooth quartics? Note a quartic equation has
+    \(\text{h}^0(\mathbb{P}^3, \mathscr{O}_{\mathbb{P}^3}(4))=35\)
+    parameters. On the other hand the automorphism group
+    \(\text{PGL}(4,\mathbb{C})\) is 15 dimensional, so the space of
+    quartics in \(\mathbb{P}^3\) has dimension \(35-1-15=19\). Thus we conclude
+    that \(S\) must admit deformation which does not embed in
+    \(\mathbb{P}^3\).
+\end{example}
+
+\section{Moduli of hyperK\"ahler manifolds}
+We have seen that if \(X\) is a hyperK\"ahler manifold then it has a universal
+deformation over \(\Def X = \HH^1(X,T_X)\) centered at the origin. Moreover
+\(\Def X\) has an open subset \(U_X\) such that the family restricted to \(U_X\)
+is a universal deformation of every fiber \(X|_t\) (\(t\in U_X\)). Thus we can
+na\"ively consider the set
+\[
+    \Moduli_X=\{Y\;|\; Y\text{ is hyperK\"ahler and deformation equivalent to
+    }X\}
+\]
+and use the charts from each \(U_Y\subset \Def Y \cong \mathbb{C}^{b_2-2}\) to
+give this a complex structure, since if \(Z\in U_Y\) then there is an
+open subset of \(U_Z\) identified with a neighbourhood of \(Z\) in \(U_Y\) by
+the universality. The same argument also guarantees compatibility at \(Z\in
+U_Y\cap U_{Y'}\), since the corresponding restricted universal families
+\(\mathcal{Y}|_{U_Y\cap U_{Y'}}\) and \(\mathcal{Y}'|_{U_Y\cap U_{Y'}}\) are
+both also universal deformations of \(Z\). Thus the set of all hyperK\"ahler
+manifolds \(\Moduli_X\) has the structure of a complex space, but it turns out
+this is not Hausdorff and hence isn't a manifold.
+
+To get a well behaved moduli space, we hence parametrise hyperK\"ahler
+manifolds with extra data, namely the choice of an isomorphism
+\(\HH^2(X,\mathbb{Z})\cong \Lambda_\text{K3}\) and (later) the choice of an
+ample bundle. For the rest of the section we will build these ideas for the
+specific case of a K3 surface, but everything generalises to hyperK\"ahler
+manifolds but with more bookkeeping.
+
+\subsection{Moduli of marked K3 surfaces} As mentioned before, \(K3\) surfaces
+have a Torelli theorem which reduces the problem to algebraic data.
+
+\begin{theorem}[(Torelli theorem for K3 surfaces)]
+    Two K3 surfaces \(X,X'\)  are isomorphic if and only if there is a Hodge
+    isometry \(\HH^2(X,\mathbb{Z})\cong \HH^2(X',\mathbb{Z})\). Moreover,
+    such an isometry \(\gamma\) is of the form \(\gamma=f^\ast\) for \(f:X\to
+    X'\) if and only if there is a K\"ahler class \(\omega_X\in
+    \HH^2(X,\mathbb{R})\) such that \(\gamma(\omega_x)\in \HH^2(X',\mathbb{R})\)
+    is K\"ahler.
+\end{theorem}
+
+\begin{definition}
+    A \textit{marked K3 surface} is a pair \((X,\varphi)\), where \(X\) is a K3
+    surface and \(\varphi:\HH^2(X,\mathbb{Z})\to \Lambda_\text{K3}\) is an
+    isometry. An isomorphism \((X,\varphi)\to (X',\varphi')\) is an isomorphism
+    \(f:X\to X'\) such that \(\varphi\circ f^\ast = \varphi'\).
+\end{definition}
+
+By the Torelli theorem, parametrising marked K3 surfaces is equivalent to
+parametrising Hodge structures on \(\Lambda_\text{K3}\). Such a structure is
+given by a filtration \(0\subset F^0\subset F^1\subset \Lambda_\text{K3}\otimes
+\mathbb{C}\) where
+\(\dim F^0=1\), \(\dim F^1=21\). Thus to first approximation the parameter space
+is in the variety \(\text{Flag}(1,21,\Lambda_\text{K3})\). But this space has
+dimension \(21\times 20=420\), which is much larger than the expected dimension of \(\Def X\)!
+
+Indeed not all filtrations can arise-- the Hodge structure in this situation is
+completely determined by \(\HH^{2,0}(X)\), since
+\(\HH^{0,2}(X)=\overline{\HH^{2,0}}(X)\) and \(\HH^{1,1}=(\HH^{2,0}(X)\oplus
+\HH^{0,2}(X))\orth\). Moreover if \(\sigma\) is a generator of
+\(\HH^0(X,\Omega^2_X)\), then it satisfies the \textit{Hodge--Riemann bilinear
+relations} \((\sigma,\bar\sigma) > 0\), \((\sigma ,\sigma) = 0\). Thus our
+desired parameter space is a subset of the Grassmannian
+\(\text{Gr}(1,22)=\mathbb{P}(\Lambda_\text{K3}\otimes \mathbb{C})\) given by
+\[\Omega_\text{K3}=\{[x]\in \mathbb{P}(\Lambda_\text{K3}\otimes \mathbb{C})
+\;|\; (x,x)=0 \text{ and }(x,\bar x)>0\},\] called the \textit{period domain}.
+This is a \(20\)-dimensional complex manifold, given by a Euclidean open set in
+the subvariety defined by a quadratic form in \(\mathbb{P}^{21}\).
+
+Write \(\Moduli_\text{K3}\) for the set of marked K3 surfaces up to isomorphism. By construction, sending a marked K3 surface \((X,\varphi)\) to the point
+\([\varphi(\HH^{2,0}X)]\in \mathbb{P}(\Lambda_{\text{K3}}\otimes \mathbb{C})\)
+gives a (surjective!) map \(\Moduli_\textnormal{K3}\to \Omega_\textnormal{K3}\),
+called the \textit{period map}. In fact we can give \(\Moduli_\textnormal{K3}\)
+an analytic structure by considering families of marked K3 surfaces.
+
+\begin{definition}
+    A \textit{family of marked K3 surfaces} is given by a smooth map
+    \(\pi:\mathcal{X}\to S\) and an isometry of sheaves \(\Phi:
+    \mathbf{R}^2\pi_\ast \underline{\mathbb{Z}}\isoto
+    \underline{\Lambda_\text{K3}}\).
+
+    The \textit{period map associated to a family} \((\mathcal{X}\to
+    S,\Phi)\) is given by the map \(\mathcal{P}:S\to
+    \Omega_{\Lambda_\text{K3}}\), which sends \(s\in S\) to the ``period of
+    \(\mathcal{X}|_s\)'', i.e.\ the subspace
+    \([\Phi_s(\HH^{2,0}(\mathcal{X}|s))]\).
+\end{definition}
+
+Thus the period map for families gives charts on \(\Moduli_\text{K3}\), and the
+global period map \(\Moduli_\text{K3}\to \Omega_\text{K3}\) is holomorphic. It
+not injective-- if \((X,\varphi)\) and \((X',\varphi')\)  have the same periods,
+then theree is an isomorphism \(f:X\to X'\) by the Torelli theorem but
+\(\varphi\) may differ from \(f^\ast \circ \varphi'\) by an automorphism of the
+lattice (in particular it is possible that such an automorphism that does not
+preserve the K\"ahler cone and hence the isometry isn't realised as a pullback).
+Thus it makes sense to quotient by the action of the orthogonal group
+\(\text{O}(\Lambda_\text{K3})\) to obtain a map
+\[
+    \Moduli_\text{K3}/\text{O}(\Lambda_\text{K3})\longrightarrow
+    \Omega_\text{K3}/\text{O}(\Lambda_\text{K3}).
+\]
+By the Torelli theorem this map is an isomorphism of complex spaces, and the
+points of this orbit space are isomorphism classes of K3 surfaces.
+
+The connected components of \(\Moduli_\text{K3}/\text{O}(\Lambda_\text{K3})\)
+are the moduli spaces of K3 surfaces that belong to a particular deformation
+family, this is precisely the construction that came from considering universal
+deformations at the start of this section. In this context, the non--Hausdorff
+behaviour can be seen as coming from the fact that the action of
+\(\text{O}(\Lambda_\text{K3})\) is far from being properly discontinuous.
+
+\subsection{Algebraicity of K3 surfaces} The moduli space constructed above
+is ill-behaved partly because we are considering `too many' surfaces-- most K3
+surfaces in the moduli space are not algebraic.
+
+\begin{theorem}[(Kodaira)]
+    A complex manifold \(X\) is projective if and only if
+    \(\HH^2(X,\mathbb{Z})\) contains a K\"ahler class.
+\end{theorem}
+
+Indeed by the Lefshetz \((1,1)\)-theorem we know that every integral
+\((1,1)\)-class (i.e.\ element of \(\HH^2(X,\mathbb{Z})\cap \HH^{1,1}(X)\)) is
+the Chern class of some holomorphic line bundle, and Kodaira's theorem shows
+that the classes with positive representatives (i.e.\ K\"ahler classes) come
+from ample line bundles.
+
+\begin{corollary}
+    A very general\footnote{We use `very general' to mean `outside the union
+    of countably many Zariski-closed subvarieties'.} K3 surface is not
+    projective.
+    \begin{proof}
+        If \(X\) is a projective K3 surface, then \(\HH^{1,1}(X)\cap
+        \HH^2(X,\mathbb{Z})\) is necessarily non-zero and hence the subspace
+        \(\HH^{2,0}(X)\) (which determines the complex structure on \(X\)) is
+        orthogonal to some \(\delta \in \HH^2(X,\mathbb{Z})\). It follows that
+        in \(\Omega_\text{K3}\), the locus of marked projective K3 surfaces is
+        contained in the closed hyperplane arrangement
+        \(\Omega_\text{K3}\cap \left(\bigcup_{\delta\in
+        \Lambda_\text{K3}}\delta\orth\right)\). The complement \(U\) is dense
+        and open, and any K3 surface with period in \(U\) is not projective.
+    \end{proof}
+\end{corollary}
+
+Thus to get better behaved moduli spaces, we consider polarised K3 surfaces.
+
+\begin{definition}
+    A \textit{polarised K3 surface} is a pair \((X,L)\) where \(X\) is a K3
+    surface and \(L\) is a primitive (i.e.\ not of the form \(M^{\otimes (>1)}\))
+    ample line bundle. The \textit{degree} of the polarised K3 surface \((X,L)\)
+    is equal to \(\text{deg}L=L^2\).
+\end{definition}
+
+\subsection{Moduli of polarised K3 surfaces} Note the degree of a polarised K3
+surface \(X\) is always even and positive, say equal to \(2d\). Now in this
+situation \(L^{\otimes 3}\) is very ample, giving an embedding \(X\into
+\mathbb{P}^{9d+1}\) such that \(X\) has Hilbert polynomial \(f(t)=9d t^2+2\).
+Thus the straightforward thing to do is to realise that polarised K3 surfaces of
+degree \(2d\) lie in an open subset of the Hilbert scheme
+\(\text{Hilb}^{9dt^2+2}(\mathbb{P}^{9d+1})\), and thus the required moduli space
+of K3 surfaces is obtained as a GIT quotient of this locus by the
+\(\text{PGL}(9d+1,\mathbb{C})\) action. In practice, however, checking for
+semistability is hard.
+
+This is circumvented by constructing the moduli space explicitly from that of
+marked K3 surfaces and using a stronger form of the Torelli theorem. We will
+provide a sketch.
+
+By standard lattice theory (Eichler's criterion), up to the action of
+\(\text{O}(\Lambda_\text{K3})\) there is a unique primitive element \(\ell\in
+\Lambda_\text{K3}\) satisfying \(\ell^2=2d\) and hence we can choose a marking
+\(\varphi:\HH^2(X,\mathbb{Z})\to \Lambda_\text{K3}\) with
+\(\varphi(\text{c}_1L)=\ell\). Then its reasonable to consider the set
+\[
+    \Moduli_{2d}= \{(X,\varphi,L)\;|\; (X,\varphi)\text{ is a
+    marked K3 surface, }(X,L)\text{ is polarised, and }\varphi[L]=\ell\}.
+\]
+Now if \((X,\varphi,L)\in \Moduli_{2d}\), then clearly the period point
+\([\varphi(\HH^{2,0}X)]\in \mathbb{P}(\Lambda_\text{K3}\otimes \mathbb{C})\)
+lies in the hyperplane \(\{[x]\;|\; x \perp \ell\}\), which we can write as the
+projective space \(\mathbb{P}(\Lambda_\text{2d}\otimes \mathbb{C})\) for
+\(\Lambda_\text{2d}=\ell\orth \cong U^{\oplus 2}\oplus E_8(-1)^{\oplus 2}\oplus
+I_1(-2d)\). Thus the natural period domain to consider is
+\[
+    \Omega_{2d}=\{[x]\in \mathbb{P}(\Lambda_{2d}\otimes \mathbb{C})\;|\;
+    (x,x)=0,\; (x,\bar x)>0\}.
+\]
+Turns out this has two irreducible components which are interchanged by complex
+conjugation, so we take the orientation preserving component \(\Omega_{2d}^+\).
+This is an example of a \textit{Seigel upper half plane}, a family of spaces
+forming higher dimensional analogue of the upper half plane \(\mathbb{H}\).
+There is a natural period map \(\Moduli_{2d}\to \Omega_{2d}\), and considering
+families of marked polarised K3 surfaces (defined in the obvious way) give
+\(\Moduli_{2d}\) a holomorphic structure.
+
+Again, to forget the marking we consider the action of
+\(\text{Stab}(\ell)\subset O(\Lambda_{K3})\) on \(\Moduli_{2d}\) and that of
+\(\text{Stab}(\ell)^+\) on \(\Omega_{2d}^+\) (where we take the subgroup
+preserving the chosen component).  It is convenient to write
+\(\Omega_{2d}/\text{Stab}(\ell)\) for \(\Omega_{2d}^+/\text{Stab}(\ell)^+\),
+this is an irreducible normal quasi-projective variety by a theorem of
+Bailey--Borel. Then one way to state the \textit{strong Torelli theorem for K3
+surfaces} is that the induced period map \(\Moduli_{2d}/\text{Stab}(\ell)\to
+\Omega_{2d}/\text{Stab}(\ell)\) is an open immersion. This gives us the moduli
+of polarised K3 surfaces as a 19 dimensional quasi-projective variety.
+
+Note the difference from the moduli space of marked K3 surfaces we constructed
+previously-- the period map here not surjective. To compute the complement, recall that the Nakai--Kleiman criterion states a
+line bundle \(L\) on a surface \(X\) is ample if and only if \(L^2>0\) and
+\(L\cdot C>0\) for all curves \( C\subset X\). When \(X\) is K3, it suffices
+to test the second condition only on curves with self-intersection \(-2\), i.e.\
+the \textit{roots} of \(\Lambda_{2d}\). Writing \(\Delta\subset \Lambda_{2d}\)
+for the set of roots, we thus see that the complement
+\((\Omega_{2d}/\text{Stab}(\ell)) \setminus (\Moduli_{2d}/\text{Stab}(\ell))\)
+is given by the root hyperplanes
+\(\bigcup_{\delta \in \Delta}\{[x]\;|\; x\perp \delta\}\).
+
+\begin{remark}
+    For general hyperK\"ahlers there is a very similar picture that realises all
+    deformation families. The slight subtlety is that the polarisation \(\ell\in
+    \Lambda_X\) is no longer uniquely determined, and hence it is also not
+    obvious what the replacement for the group action should be.
+    Turns out the solution is to consider the group of Hodge isometries arising
+    as monodromies, but that is beyond the scope of these notes.
+\end{remark}
+
+\section{Cubic 4-folds}
+
+In this section we will use some of the techniques discussed to address
+rationality problems for cubic 4-folds. To begin, note that the locus of smooth cubic 4-folds forms an open set \(V\) in the linear system \(|\mathscr{O}_{\mathbb{P}^5}(3)|\cong \mathbb{P}^{55}\). Since the automorphism group \(\text{PGL}(6,\mathbb{C})\) is \(35\)-dimensional, we see that the quotient \(\mathcal{C}=V\sslash \text{PGL}(6,\mathbb{C})\) is a \(20\)-dimensional quasi-projective variety, the \textit{moduli space of cubic
+4-folds}. Conjecturally rational cubics form a codimension one locus related
+intricately with the Hodge theoretic and derived=categorical behaviour of K3
+surfaces.
+
+Before proceeding, we first recall some facts about the cohomology of cubic 4-folds. If \(Y\subset \mathbb{P}^5\) is a cubic hypersuface, its Hodge diamond looks like
+\[\begin{tikzcd}[column sep=0em, row sep = 0em]
+    &&&& 1 &&&& \\
+    &&& 0 && 0 &&&\\
+    && 0 && 1 && 0 && \\
+    &0 &&0 &&0 &&0&\\
+    0&&1&&21&&1&&0.
+\end{tikzcd} \]
+The most interesting bit is the middle cohomology lattice
+\(\HH^4(Y,\mathbb{Z})\cong I_1^{\oplus 21}\oplus I_1(-1)^{\oplus 2}\). We can pick a generator \(h\in \HH^2(X,\mathbb{Z})\) associated
+(via the Chern class map) to a hyperplane section, then the class \(h^2\in
+\HH^4(X,\mathbb{Z})\) has self intersection \(3\). This allows us to define
+the \textit{primitive cohomology lattice}
+\(\HH^4(Y,\mathbb{Z})_\text{prim}=(\hh^2)\orth \cong E_8^{\oplus 2}\oplus U^{\oplus 2}\oplus
+\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)\).
+
+Note the similarity with the K3 lattice-- in fact the primitive cohomology of
+certain cubic 4-folds can be identified with a subspace of the cohomology of an
+associated K3 surface, so that these cubics `look like K3 surfaces' to Hodge
+theory. Conjecturally these are precisely the rational cubics. We will sketch this with examples.
+
+\subsection{Explicit constructions} We look at two examples of
+rational cubic 4-folds and how K3 surfaces naturally arise in this setting.
+
+\begin{example}[Cubics containing two planes]
+    Consider the cubic polynomials \(g=u^2x+v^2y+w^2z\) and
+    \(h=ux^2+vy^2+wz^2\), and the associated hypersurface
+    \(Y=\mathbb{V}(g-h)\subset \mathbb{P}^5\). This is smooth, and one can
+    consider the contained planes \(\Pi_1=\mathbb{V}(u,w,v)\) and
+    \(\Pi_2=\mathbb{V}(x,y,z)\). Given
+    two general points \(p_1\in \Pi_1\), \(p_2\in \Pi_2\), the line through them
+    \[\ell_{p_1,p_2}=\{s\cdot p_1+ t\cdot p_2\;|\; [s:t]\in \mathbb{P}^1\}\]
+    intersects \(Y\) in three points \(\{p_1,p_2,q\}\) by Bezout's
+    theorem; this defines a rational map \(\Pi_1\times \Pi_2\dashrightarrow Y\)
+    given by \((p_1,p_2)\mapsto q\). It is a birational map-- given any point
+    \(q\in \mathbb{P}^5\setminus (\Pi_1\cup \Pi_2)\), there is a unique line
+    passing through \(q\) that meets \(\Pi_1\) and \(\Pi_2\). Thus \(Y\) is
+    birational to \(\mathbb{P}^2\times \mathbb{P}^2\), i.e.\ it is rational.
+
+    The given map \(\Pi_1\times \Pi_2\dashrightarrow Y\)  is undefined whenever
+    \(\ell_{p_1,p_2}\) lies  inside \(Y\), i.e.\ on \(S=\mathbb{V}(g,h)\cap
+    \Pi_1\cap \Pi_2\). Since \(S\) is a
+    \((1,2),(2,1)\) complete intersection in \(\mathbb{P}^2\times
+    \mathbb{P}^2\), it is a K3 surface.
+\end{example}
+
+\begin{example}[Pfaffian cubics]
+    Fix a vector space \(V\cong \mathbb{C}^6\) and consider the Grassmannian
+    \(G=\text{Gr}(2,V)\) parametrising lines in \(\mathbb{P}(V)\). This is
+    8-dimensional, sits as a degree 14 subvariety inside
+    \(\mathbb{P}(\Exter^2V)\) via the Pl\"ucker embedding, and is Fano with
+    canonical bundle \(\mathscr{O}_G(-6)\). Thus for a general 9-dimensional
+    linear subspace \(L\subset \Exter^2V\), the variety \(S=G\cap
+    \mathbb{P}(L)\) is the complete intersection of \(G\) with six hyperplanes
+    (corresponding to a basis of \(L\orth\subset \Exter^2V^\ast\)), and
+    adjunction formula shows \(S\) is a K3 surface. In fact all general
+    polarised K3 surfaces \((S,H)\) of degree \(H^2=14\) arise in this fashion
+    \cite[see][\S 3]{mukaiCurvesK3Surfaces}.
+
+    There is a natural way to produce cubic 4-folds in this setting. Note that
+    the projective space \(\mathbb{P}(\Exter^2V^\ast)\) parametrises alternating
+    forms \(V\times V\to \mathbb{C}\) up to scaling. Now the
+    determinant of a \(6\times6\) skew-symmetric matrix \(M\) has form
+    \(\det M = \text{Pf}(M)^2\) for a homogeneous cubic polynomial
+    \(\text{Pf}\in \mathbb{C}[M_{ij}\;|\; 1\leq i<j\leq 6]\), so the vanishing
+    locus \(\mathbb{V}(\text{Pf})\subset \mathbb{P}(\Exter^2V^\ast)\)
+    parametrises degenerate forms (i.e.\ forms of rank \(\leq 4\)). On the other
+    hand the Grassmannian \(G^\ast = \text{Gr}(2,V^\ast)\) parametrises forms
+    of rank \(2\), thus giving us a natural stratification
+    \(G^\ast\subset  \mathbb{V}(\text{Pf}) \subset \mathbb{P}(\Exter^2V^\ast).
+    \) If the choice of \(L\) was sufficiently general, then \(L\orth\subset
+    \Exter^2V^\ast\) is disjoint from \(G^\ast\) and is not
+    contained in \(\mathbb{V}(\text{Pf})\). Thus \(\mathbb{P}(L\orth)\) is a
+    \(\mathbb{P}^5\) whose points correspond to skew-forms \(V\times V\to
+    \mathbb{C}\) of rank \(\geq 4\). The locus of degenerate forms in
+    \(\mathbb{P}(L\orth)\) is then
+    given by a cubic hypersurface \(Y=\mathbb{P}(L\orth)\cap
+    \mathbb{V}(\text{Pf})\), called the \textit{Pfaffian cubic} associated to
+    \(L\). If explicit coordinates are fixed, then the choice of \(L\orth\)
+    corresponds to the choice of a \(6\times 6\) skew-symmetric matrix with
+    entries given by linear forms in \(\mathbb{C}[u,v,w,x,y,z]\), and \(Y\) cuts
+    out the locus where this matrix is degenerate.
+\end{example}
+
+\begin{exercise}
+    Show that \(Y\) is rational, by considering a general 5-dimensional subspace
+    \(W\subset V\) and mapping \([\varphi]\in Y\) to \([W\cap \ker\varphi]\in
+    \mathbb{P}(W)\). The birational map \(\mathbb{P}^4\dashrightarrow S\) is in
+    fact a blow-up in a surface birational to \(S\) \cite[see][\S
+    4.1.3]{hassettSpecialCubicFourfolds}.
+\end{exercise}
+
+Thus to the data of \(L\subset \Exter^2V\), we have associated a cubic 4-fold
+\(Y\) parametrising non-degenerate alternating forms in \(L\orth\) and a K3
+surface \(S\) parametrising the 2-planes \(P\subset V\)  such that
+\(\varphi|_P=0\) for every \(\varphi\in L\orth\). There is a surprising
+connection between the geometry of the two, first explored by Beauville and
+Donagi in \cite{beauvilleVarieteDroitesHypersurface}. They were studying the
+so-called \textit{Fano variety of lines} \(F(Y)\), which parametrises
+lines contained in \(Y\). Since \(Y\) lies in \(\mathbb{P}(L\orth)\), the
+variety \(F(Y)\) naturally sits in the Grassmannian
+\(\text{Gr}(2,L\orth)\).
+
+\begin{theorem}[(Beauville--Donagi)]
+    The Fano variety of lines \(F(Y)\) is isomorphic to the Hilbert scheme
+    \(S^{[2]}\).
+
+    \begin{proof}[Sketch]
+        Given two distinct points in \(S\), we can realise them as \(2\)-planes
+        \(P,Q\subset V\). By the generality hypothesis \(P+Q\)
+        is a 4-plane, and we consider the linear subspace \(\ell=\{[\varphi]\in
+        \mathbb{P}(L\orth)\;:\; \varphi|_{P+Q}=0\}\). This is 1-dimensional, and
+        if \([\varphi]\in \ell\) then \(\varphi|_P=\varphi|_Q=0\) so
+        \(\varphi\) is necessarily degenerate. Thus we have a line \(\ell\subset
+        Y\), and our map \(S^{[2]}\to F(Y)\) maps \(\{P,Q\}\mapsto \ell\).
+    \end{proof}
+\end{theorem}
+
+\begin{remark}
+    Despite its name, \(F(Y)\) is not a Fano variety. Indeed the theorem shows
+    it is hyperK\"ahler, and the name is simply a reflection of the fact that
+    this variety was first extensively studied by Fano.
+\end{remark}
+
+\subsection{Hodge theory of cubic 4-folds} If \(Y\subset \mathbb{P}^5\) is a
+cubic 4-fold, we can analogously construct the Fano variety of lines
+\(F(Y)\subset \text{Gr}(2,6)\), this is a smooth hyperK\"ahler 4-fold. There is
+a universal line \(\mathscr{L}\subset F(Y)\times Y\) parametrising pairs
+\((\ell,y)\) such that \(y\in \ell\). The natural map \(q:\mathscr{L}\to F(Y)\)
+is a \(\mathbb{P}^1\)--bundle, and the fibers of the map \(p:\mathscr{L}\to Y\)
+are lines in \(\text{Gr}(2,6)\). There is an induced morphism on cohomology
+\[
+    \alpha=q_\ast\circ p^\ast : \HH^4(Y,\mathbb{Z})\to \HH^2(F_1(Y), \mathbb{Z})
+\]
+called the \textit{Abel--Jacobi map}, which sends the class \(h^2\) to
+\(g=[\mathscr{O}_{F(Y)}(1)]\) where the hyperplane class on \(F(Y)\) is induced
+from the Pl\"ucker embedding of the ambient Grassmannian. This map in fact
+preserves the Hodge structures, up to a twist.
+
+\begin{theorem}
+    The map
+    \(\alpha:\HH^4(Y,\mathbb{Z})\to \HH^2(F(Y), \mathbb{Z})(-1)\) is an
+    isomorphism of Hodge structures, and induces a Hodge isometry \((h^2)\orth
+    \cong g\orth\).
+\end{theorem}
+
+Now \cite{charlesRemarkTorelliTheorem} shows that \(F(Y)\) in fact
+determines \(Y\). Since hyperK\"ahler manifolds have a Torelli theorem, we can
+use this construction to obtain an analogous one for cubic 4-folds.
+
+\begin{corollary}
+    Two cubic 4-folds are isomorphic if and only if their primitive
+    cohomology lattices are isometric as Hodge structures.
+\end{corollary}
+
+Thus fixing the lattice \(M=U^{\oplus 2}\oplus E_8^{\oplus 2}\oplus
+\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)\), we can consider the
+manifold \(\Omega_M\) parametrising compatible Hodge structures on \(M\). As
+before, there is a period map \(\mathcal{P}:\mathcal{C}\to \Omega_M/\text{O}(M)\) from the moduli space
+\(\mathcal{C}\) of cubic 4-folds. The Torelli theorem says this period map is an
+open immersion.
+
+\subsection{Rationality problems and special cubics} In particular, the period
+map can be used to show that a very general cubic 4-fold has
+\(\HH^{2,2}(X,\mathbb{Z})\cong \mathbb{Z}\cdot h^2\).
+
+\begin{definition}
+    Say a cubic 4-fold \(Y\) is \textit{special} if there is a surface
+    \(S\subset Y\) with \([S]\notin \mathbb{Z}\cdot h^2\subseteq
+    \HH^{2,2}(X,\mathbb{Z})\).
+
+    For such \(Y\), we say a \textit{labelling} is a saturated rank \(2\)
+    sublattice \(K\subset \HH^{2,2}(X,\mathbb{Z})\) containing \(\mathbb{Z}\cdot
+    h^2\). The \textit{discriminant} of the labelling is the determinant of the
+    Gram matrix of the lattice.
+
+    Say a polarised K3 surface \((X,L)\) is \textit{associated to} a labelled
+    cubic 4-fold \((Y,K)\) if \(K\orth \subset \HH^4(Y,\mathbb{Z})\) is
+    isometric as a Hodge structure to \([L]\orth\subset \HH^2(X,\mathbb{Z})\).
+\end{definition}
+
+These were extensively studied in \cite{hassettSpecialCubicFourfolds}, and
+we summarise some of the results.
+
+\begin{theorem}[(Hasset)]
+    For \(d\geq 0\), consider the space \(\mathcal{C}_d\subset \mathcal{C}\) of
+    smooth cubic 4-folds that admit a labelling of discriminant \(d\). Then
+    \(\mathcal{C}_d\) is an irreducible divisor if and only if \(d>6\) and
+    \(d\equiv 0,2\pmod 3\)
+\end{theorem}
+
+\begin{theorem}[(Hasset)]
+    A labelled cubic 4-fold \((Y,K)\) has an associated K3 surface if and
+    only if its discriminant \(d\) is positive, \(4,9\nmid d\), and all odd
+    prime factors of \(d\) are of the form \(3n+1\).
+\end{theorem}
+
+Conjecturally, rationality is equivalent to having an associated K3 surface.
+
+\textbf{Conjecture.} (Hasset) A cubic 4-fold \(Y\) is rational if and only if
+\(Y\in \mathcal{C}_d\) for \(d\) satisfying the conditions of the theorem
+above. In particular, a very general cubic 4-fold is irrational.
+
+On the other hand, by considering \textit{non-commutative K3 surfaces} arising
+as Kuznetsov components in \(\Db Y\), Kuznetsov conjectures another criterion
+for rationality.
+
+\textbf{Conjecture.} (Kuznetsov) A cubic 4-fold \(Y\) is rational if and only if
+the Kuznetsov component associated to the exceptional collection
+\((\mathscr{O}_Y,\mathscr{O}_Y(1),\mathscr{O}_Y(2))\) is equivalent to the
+derived category of a K3 surface.

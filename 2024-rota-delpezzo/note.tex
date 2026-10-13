@@ -1,0 +1,464 @@
+\title{Surface--like pseudolattices, del Pezzo surfaces, and genus one
+fibrations}
+\author{\textit{Based on a lecture series by }Franco Rota.}
+\date{December 2024}
+\maketitle
+
+\subsection{About} This course on pseudolattices was a part of a Winter
+School for students and early career researchers, organised by the UK Algebraic
+Geometry Network. The lectures were delivered in-person in the University of
+Warwick, and were transcribed by Parth Shimpi. These notes have undergone
+several amendments and are not a verbatim recall of the lectures, therefore
+discretion is advised when using this material. They are available online at
+\url{https://pas201.user.srcf.net/documents/2023-ukag-pseudolattices.pdf}.
+All errors and corrections should be communicated to by email to
+\url{parth.shimpi@glasgow.ac.uk}.
+
+Think about homological mirror symmetry on a linear algebraic level.
+
+We recall some of the bilinear--algebraic constructions associated to a smooth
+projective \(\mathbb{C}\)--surface \(S\). A \emph{Cartier divisor} \(D\) on
+\(S\). To such \(D\) we can associate a line bundle \(\mathscr{O}_S(D)\), and
+this gives a one--to--one correspondence between the set of divisors on \(S\) up
+to rational equivalence and the set of line bundles on \(S\) up to isomorphism.
+Either of these is a group called the \emph{Picard group}.
+
+\subsection{The bilinear pairing on the Picard group} Given \(C,C'\) distinct
+irreducible curves in \(S\) and a point \(x\in C\cap C'\), one can associate an
+integer \(\text{mult}_x(C\cap C')\) called the \emph{intersection multiplicity}
+of \(C,C'\) at \(x\). If \(C,C'\) are locally defined by polynomials \(f,f'\)
+respectively, then the intersection multiplicity is the dimension of
+\(\mathscr{O}_x/(f,f')\). Then the intersection pairing is defined as
+\[C\cdot C' = \sum_{x\in C\cap C'} \text{mult}_x(C\cap C')\]
+and we extend it linearly to sums of curves.
+
+Fact:\(\mathscr{O}_{C\cap C'}=\mathscr{O}_S/\mathscr{O}_S(-C) +
+\mathscr{O}_S(-C')\), so \(C\cdot C'=\hh^0(S,\mathscr{O}_{C\cap C'})\).
+
+\begin{theorem}
+For \(L,M\in \Pic(S)\),
+\[
+    (L\cdot M) = \chi(\OO_S) - \chi(L\dual) - \chi(M\dual) +\chi(L\dual\otimes
+    M\dual)
+\]
+is a symmetric bilinear form that extends \((C\cdot C') = (\OO_S(C)\cdot
+\OO_S(C'))\).
+\end{theorem}
+
+Topological interpretation: since \(S\) is a complex variety, there is an
+exponential exact sequence
+\[0\to \mathbb{Z}\to \OO_S \xrightarrow{e^{2\pi i (-)}} \OO_S^\times \to 0.\]
+Then \(\Pic(S)\) is isomorphic to \(\HH^1(S,\OO_S^\times)\), so taking the long
+exact sequence in cohomology gives
+\[...\to \HH^0(S,\OO_S)\to \HH^0(S,\OO_S^\times) \to \HH^1(S,\mathbb{Z})\to
+\HH^1(S,\OO_S)\to \Pic(S)\xrightarrow{c_1} \HH^2(S,\mathbb{Z})\to
+\HH^2(S,\OO_S)\to ...\]
+Now the map \(\HH^0(S,\OO_S)\to\HH^0(S,\OO_S^\times)\) is simply the exponential
+map \(\mathbb{C}\to \mathbb{C}^\times\) and is in particular surjective. Thus
+the Picard group sits in an exact sequence
+\[
+0\to \frac{\HH^1(S,\OO_S)}{\HH^1(S,\mathbb{Z})} \to \Pic(S) \xrightarrow{c_1}
+\text{NS}(S)\to 0
+\]
+where \(\text{NS}(S)\subset \HH^2(S,\mathbb{Z})\) is the image of
+\(c_1:\Pic(S)\to \HH^2(S,\mathbb{Z})\). We say \(\text{NS}(S)\) is the
+\emph{N\'eron--Severi group} of \(S\), and the map \(c_1\) is the first
+\emph{Chern class} map. Given an irreducible curve \(C\subset S\), there is a
+restriction map \(\HH^2(S,\mathbb{Z})\to \HH^2(C,\mathbb{Z})=\mathbb{Z}\) which
+by Poincar\'e duality gives \(c_1(C)\in \HH^2(S,\mathbb{Z})\).
+
+Then by construction, the cup product on cohomology gives the intersection product \(C\cdot
+C'=c_1(C)\cap c_1(C')\).
+
+\subsection{Chern characters} If \(X\) is a smooth projective variety, then each
+line bundle \(L\in \Pic (X)\) can be assigned a \emph{Chern polynomial}
+\(\cc(L)_t = 1+\cc_1(L)t \in \HH^\bullet(X,\mathbb{Z})[t]\). We say the
+\emph{Chern character} is \[\ch(L)=e^{\cc_1(L)} =
+1+\cc_1(L)+\frac{1}{2}\cc_1(L)^2+...\]
+If \(E=\bigoplus_{i=1}^rL_i\) is a direct sum of line bundles (or more generally
+if \(E\) is a vector bundle filtered by line bundles \(L_1,...,L_r\)), then the
+Chern polynomial and character are defined as
+\[
+\cc(E)_t = \prod_{i=1}^r\cc(L_i)_t = 1 + \cc_1(E)_t + \cc_2(E)t^2 + ... \\
+\ch(E) = \sum_{i=1}^r\ch(L_i) = \sum_{k=0}^{\dim X} \ch_k(E).
+\]
+More generally, the splitting principle lets us assume \(\cc(E)_t\) always has
+the form \(\prod(1+a_it)\) for cohomology classes \(a_i\in \HH^2(X,\mathbb{Z})\)
+called the Chern roots of \(E\). These can be used to define the \emph{Todd
+class}
+\[
+\todd(E)= \prod_{i=1}^r \frac{a_i}{1-e^{-a_i}}.
+\]
+
+\begin{exercise}[Properties of Chern classes]
+\(\ch(E\oplus F)=\ch(E)+\ch(F)\), \(\ch(E\otimes F)=\ch(E)\cdot \ch(F)\),
+\(\ch(E\dual)=\sum_{i=1}^{\dim X}(-1)^i\ch_i(E)\).
+\end{exercise}
+
+\begin{exercise}[Chern and Todd classes on surfaces]
+If \(E\) is a vector bundle on a surface \(S\), then
+\[
+\ch(E)=1+\cc_1(E)+\frac{\cc_1^2(E)-2\cc_2(E)}{2}, \qquad
+\todd(E) = 1+\frac{1}{2} \cc_1(E) + \frac{1}{12} (\cc_1^2(E)+\cc_2(E)).
+\]
+\end{exercise}
+
+\begin{theorem}[Hirzebruch--Riemann--Roch]
+If \(E\) is a vector bundle on a smooth projective variety \(X\) of dimension
+\(n\), then
+\[\chi(E) = \sum_{i=0}^n (-1)^i \dim \HH^i(X,E) = \deg[\ch(E)\cdot \todd(T_X)]_n
+= \int_X \ch(E)\todd(T_X)\].
+\end{theorem}
+
+\begin{example}
+If \(X=C\) is a smooth curve and \(L=\OO_C(\sum n_i p_i)\) is a line bundle,
+then \(\todd_C=\todd(T_C)=\todd(\omega_C\dual) = 1+\frac{1}{2}\cc_1(\omega\dual)
+= 1+\frac{2-2g}{2}[p]\) while \(\ch(L) =1+(\sum n_i)[p]\). Then HRR gives us
+\(\chi(L) = \deg(L)+1-g\).
+\end{example}
+
+\begin{example}
+If \(X=C\) is a surface, then \(\todd_S=(1,-\frac{K_S}{2},
+\frac{1}{12}(\cc_1^2+\cc_2))\) and \(\ch(L)=(1,L,\frac{L^2}{2})\). Thus HRR gives
+us
+\[\chi(L)=\underbrace{\frac{1}{12}(\cc_1^2+\cc_2)}_{\chi(\OO_S)} -
+\frac{1}{2}(L\cdot K_S) + \frac{L^2}{2} = \chi(\OO_S)+\frac{1}{2}(L-K_S)\cdot L.\]
+Noether's formula \(\chi(\OO_S)=\frac{1}{12}(\cc_1^2+\cc_2)\).
+\end{example}
+
+Extensions: If \(E,F\) are vector bundles, then have Euler pairing
+\(\chi(E,F)=\sum_{i=0}^n (-1)^i \ext^i (E,F)\). Since \(\chi(E,F)=\chi(F\otimes
+E\dual)\), HRR gives us \(\chi(E,F)=\int_X \ch(F)\ch(E\dual)\todd_X\).
+
+
+Since \(X\) is smooth, each sheaf \(G\) has a finite resolution by vector
+bundles \(0\to E_n\to E_{n-1}\to...\to E_0\to G\to 0\).  Define
+\(\ch(G)=\sum_{i=0}^n(-1)^i \ch(E_i)\)
+
+Define: Grothendieck group of an Abelian category, triangulated category,
+derived category.
+
+Upshot: \(\chi:\KK_0(\Coh X)\times \KK_0(\Coh X)\to \mathbb{Z}\) is a bilinear
+form, not necessarily symmetric.
+
+Define \(\ker\chi = \{G\;|\; \chi(G,H)=0\text{ for all }H\in\KK_0(\Coh X)\}\).
+In the presence of a Serre functor, this is equal to  \(\{G\;|\;
+\chi(H,G)=0\text{ for all }H\in\KK_0(\Coh X)\}\).
+
+The intersection pairings on \(\Pic(X), \NerSev(X)\) are symmetric. On the other
+hand, the Euler pairing on \(\KK_0(\Coh X)\) is not usually symmetric.
+
+[Very rough introduction to derived category, cohomology functors,
+quasi-isomorphisms and roofs, Ext1--Hom correspondence, replacing objects by
+resolutions, Serre functors]
+
+\begin{theorem}[Serre duality]
+    Given a smooth projective variety \(X\) and complexes \(E,F\in \Db X\),
+    there is a canonical isomorphism
+    \[
+        \Hom_{\Db X}(E,F) \cong \Hom_{\Db X}(F, E\otimes \omega_X[\dim X])\dual.
+    \]
+\end{theorem}
+
+References: FM transforms in AG, Gelfand--Manin
+
+\begin{theorem}
+    Given a triangulated category \(\mathscr{T}\), a Serre functor is an
+    autoequivalence \(\mathbb{S}:\mathscr{T}\to \mathscr{T}\) such that
+    \(\Hom(A,B)\cong \Hom(B,\mathbb{S}(A))\dual\).
+\end{theorem}
+
+Suppose \(\mathscr{T}\) is triangulated with a Serre functor \(\mathbb{S}\).
+Then \(\ker \chi = \{E\in \mathscr{T}\;|\; \chi(E,F)=0 \text{ for all
+}F\in\mathscr{T}\}\) is equal to \(\{E\in\mathscr{T}\;|\; \chi(F,E)=0 \text{
+for all }F\in\mathscr{T}\}\) since \(\chi(E,F)=\chi(\mathbb{S}^{-1}F, E)\). This
+lets us define the numerical Grothendieck group \(\KK_0^\text{num}=\KK_0/\ker
+\chi\).
+
+\begin{example}
+    For \(E\) an elliptic curve, \(\KK_0(E)\) is not finitely generated since it
+    contains \(\Pic^0(E)\cong E\). On the other hand, \(\KK_0^\text{num}(E)\) is
+    isomorphic to \(\mathbb{Z}^2\) with basis \([\OO_p]\), \([\OO_E]\). What's the
+    Euler pairing?
+\end{example}
+
+\begin{definition}
+    A \emph{pseudolattice} is a finitely generated free Abelian group \(G\)
+    equipped with a non--degenerate bilinear pairing \(\chi:G\times G\to
+    \mathbb{Z}\). We say \(G\) is \emph{unimodular} if the induced natural map
+    \(\xi:G\to \Hom(G,\mathbb{Z})\) given by \(v\mapsto \chi(-,v)\)  is an
+    isomorphism.
+
+    We say pseudolattices \(G,G'\) are isometric if there is a group isomorphism
+    \(\varphi:G\to G'\) that respects the pairings.
+\end{definition}
+
+\begin{definition}
+    A \emph{Serre operator} on \(G\) is an isometry \(\mathbb{S}:G\to G\) such that
+    \(\chi(u,v)=\chi(v,\mathbb{S}u)\) for all \(u,v\in G\).
+\end{definition}
+
+\begin{exercise}
+    Defining \(\xi^T:G\to G\dual\)by \(v\mapsto \chi(v,-)\), show that a Serre
+    operator exists if and only if \(\xi\) is an isometry and in this case
+    \(\mathbb{S}=\xi^{-1}\circ \xi^T\).
+\end{exercise}
+
+\subsection{Exceptional bases and mutation} An element \(e\in G\) is
+(numerically) exceptional if \(\chi(e,e)=1\). A (numerical) exceptional sequence
+is a sequence \((e_1,...,e_n)\) of exceptional elements such that
+\(\chi(e_i,e_j)=0\) whenever \(j\leq i\). An exceptional basis is an exceptional
+sequence which spans \(G\).
+
+\begin{lemma}
+    If there is an exceptional sequence of length \(\textnormal{rank}(G)\) then the
+    sequence is an exceptional basis and \(G\) is unimodular.
+\end{lemma}
+
+Mutations: given \(e\in G\) exceptional, we can define operators
+\[\mathbb{L}_e(v)=v-\chi(e,v)e, \quad \mathbb{R}_e(v)=v-\chi(v,e)e\]
+
+Given an exceptional sequence \(e_\bullet=(e_0,...,e_n)\) and \(0\leq i \leq
+n\), define \(\mathbb{L}_i(e_\bullet)=(...,e_{i-1}, \mathbb{L}_{e_i}(e_{i+1}),
+e_i, e_{i+2}, ...)\) and  \(\mathbb{R}_i(e_\bullet)=(...,e_{i-1}, e_{i+1},
+\mathbb{R}_{e_{i+1}}(e_i), e_i, e_{i+2}, ...)\).
+
+Modelling on \(\KK_0^\text{num}(X^2)=\HH^0(X)\oplus \NerSev(X)/\text{tors} \oplus
+\HH^4(X)\), we make the following definition.
+
+\begin{definition}[Kuznetsov, Vial]
+A pseudolattice \((G,\chi)\) is \emph{surface--like} if there is a primitive
+element \(p\in G\) such that \(\chi(p,p)=0\), \(\chi(p,-)=\chi(-,p)\), and
+\(\chi|_{p\orth}\) is symmetric.
+\end{definition}
+
+We say such a \(p\) is pointlike. For \(u,v\in p\orth\), write
+\(\chi(u,v)=-u\cdot v\). Write \(\text{rk}(v)=\chi(v,p)\), then \(p\orth =
+\{v\in G\;|\; \text{rk}(v)=0\}\).
+
+There is a chain complex \(\mathbb{Z}\xrightarrow{p} G \xrightarrow{\text{rk}}
+\mathbb{Z}\) with middle cohomology \(p\orth/p\) which we call the
+\emph{Neron--Severi group} \(\NerSev(G)\). This is a finitely generated free
+Abelian group of rank \(\text{rk}G-2\).
+
+If \(G\) has a Serre operator, then the filtration \(0\into \mathbb{Z}p\into
+p\orth \into G\) has backward maps \(G\xrightarrow{\text{id}-\mathbb{S}}p\orth
+\xrightarrow{\text{id}-\mathbb{S}} \mathbb{Z}p
+\xrightarrow{\text{id}-\mathbb{S}} 0\). In particular
+\((\text{id}-\mathbb{S})^3=0\) i.e.\ \(\mathbb{S}\) is unipotent.
+
+\subsection{The canonical class} If \((G,\chi)\) is a surface--like
+pseudolattice, then there is a unique object \(K\in
+\text{NS}(G)\otimes\mathbb{Q}\) such that for any \(v_1,v_2\in G\),
+\(\chi(v_1,v_2)-\chi(v_2,v_1)= -K \cdot \lambda(v_1,v_2)\)  where
+\(\lambda(v_1,v_2)=\text{rk}(v_1)v_2 - \text{rk}(v_2)v_1)\).
+
+In the surface setting, \(K=K_X\) is the class of a canonical divisor.
+
+The motivation to consider numerical exceptional collections is to obstruct
+the existence of exceptional collections in the derived category.
+
+\begin{definition}
+    If \(\mathscr{T}\) is a triangulated category, then \(E\in \mathscr{T}\) is
+    exceptional if \(\Hom^\bullet(E,E)=\mathbb{C}\). An exceptional collection
+    is a sequence \((E_1,...,E_n)\) of exceptional objects such that
+    \(\Hom(E_i,E_j[k])=0\) for all \(i>j\), and \(k\in \mathbb{Z}\).
+
+
+    We say it is \emph{full} if it generates \(\mathscr{T}\).
+\end{definition}
+
+It is immediate that the classes \([E_1],...,[E_n]\) form an exceptional basis
+of \(\KK_0^\text{num}\).
+
+The leading conjecture (by Orlov) is that a smooth projective surface over
+\(\mathbb{C}\) admits a full exceptional collection if and only if it is
+rational.
+
+Other questions:
+\begin{enumerate}
+    \item Given an exceptional collection of maximal length
+        (\(2+\text{rk}(\NerSev X)\)), when is it full?
+    \item When do mutations act transitively on the set of all exceptional
+        collections of maximal length?
+\end{enumerate}
+
+Answers: for del Pezzo surfaces (i.e.\ blow ups of \(\mathbb{P}^2\) in \(\leq
+8\) points in general position), the answer to both the questions is `always'
+(see Pirozhkov `20, Kuleshov--Orlov `94). Also for blow up in 9 points [Krah].
+
+[Cheng--Hayden--Schroll] consider the Fukaya category of a specific Riemann
+surface to show that the mutation action need not be transitive.
+
+[Krah] found that the Blow up of \(\mathbb{P}^2\) in ten points does \emph{not}
+have a full exceptional collection of maximal length, thus having at least two
+orbits.
+
+We focus on numerical versions of these.
+
+\begin{theorem}[(Vial)]
+    If \(X\) is is a smooth projective surface with \(\chi(\OO_X)=1\) i.e.\
+    \([\OO_X]\) is numerically exceptional, then the following are
+    equivalent.
+    \begin{enumerate}
+        \item \(X\) has a numerical exceptional sequence \(L_0,...,L_{n+1}\) of
+            line bundles of maximal length.
+        \item \(X\) has a numerical exceptional sequence \(E_0,...,E_{n+1}\) of
+            numerical line bundles (i.e.\ \(\text{rk}(E_i)=1\)) of maximal
+            length.
+        \item \(K_X^2=10-\rho(X)\) and one of the following holds
+            \begin{enumerate}
+                \item \(\mathbb{P}^2\)--like: \(\NerSev(X)=\langle 1 \rangle\)
+                    and \(\frac{1}{3}K_X\) is primitive.
+                \item \(\mathbb{P}^1\times \mathbb{P}^1\)--like:
+                    \(\NerSev(X)=U\) (hyperbolic plane) and \(\frac{1}{2}K_X\)
+                    is primitive.
+                \item Blow up of \(\mathbb{P}^2\) in \(n-1\) like:
+                    \(\NerSev(X)=\langle 1 \rangle \oplus \langle -1 \rangle
+                    ^{n-1}\) and \(K_X\) is primitive.
+            \end{enumerate}
+    \end{enumerate}
+\end{theorem}
+
+Main tool [Hille--Perling] is to attach a toric system-- given
+\((E_0,...,E_{n+1})\), take \(D_i=\cc_1(E_i)-\cc_1(E_{i-1})\) to get a set
+\(D_1,...,D_n\) which forms a trigonal unimodular basis for \(\NerSev(X)\). If
+you assume in addition that the signature is \((1,n-1)\) and there is a
+canonical class (characteristic element) then such lattices have been completely
+classified.
+
+Geometric consequences: if \(X\) is a smooth projective surface, \(\OO_X\) is
+exceptional if and only if \(p_g=\hh^0(K_X)\) and \(q=\HH^1(\OO_X)\) both
+vanish. Such surfaces have been classified by [Kotschik] according to Kodaira
+dimension.
+
+For \(k=-\infty\) these are the minimal surfaces, i.e.\ \(\mathbb{P}^2\),
+\(\mathbb{P}^1\times \mathbb{P}^1\), and Hirzebruch surfaces \(\bbF_n\) for
+\(n\geq 2\).
+
+If \(k=0,1\) these are the Dolgachev surfaces \(X_9\) (Blow up of
+\(\mathbb{P}^2\) in \(9\) points) the \(9\) points form the base locus of a
+pencil of cubics thus giving an elliptic fibration \(X_9\to \mathbb{P}^1\). You
+can also apply a log transformation to get \(X_9(p_1,...,p_\ell)\) where you add
+multiplicity \(p_i\) to a smooth fiber \(F_i\). If \(k=0\) this gives the
+Enriques surface \(X_9(2,2)\), all others have \(k=1\).
+
+For \(k=2\) these are some fake projective planes (including Godeaux surfaces).
+
+\begin{theorem}[(Vial)]
+    \(X\) smooth projective surface with \(p_g=q=0\). If \(S\) is not minimal
+    then there is a numerically exceptional collection of maximal length. If
+    \(S\) is minimal then there is a numerically exceptional collection of
+    maximal length except for
+    \(X_9(2,2),X_9(2,3),X_9(2,4),X_9(3,3),X_9(2,2,2)\).
+\end{theorem}
+
+Enriques surfaces therefore do not admit exceptional collections. [Cho] gives an Enriques surface whose blowup has a full exceptional collection.
+
+Kuznetsov recovers a similar classification result-- if \(G\) is a surface--like
+pseudolattice of rank \(n+2\), we say it is geometric if \(\NerSev(G)\) has
+signature \((1,n-1)\). We say \(G\) is minimal if there are no exceptional
+objects of rank \(0\). Then Kuznetsov sets up a `numerical MMP': if \(e\in G\)
+is an exceptional object of rank \(0\), then \(G_e=\orth e\) and have a
+semi--orthogonal decomposition \(G=e\oplus G_e\) with pairing
+\(\begin{pmatrix}1&\ast\\0&\chi_{G_e}\end{pmatrix}\) and
+\(\NerSev(G)=\NerSev(G_e)\oplus \langle 1 \rangle\) is an orthogonal decomposition.
+Then induction and toric systems game recovers the classification.
+
+\section{The Fano/LG correspondence} Start with a Fano variety/orbifold \(X\).
+The mirror is an LG model \(W:Y\to \mathbb{C}\) where \(Y\) is a non--compact
+manifold and \(W\) is smooth. Mirrors to surfaces are a source of surface--like
+pseudolattices-- \((\KK_0^\text{num}(FS(Y,W)),\chi)\) is surfacelike.
+
+But theres more structure-- if there is a smooth effective \(D\in |-K_X|\)
+(quasi del Pezzo: \(X\) a rational surface with smooth effective anticanonical
+divisor, which is necessarily an elliptic curve by adjunction) then \(i:D\into
+X\) gives linear map \(i^\ast:\KK_0^\text{num}X\to \KK_0^\text{num}D\)
+induced by a functor \(i^\ast: \Db X \to \Db D\) which is spherical. Main
+reference: [Harder--Thompson]
+
+\begin{definition}[Addington, Anmo--Logvinenko]
+    A spherical functor is an exact functor \(F:\mathcal{A}\to \mathcal{B}\) of
+    triangulated categories with left and right adjoints \(L,R:B\to A\) such
+    that the cotwist functor \(C\) defined as \(C\to \text{id}\to RF\) is an
+    equivalence and \(R\cong CL\).
+\end{definition}
+
+If \(F\) is spherical then we can also prove that the twist \(T\) defined as
+\(FR\to \text{id}\to T\) is also an equivalence.
+
+\begin{example}
+    An object \(E\in \mathscr{B}\) is \(n\)--spherical if \(\mathbb{S}(E)=E\)
+    and \(\Hom(E,E[i])=\mathbb{C}\oplus \mathbb{C}[n]\).
+    Then the map \(\Db(\ast)\to \mathscr{B}\) given by \(V\mapsto V\otimes E\)
+    is a spherical functor.
+
+    Why? Note that \(RF=\text{id}\oplus [-n]\) so the Cotwist is \([-n-1]\).
+
+    Thus also the twist functor is an equivalence, it is given by the cone of
+    \(\Hom(E,X)\otimes E \to X\).
+\end{example}
+
+If \(D\subset X\) is a smooth anticanonical divisor, then \(i_\ast\) is right
+adjoint to \(i^\ast\),  and the cotwist is \(-\otimes \OO(-D)=-\otimes\omega_X\).
+
+[Harder--Thompson] if \(f:G\to H\) is a Hom of pseudolattices, \(f\) is
+spherical if there is a right adjoint \(r:H\to G\) and \(T=\text{id}-fr,
+C=\text{id}-rf\) are invertible.
+
+A spherical functor \(f:G\to H\) is relative \((-1)^n\)--CY if \(C=(-1)^n\mathbb{S}\).
+
+If \(X\) is a quasi--del Pezzo and \(D\) is an elliptic curve,
+\(\mathbb{E}=\KK_0^\text{num}(D)\) in the skyscraper--structuresheaf basis
+\(\{a,b\}\) is given by the lattice \((\begin{smallmatrix} 0 & -1 \\ 1 &
+0\end{smallmatrix})\); this is isomorphic to the lattice \(\HH^1(D,\mathbb{Z})\)
+with intersection pairing.
+
+We say \(f:G\to \mathbb{E}\) is quasi--del Pezzo if \(f\) is a relative 0-CY
+spherical with adjoint \(r\), \(G\) is surfacelike with
+pointlike \(p=r(a)\), and \(G\) admits an exceptional basis \(e_\bullet\) with
+primitive images in \(\mathbb{E}\), and \(\NerSev(G)\) has sign \((1,n-1)\).
+
+Can then show that \(a\) is fixed by twist and \(T\) acts on \(\mathbb{E}\) by \((\begin{smallmatrix} 1&-K_G^2\\0&1 \end{smallmatrix})\), further \(r(b)\in p\orth\) and \(r(b)=-K_G\) in \(\NerSev(G)\)
+
+Notation: given \(\mathbb{E}=\langle a,b \rangle\) and \(v_i\in \mathbb{E}\),
+can define a pseudolattice \(Z(\{v_i\})\) with formal basis \(z_i\) and
+\(\chi(z_i,z_j)=\langle v_i,v_j \rangle_\mathbb{E}\).
+
+Classification: up to mutations of \(e_\bullet\) and automorphisms
+of \(\mathbb{E}\) of the form \((\begin{smallmatrix}1&K\\0&1\end{smallmatrix})\)
+any quasiDelpezzo is of the form
+\[
+    (A)\quad Z(b,3a+b, 6a+b, a,...,a)\to \mathbb{E}\qquad
+    (B)\quad Z(b,2a+b,2a+b,4a+b)\to \mathbb{E}
+\]
+
+Exercise:what are the surfaces that realise these cases?
+
+Exercise: show that there is an isomorphism \(Z(b,3a+b,6a+b,a,a)\cong
+Z(b,2a+b,2a+b,4a+b,a)\)
+
+What does this story look like on the mirror? Genus 1 Lefschetz fibrations
+\(W:Y\to \mathbb{C}\) with generic fiber given by a torus and special fibers given
+by pinched tori. Choose paths from critical points to a point \(\infty\in
+\mathbb{C}\), lift (parallel transport) to get vanishing cycles \(Z_i\in
+F_\infty\). These define cohomology classes \(V_i\in
+\HH^1(F_\infty,\mathbb{Z})\cong \mathbb{E}\). Then the vanishing cycles generate
+\(\text{FS}(Y,W)\) and so \(\KK_0^\text{num}(FS(Y,W))\) is isomorphic to
+\(Z(\text{vanishing thimbles }v_i)\cong \HH_2(Y,F\;;\mathbb{Z})\). By the
+Harder--Thompson classification, get `numerical mirror symmetry
+statements:\(\KK_0^\text{num}(X)\to \KK_0^\text{num}(D)\) is isomorphic to
+\(\KK_0^\text{num}(FS(Y,W))\to \HH^1(F,\mathbb{Z})\) and further the isomorphism
+is given by sequences of mutations. Trick is to take an \(e_\bullet\) that is
+minimal in the sense of \(\sum |\text{rk}e_i|^2\).
+
+Question: To prove that \(\KK_0^\text{num}(FS(Y,W))\cong Z(\text{vanishing
+thimbles})\) we use \(g=1\) fibers. Why doesn't this work for higher genus? What
+if you take fibrations that aren't Lefschetz? What if \(X\) is singular (log dP)
+and \(|-K_X|=\emptyset\) but \(|-2K_X|\) has sections? McKay correspondence says
+you should look at an orbifold inside which \(\Db(\tilde X)\) lives.
+
+
+
+
+

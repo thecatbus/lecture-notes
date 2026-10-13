@@ -1,0 +1,487 @@
+\title{Lie algebras and their representations}
+\author{\textit{Based on a lecture series by} Ian Grojnowski.}
+\date{Michaelmas 2026}
+\maketitle
+
+\newcommand{\mat}[1]{\left(\begin{smallmatrix} #1 \end{smallmatrix}\right)}
+\newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
+\newcommand{\adj}{\textnormal{ad}}
+\renewcommand{\gg}{\mathfrak{g}}
+\newcommand{\bb}{\mathfrak{b}}
+\newcommand{\nn}{\mathfrak{n}}
+\renewcommand{\gl}{\mathfrak{gl}}
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\so}{\mathfrak{so}}
+\renewcommand{\sp}{\mathfrak{sp}}
+\renewcommand{\sf}{\mathsf}
+
+This is a course about symmetries controlled by the \emph{linear algebraic groups}
+\begin{align*}
+    \sf{GL}_n(\bbC) &=\{ A\in \Mat{n}(\bbC) \;|\; \det A \neq 0\}, &
+    \sf{O}_n(\bbC) &=\{ A\in \Mat{n}(\bbC) \;|\; A^{\sf{T}} \cdot A = \id \}, \\
+    \sf{SL}_n(\bbC) &=\{ A\in \Mat{n}(\bbC) \;|\; \det A = 1\}, &
+    \sf{SP}_{n}(\bbC) &=\{ A\in \Mat{n}(\bbC) \;|\; \langle x,y \rangle =
+    \langle Ax, Ay\rangle \; \forall \, x,y\in \bbC^{n}\}
+\end{align*}
+(here the \emph{Symplectic group} $\sf{SP}_n(\bbC)$ is defined
+when $n$ is even, and the given definition depends on the choice of a
+non-degenerate skew-symmetric bilinear form $\langle-,-\rangle\colon
+\bbC^n\times \bbC^n\to \bbC$), and five others --- which happen to be groups
+equipped with additional structures of a smooth manifold and an algebraic
+variety. These structures mean we can use topological and analytic methods to
+study the groups; on the other hand the structures also simplify much of the
+study of these groups to simple linear algebra. This reduction is accomplished
+by associating the group to its tangent space at identity, which comes naturally
+equipped with the structure of a \emph{Lie algebra} that shadows the group
+operation. 
+
+This course is about Lie algebras and their representation theory over a field of characteristic zero.
+
+\subsection{About} This course on Lie algebras is a part of Part III of the
+Mathematics tripos at the University of Cambridge. The lectures were delivered in-person, and were transcribed live. The notes can be found
+online at \url{https://pas201.user.srcf.net/documents/2026-lie-algebras.pdf}. 
+
+Errors and corrections should be communicated to by email to
+\url{pas201@srcf.net}.
+
+\section{Getting started}
+\marginpar{Lecture 1, 08/10/26} 
+
+The Lie algebra associated to an algebraic group $G$ is the tangent space
+$\gg=\sf{T}_\id G$ at the identity element. The group structure on $G$ induces
+the structure of a \emph{Lie algebra} on $\gg$. We unpack this with an ad hoc definition first. 
+
+\begin{definition}[Ad hoc] A complex \emph{linear algebraic group} $G$ is a
+    subvariety of the affine space $\Mat{n}(\bbC)$ of $n\times n$ matrices,
+    defined as the zero locus of some polynomials in matrix coefficients,
+    equipped with an associative multiplication map $G\times G\to G$ and an
+    inverse map $G\to G$ defined by polynomials in matrix coefficients, such
+    that the usual axioms of a group are satisfied.
+\end{definition}
+
+This is a terrible definition, because it is not \emph{intrinsic}. It relies on
+choosing an embedding of the group into a coordinate system. There \emph{is} an
+intrinsic definition, under which a linear algebraic group is simply a
+group-object in the category of affine varieties. 
+
+\begin{remark}
+    It is not obvious that every such intrinsically defined object can be
+    embedded into some affine space $\Mat{n}(\bbC)$, but it follows from noting that
+    $G$ would then act on the space of functions on $G$ faithfully, and by
+    Hilbert's basis theorem there is a finite dimensional faithful
+    sub-representation therein.
+\end{remark}
+
+\begin{remark}
+    Each linear algebraic group has a maximal compact subgroup (unique up to
+    conjugacy), and the linear algebraic group is diffeomorphic to the tangent
+    bundle over this compact subgroup. Note that the tangent bundle of any Lie
+    group is trivial.
+
+    For instance the maximal compact subgroup of $\sf{SL}_n(\bbC)$ is the special
+    unitary group $\sf{SU}_n(\bbC)$, diffeomorphic to an $n$-sphere. Likewise
+    the maximal compact subgroup inside $\sf{SO}_n(\bbC)$ is $\sf{SO}_n(\bbR)$.
+\end{remark}
+
+\paragraph{What is a tangent space?} Let us begin with an example, by
+calculating the tangent space to $\sf{SL}_2(\bbC)$ at $\id=\mat{1&0 \\ 0&1}$. 
+An element close to $\id$ can be expressed as \[P=\id + \varepsilon \mat{a & b
+\\ c &  d} + \varepsilon^2 ( \cdots ),\]
+so for this to lie in $\sf{SL}_2(\bbC)$ we must have $\det(P)=1$, which expands
+to
+\[1+\varepsilon(a+d)+\varepsilon^2(\cdots )=1.\]
+To compute the tangent space we wish for $\varepsilon$ to be ``very small'', so
+that $\varepsilon^2\approx 0$ and the tangent space is this first-order neighbourhood
+\[\sl_2(\bbC) = \{\mat{a&b \\ c&d} \;|\; a+d =0\}.\] 
+
+This construction can be made rigorous by working over the ring
+$\bbE=\bbC[\varepsilon]/(\varepsilon^2)$. Recall that if $G$ is a complex linear
+algebraic group and $R$ is a $\bbC$-algebra, we define the \emph{set of
+$R$-points of $G$} as 
+\[
+    G(R)=\{
+        P\in \Mat{n}(R) \;|\; 
+        P\text{ satisfies the polynomial equations defining } 
+        G\subset \Mat{n}(\bbC)
+    \}
+\]
+There is a map $\bbE\to \bbC$ sending $\varepsilon\mapsto 0$, this in turn
+induces a map $\pi\colon G(\bbE)\to G(\bbC)$. The tangent space $\gg=\sf{T}_\id G$
+is then defined as the pre-image $\pi^{-1}(\id)$.
+
+
+\begin{exercise}
+    Show that $\sf{GL}_n(\bbC)$ is a linear algebraic group (\emph{hint: the condition
+    $\det P \neq 0$ can be written as the vanishing of a polynomial by embedding
+    $\sf{GL}_n(\bbC)$ into $\Mat{(n+1)}(\bbC)$}). Use this to show that the
+    associated Lie algebra is $\frak{gl}_n(\bbC) =\Mat{n}(\bbC)$.
+\end{exercise}
+ 
+\begin{exercise}
+    For an $n\times n$ matrix $X$, show that $\det(\id + \varepsilon X) = 1 +
+    \varepsilon \cdot \text{tr}(X)$. Conclude that the Lie algebra $\sl_n(\bbC)$
+    associated to $\sf{SL}_n(\bbC)$ is the space of traceless $n\times n$
+    matrices. 
+\end{exercise}
+
+\begin{example}
+    For the orthogonal group over $\bbC$, the associated Lie algebra is
+    the space of antisymmetric matrices. Note that all such matrices are
+    traceless over any field of characteristic $\neq 2$, thus $\sf{SO}(n)$ has
+    the same Lie algebra. We therefore denote it as $\so_n(\bbC)$.
+\end{example}
+
+In the above example we have learnt that different groups can have the same Lie
+algebra. This shouldn't be surprising --- for instance, all finite groups are
+linear algebraic groups, and their Lie algebra is the zero algebra $\mathbf{0}$.
+In a similar fashion the orthogonal group is disconnected, with two connected
+components diffeomorphic to each other, one of which is $\sf{SO}_n(\bbC)$.
+
+One thing we will learn in due course is that a Lie group, its maximal compact
+subgroup, and its Lie algebra all have coincident finite dimensional
+representations.
+ 
+
+\paragraph{The Lie bracket.} What structure does $\gg=\sf{T}_\id G$ have that is
+inherited from the group structure on $G$? It is not multiplication. 
+
+What we do instead is to look at the commutator map $G\times G\to G$ sending
+$(p,q)\mapsto p^{-1}q^{-1}pq$. This sends $(\id,\id)\mapsto \id$, thus the
+derivative of the commutator gives a linear map 
+\[
+    \gg\times \gg \simeq T_{(\id,\id)}(G\times
+    G)\longrightarrow \sf{T}_\id G \simeq \gg.
+\]
+This is simply the zero map, and is not quite what we want --- we want a
+\emph{bilinear} map $\frak{g}\times \frak{g}\to \frak{g}$, so we differentiate
+the first and the second variable separately.
+
+To explain the construction, suppose $G$ is $\sf{GL}_n(\bbC)$ or another matrix
+group. Let $P=\id + X\varepsilon$, $Q=\id + Y\delta$ where $\varepsilon, \delta$
+are small and satisfy $\varepsilon^2=\delta^2=0$ but
+$\varepsilon\delta=\delta\varepsilon\neq 0$ (i.e.\ we work over
+the ring $\bbk[\varepsilon, \delta]/(\varepsilon^2,\delta^2)$). We then see that
+\[
+    P^{-1}Q^{-1}PQ=\id + \varepsilon\delta (XY-YX),
+\]
+so it makes sense to introduce the map
+$[\,,\,]\colon \frak{g}\times
+\frak{g}\to \frak{g}$ given by $[X,Y]=XY-YX$. This is the \emph{Lie bracket}.
+
+\begin{exercise}
+    The above calculation is an extrinsic proof of the fact that the Lie
+    bracket $[\,,\,]\colon\gg\times \gg \to \gg$ is \emph{antisymmetric}. To get an intrinsic proof that doesn't rely
+    on any embedding into matrix groups, use the fact that
+    $(pqp^{-1}q^{-1})^{-1}=qpq^{-1}p^{-1}$ for any group elements $p,q$.
+\end{exercise}
+
+The next property of the Lie bracket is the \emph{Jacobi identity}:
+\[[[x,y],z]+[[y,z],x] + [[z,x],y]=0 \qquad \text{for all }x,y,z\in \gg.\] 
+We will deduce this over multiple exercises, seeing three reasons why it is
+true. Next time we will look at a fourth and a fifth explanation. 
+
+\begin{exercise}
+    For $G\subseteq \sf{GL}(n,\bbC)$, show by direct
+    computation that the Jacobi identity holds.
+\end{exercise}
+
+\begin{exercise}
+    Marshall Hall discovered the following identity in the 1930s: writing
+    $p^q=q^{-1}pq$ and $(p,q)=p^{-1}q^{-1}pq$, Hall showed that in any
+    group $G$ with elements $p,q,r$ we have
+    \[((p,q^{-1}),r)^q \cdot ((q,r^{-1}),p)^r \cdot ((r,p^{-1}),q)^p=\id.\] 
+    Differentiate this to deduce the Jacobi identity.
+\end{exercise}
+
+\begin{exercise}
+    Deduce the Jacobi identity from associativity of the group law on $G$.
+\end{exercise}
+
+\paragraph{Lie algebras.} The two properties above --- antisymmetry and the
+Jacobi identity --- define an abstract Lie algebra. Fix a field $\bbk$ of
+characteristic $\neq 2,3$.
+
+\begin{definition}
+    Let $\gg$ be a $\bbk$-vector space. A \emph{Lie bracket} on $\gg$ is an
+    antisymmetric bilinear form $[\,,\,]\colon \gg\times\gg\to \gg$ that
+    satisfies the Jacobi identity. We say $\gg$ equipped with a Lie bracket is a
+    \emph{Lie algebra}.
+\end{definition}
+
+\begin{exercise}
+    \marginpar{Lecture 2, 10/10/26}
+    Here is another way to define a Lie bracket on a $\bbk$-vector
+    space $\gg$ --- it is given by an element $\mu\in \Exter^2(\gg\dual)\otimes \gg$
+    (i.e.\ a $\gg$-valued 2-form on $\gg\dual$) which lies in the kernel of the
+    induced exterior derivative $d_\mu \colon \Exter^\bullet(\gg\dual)\otimes \gg \to
+    \Exter^{\bullet+1}(\gg\dual)\otimes \gg$. Recall that this derivative is
+    given by $d_\mu(1)=0$, $d_\mu\omega = \omega \circ \mu$ for $\omega\in
+    \gg\dual\otimes \gg$, extended by the graded Leibniz rule to the rest of
+    $\Exter^\bullet(\gg\dual)\otimes \gg$. Check the equivalence of the two
+    definitions.
+\end{exercise}
+
+\begin{example}
+    If $V$ is a finite dimensional $\bbk$-vector space, then $\gl(V) =
+    \End_\bbk(V)$ is a Lie algebra, isomorphic to $\gl_n(\bbk)$. We omit the
+    field from the notation unless necessary, thus simply writing $\gl_n$. 
+
+    Other examples include the Lie algebras 
+    \begin{align*}
+        \sl_n &= \{X\in\gl_n\;|\; \text{tr}(X)=0\}, \\ 
+        \so_n &= \{X\in \gl_n\;|\; X + X^{\sf{T}} = 0\}, \\ 
+        \sp_{n} &= \{ X\in \gl_n\;|\; J\, X^{\sf{T}}\, J^{-1} + X = 0\} \qquad
+        (n \text{ even, } J\text{ the standard }n\times n\text{ symplectic
+        matrix}), \\ 
+        \bb_n &= \{X \in \gl_n\;|\; X \text{ upper triangular}\}, \\ 
+        \nn_n &= \{X \in \gl_n\;|\; X \text{ strictly upper triangular}\}.
+    \end{align*}
+\end{example}
+
+\begin{exercise} 
+    Check directly that each of the above, equipped with the commutator bracket,
+    is a Lie algebra. Which algebraic groups are they the Lie algebras of?
+\end{exercise}
+
+\begin{exercise}
+    Show that $\{\mat{\ast & \ast \\ \ast & \cdot}\}$ is not a Lie subalgebra of
+    $\gl_2$.
+\end{exercise}
+
+\begin{example}
+    If $V$ is a $\bbk$-vector space, then the zero form $0\in \Exter^2
+    (V\dual)\otimes V$ makes $V$ into a trivial Lie algebra. Such Lie algebras
+    are termed \emph{Abelian}. 
+\end{example}
+
+\begin{exercise}
+    Classify one, two, and three-dimensional Lie algebras over $\bbC$.
+\end{exercise}
+
+\section{Representations of Lie algebras}
+
+\begin{definition}
+    A \emph{representation} of a Lie algebra $\gg$ on a $\bbk$-vector space $V$ is a
+    homomorphism of Lie algebras $\rho \colon \gg\to \gl(V)$. In this case we
+    say ``$\gg$ acts on $V$''.
+\end{definition}
+
+For example, each Lie algebra $\gg$ acts on itself --- given $x\in \gg$, define
+the map $\adj_x\colon \gg \to \gg$ as $y\mapsto [x,y]$.
+
+\begin{lemma}
+    The map $\gg \to \gl(\gg)$ given by $x\mapsto \adj_x$ is a representation of
+    $\gg$. We call this the \emph{adjoint representation}.
+    \begin{proof}
+        We must show $\adj_{[x,y]} = \adj_x\circ \adj_y - \adj_y\circ \adj_x$.
+        But $\adj_{[x,y]}(z)=[[x,y],z]$, while the right-hand side sends $z$ to
+        $[x,[y,z]]-[y,[x,z]]$. By antisymmetry, the required result is
+        equivalent to the Jacobi identity.
+    \end{proof}
+\end{lemma}
+
+\begin{definition}
+    The \emph{center} of $\gg$ is the kernel of the adjoint action
+    $\ker(\adj\colon \gg\to \gl(\gg))$
+\end{definition}
+
+Thus a Lie algebra with trivial center acts faithfully on itself. 
+
+\begin{remark}
+In fact \emph{every} finite dimensional Lie algebra has a faithful finite
+dimensional representation. This is a non-trivial theorem of Ado, and the
+construction of the representation is non-obvious (unlike the
+corresponding statement for algebraic groups, where you can simply consider the
+space of functions on the group). We will look at the proof if time permits.
+\end{remark}
+
+\begin{example}
+The Lie algebra $\sl_2=\{\mat{a & b \\ c & -a}\;|\; a,b,c\in \bbk\}$ has a basis given
+by the three elements \[e=\mat{0&1\\0&0}, \quad h = \mat{1 & 0 \\ 0 & -1}, \quad f
+= \mat{0 & 0 \\ 1 & 0}\]
+which satisfy the relations 
+\[[h,e]=2e, \quad [h,f]=-2f, \quad [e,f]=h.\]
+Hence a representation of $\sl_2$ on $\bbk^n$ is given by a triple $E,F,H\in
+\Mat{n}(\bbk)$ such that $EF-FE=H$, $HF-FH=-2F$, and $HE-EH=2E$.
+\end{example}
+
+\begin{exercise}
+    If $G$ is an algebraic group, an (algebraic) representation of $G$ on a
+    $\bbk$-vector space $V$ is a group homomorphism $\rho\colon G\to
+    \sf{GL}(V)$ defined by polynomial equations in matrix coefficients. For the
+    ring $\bbE=\bbk[\varepsilon]/(\varepsilon^2)$, we thus have a map of the
+    groups of $\bbE$-points $G(\bbE)\to \sf{GL}(V)(\bbE)$ satisfying
+    $\rho(\id)=\id$. It follows that $\rho(\id + X\varepsilon) = \id  +
+    d\rho(X)\cdot \varepsilon$ for some matrix $d\rho(X)$. Check that this
+    assignment $d\rho\colon \sf{T}_\id G \to \gl(V)$ is a Lie algebra
+    homomorphism.
+\end{exercise}
+
+\begin{example}
+    Take $G=\sf{SL}_2(\bbk)$, and $L(n)=\Sym^n(\bbk^{\oplus 2})$ (equivalently,
+    the degree two homogeneous piece of $\bbk[x,y]$). As $\sf{GL}_2(\bbk)$ acts
+    on $L(n)$, so does $\sf{SL}_2(\bbk)$. Call this representation $\rho_n\colon
+    \sf{SL}(2,\bbk)\to \sf{GL}(L(n))$. For example, $\rho_0$ is the trivial
+    representation, $\rho_1$ is the standard representation, and we have \[\rho_2\mat{a&b \\
+    c&d} = \mat{a^2 & ab & b^2 \\ 2ac & ad+bc & 2bd \\ c^2 & cd & d^2}.\]
+    Differentiating, we get representations $\sl_n\to \gl(L(n))$ which we
+    simply refer to as $L(n)$.
+\end{example}
+
+\begin{exercise}
+    Writing $(x^iy^j)_{i+j=n}$ for the standard basis of $L(n)$, show that we
+    have 
+    \begin{gather*}
+        e\cdot x^iy^j = jx^{i+1}y^{j-1}, \quad f\cdot x^iy^j = ix^{i-1}y^{j+1},
+        \quad h\cdot x^iy^j = (i-j)x^iy^j, \\ 
+        \text{or equivalently,}\qquad
+        e=x\frac{\partial\phantom{y}}{\partial y}, \quad f = y
+        \frac{\partial\phantom{x}}{\partial x}, \quad h =
+        x\frac{\partial\phantom{x}}{\partial x} - y
+        \frac{\partial\phantom{y}}{\partial y}.
+    \end{gather*}
+    Assuming $\text{char}(\bbk)=0$, show that each $L(n)$ is an irreducible representation.
+\end{exercise}
+
+\begin{remark} 
+    How to think about these representations $L(n)$? The space $L(n)$ is
+    $\HH^0(\bbP^1, \OO(n))$. This is significant because $\bbP^1$ is a
+    homogeneous space for the group $\sf{SL}_2$, and $\sl_2$ is precisely the
+    Lie algebra of holomorphic vector fields on $\bbP^1$. A second approach to
+    defining Lie algebras and their representations is thus to consider
+    homogeneous spaces for other algebraic groups.
+\end{remark}
+
+\marginpar{Lecture 3, 13/10/26} 
+\begin{example}
+    Take the group $G=\bbC^\times$ with its lie algebra $\gg\simeq \bbC$. A
+    representation of $\gg$ on a vector space $V$ is an element $A\in \End(V)$,
+    and two such elements $A,A'$ define isomorphic representations if and only
+    they are conjugate. Thus the isoclasses of $\gg$-representations are in
+    bijection with Jordan normal forms of matrices. Likewise a subspace
+    $W\subset V$ is a subrepresentation if and only if it is preserved by $A$,
+    and since any matrix always has an eigenvector, the irreducible (i.e.\ simple)
+    $\gg$-representations are all one-dimensional. In contrast, irreducible
+    representations of $G$ are all one-dimensional, but of the form
+    $\rho_n\colon z\mapsto z^n$, which have derivative $d\rho_n = n$. Thus out
+    of the $\bbC$-many irreducible representations of $\gg$, only $\bbZ$-many
+    come from the Lie group $G$.
+\end{example}
+
+The situation for $\sl_2$ is drastically different.
+
+\begin{theorem}[(Lie)]
+    If $G$ is a simply connected (almost) simple algebraic group over $\bbC$ (or
+    a compact Lie group), with Lie algebra $\gg$, then the natural map
+    $\textnormal{Rep}(G)\to \textnormal{Rep}(\gg)$ is an equivalence of categories.
+\end{theorem}
+
+Here, \emph{almost simple} means that the group has no nontrivial connected
+normal subgroup. For example, $\sf{SL}_n(\bbC)$ has centre $\{\pm \id\}$. This
+is an important constraint because quotienting by disconnected discrete normal
+subgroups does not affect the Lie algebra. The quotient group
+$\sf{SL}_n(\bbC)/\{\pm \id\}\simeq \mathsf{PGL}_n(\bbC)$ has the same Lie
+algebra as $\sl_2$. This is consistent with the fact that every
+$\sf{PGL}_n$-representation is naturally a $\sf{SL}_n$-representation (but this
+doesn't account for all $\sf{SL}_n$-representations).
+
+\begin{remark}
+    Not all finite dimensional Lie algebras come from Lie groups. In
+    characteristic zero, there is a five-dimensional example somewhere in
+    Bourbaki. In characteristic $p>0$ it is simpler to see --- noting that the
+    $p\times p$ identity matrix is traceless, the quotient $\sl_p/(\bbk\cdot
+    \text{id})$ can be shown to not arise from a Lie group.
+\end{remark}
+
+\subsection{Classifying representations of $\sl_2(\bbC)$}
+ 
+Let $e,f,h$ be the standard basis of $\sl_2(\bbC)$, with commutation relations
+$[e,f]=h$, $[h,e]=2e$, $[h,f]=-2f$.
+
+\begin{theorem}
+    Every finite dimensional representation of $\sl_2(\bbC)$ is a direct sum of
+    irreducible representations. For all $n\geq 0$, there exists a unique
+    irreducible representation of $\sl_2$ that is $(n+1)$-dimensional.
+\end{theorem}
+
+We will build up to the proof, by first making some definitions. Thus let $V$ be a
+finite dimensional representation of $\sl_2$.
+
+\begin{definition}
+    For any complex number $\lambda$, the \emph{$\lambda$-weight space} for $V$
+    (denoted $V_\lambda$) is defined as the $\lambda$-eigenspace for the
+    operator $h\colon V\to V$.
+\end{definition}
+
+Suppose $v\in V_\lambda$. Then the commutation relations imply $ev\in
+V_{\lambda+2}$ and $fv\in V_{\lambda-2}$. Thus the actions of $e$ and $f$ move
+the vectors `up and down' the $h$-eigenspaces.
+
+\begin{definition}
+    If a non-zero vector $v$ lies in $V_\lambda\cap \ker(e)$, i.e.\ satisfies
+    $hv=\lambda v$ and $ev = 0$, then we say that $v$ is a \emph{highest weight
+    vector of weight $\lambda$}.
+\end{definition}
+
+\begin{lemma}
+    Let $v\in V_\lambda$ be a highest weight vector of weight $\lambda$. Let
+    $W=\langle v, fv, f^2v, \ldots \rangle\subseteq V$. Then $W$ is a
+    subrepresentation of $V$.
+    \begin{proof}
+        We need to show $fW\subseteq W$, $eW\subseteq W$, and $hW\subseteq W$.
+        The first and third statements are immediate. To show $eW\subseteq W$,
+        show by induction that we have $ef^n v = n(\lambda-n +1)f^{n-1}v$, from
+        which the conclusion will follow.
+    \end{proof}
+\end{lemma}
+
+\begin{lemma}
+    Let $v\in V_\lambda$ be a highest weight vector
+    of weight $\lambda$. Then $\lambda \in \bbZ_{\geq 0}$ is a non-negative integer.
+    \begin{proof}
+        All $f^k v$ ($k\geq 0$) lie in distinct eigenspaces of $h$, so that they
+        are linearly independent. Since $V$ is finite dimensional, there is a
+        $k$ with $f^kv \neq 0$ but $f^{k+1}v= 0$. But then we have \[0=ef^{k+1}v
+        = (k+1)(\lambda-k)f^k v,\]
+        and since $(k+1)(f^k v)\neq 0$, we must have $\lambda=k$.
+    \end{proof}
+\end{lemma}
+
+\begin{lemma}
+    Every finite dimensional representation of $\sl_2(\bbC)$ has a highest
+    weight vector.
+    \begin{proof}
+        Since $V$ is a $\bbC$-vector space, the operator $h$ has an eigenvector
+        $v$. Then $v, ev, e^2v, \ldots$ are all vectors which, if non-zero, are
+        linearly independent since they lie in distinct eigenspaces of $h$. But
+        $V$ is finite dimensional, so there is a $k$ with $e^k v \neq 0$,
+        $e^{k+1}v=0$. Then $e^kv$ is a highest weight vector.
+    \end{proof}
+\end{lemma}
+
+\begin{corollary}
+    If $V$ is an irreducible representation of $\sl_2(\bbC)$ of dimension $n+1$
+    ($n\geq 0$), then $V$ has a basis $v_0,v_1,\ldots, v_n$ with $hv_i =
+    (n-2i)v_i$, $fv_i=v_{i+1}$, and $ev_i=i(n-i+1)v_{i-1}$. In particular there
+    is a unique $(n+1)$-dimensional representation of $\sl_2(\bbC)$.
+\end{corollary}
+
+\begin{exercise}
+    Write an explicit isomorphism between $L(n)$ and the irreducible
+    representation of $\sl_2(\bbC)$ constructed above.
+\end{exercise}
+
+We move on to proving \emph{complete reducibility} in $\text{Rep}(\sl_2\bbC)$,
+i.e.\ showing that every indecomposable representation is irreducible. When
+proving analogous results for finite groups or compact Lie groups, the trick is
+to take some average over all group elements. We don't have such tools here.
+
+\begin{definition}
+    Let $V$ be a representation of $\sl_2(\bbC)$. The associated \emph{Casimir
+    operator}, denoted $\Omega\colon V\to V$, is given by
+    $ef+fe+\frac{1}{2}h^2$.
+\end{definition}
+
+\begin{lemma}
+    The operator $\Omega$ is central, i.e.\ it commutes with $e$, $f$ and $h$.
+\end{lemma}

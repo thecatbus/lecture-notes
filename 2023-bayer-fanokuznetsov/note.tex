@@ -1,0 +1,758 @@
+\title{Kuznetsov components of Fano varieties}
+\author{\textit{Based on a Lecture series by} Arend Bayer.}
+\date{December 2023}
+\maketitle
+
+\newcommand{\deri}{\mathop{\mathbf{D}}}
+\newcommand{\Jac}{\mathop{\mathcal{J\kern -0.5pt a\kern -0.5pt c\kern -1pt}}}
+\newcommand{\IJac}{\mathop{I\mathcal{J\kern -0.5pt a\kern -0.5pt c\kern -1pt}}}
+\newcommand{\Moduli}{\ensuremath{\mathscr{M}}}
+
+We will discuss methods to study Kuznetsov components of derived categories of
+coherent sheaves, using moduli theory and stability spaces. Along the way we
+will look at classical questions regarding invariants and techniques surrounding
+Fano varieties.
+
+\subsection{About} This course on Fano varieties was a part of a Winter
+School for early career researchers, organised by the UK Algebraic
+Geometry Network. The lectures were delivered in-person in the University of
+Warwick, and were transcribed by Parth Shimpi. These notes have undergone
+several amendments and are not a verbatim recall of the lectures, therefore
+discretion is advised when using this material. They are available online at
+\url{https://pas201.user.srcf.net/documents/2023-ukag-kuznetsov.pdf}.
+
+All errors and corrections should be communicated to by email to
+\url{pas201@srcf.net}.
+
+
+\section{Low--dimensional Fano varieties}
+\begin{definition}
+    A smooth variety \(X/\mathbb{C}\) is called \textit{Fano} if the
+    anticanonical bundle \(\mathscr{O}(-K_X)=\Exter^\text{top}T_X\) is ample.
+\end{definition}
+
+Thus the only one-dimensional Fano variety is \(\mathbb{P}^1\).
+
+More generally, all projective spaces and complete intersections of low degree
+in projective spaces are Fano. In particular, any complete intersection
+\(X\subset \mathbb{P}^{n+N}\) cut out by equations of degrees \(d_1,...,d_N\) is
+Fano if and only if \(\sum_i d_i\leq n+N\). For example, this can be used to
+show that all Fano 2-folds (i.e.\ del Pezzo surfaces) arise as \(\mathbb{P}^2\)
+blown up at \(\leq 8\) points, or as the smooth quadric \(\mathbb{P}^1\times
+\mathbb{P}^1\).
+
+\begin{example}[Grassmannians]
+    Generalising the example of projective space, each Grassmannian variety
+    \(G=\text{Gr}(n,m)\) parametrising \(n\)-dimensional subspaces \(U_n\subset
+    \mathbb{C}^m\) is Fano. To see why, we will compute its tangent bundle. Note
+    we have the tautological exact sequence of vector bundles
+    \(\mathcal{U}_n\into \mathscr{O}_X^{\oplus m}\onto \mathcal{Q}_{m-n}\), and
+    that at a point \(p\in X\) corresponding to \(U_n\into \mathbb{C}^m\onto
+    Q_{m-n}\) the tangent space \(T_pX\) is given by elements of \(\Hom(U_n,
+    Q_{m-n})\) i.e.\ deformations of the subspace \(U_n\into \mathbb{C}^m\) up
+    to automorphisms of \(U_n\). Thus the tangent bundle is
+    \(T_X=\Hom(\mathcal{U}_n, \mathcal{Q}_{m-n})\), and we have
+    \(\Exter^\text{top} T_X= (\Exter^\text{top} \mathcal{U}_n\dual)^{\otimes
+    (m-n)}\otimes (\Exter^\text{top}\mathcal{Q}_{m-n})^{\otimes n}\). But the
+    tautological exact sequence shows \(\Exter^\text{top}\mathcal{U}_n =
+    (\Exter^\text{top}\mathcal{Q}_{m-n})^{-1}\), and the Pl\"ucker embedding
+    \(G\into \mathbb{P}(\Exter^n \mathbb{C}^m)\) shows
+    \(\Exter^\text{top}\mathcal{U}_n = \mathscr{O}(1)\) is ample. We conclude
+    that so is \(\Exter^\text{top}T_X = \mathscr{O}_X(m)\).
+\end{example}
+
+Likewise, low degree subvarieties of Grassmannians are Fano, and this gives us
+examples of Fano varieties in dimensions three and four. For example,
+\(\text{Gr}(2,4)\subset \mathbb{P}^5\) is a smooth quadric 4-fold. Intersecting
+\(\text{Gr}(2,5)\subset \mathbb{P}^9\) with three hyperplanes, we get the Fano 3-fold \(Y_5=\text{Gr}(2,5)\cap \mathbb{P}^6\). Likewise we have the
+\textit{Gushel--Mukai 3-fold} \(X_{10}\) obtained by intersecting
+\(\text{Gr}(2,5)\subset \mathbb{P}^9\) with two hyperplanes and a quadric.
+Another similar example is \(X_{14}=\text{Gr}(2,6)\cap \mathbb{P}^9\subset
+\mathbb{P}^{14}\).
+
+\subsection{Deformation families}
+Fano varieties of fixed dimension are \textit{bounded}, i.e.\ occur in
+finitely many deformation families. In low dimensions, there are fairly explicit
+unirational moduli spaces while the moduli spaces in higher dimensions are
+studied using K-stability.
+
+For Fano 3-folds, there are 105 families. Most have relatively low Picard rank--
+this is because the behaviour is fairly complicated for high Picard ranks and in
+fact sufficiently high Picard ranks simply become difficult to realise. For
+instance the only way to obtain a Fano 3-fold of Picard rank \(8\) is the
+trivial way, by taking the product of \(\mathbb{P}^1\) with a del Pezzo surface.
+
+Thus we focus on the simplest case, that of Picard rank \(1\). Such
+Fano 3-folds are called \textit{prime}, and have a canonical ample divisor \(H\)
+(called the \textit{fundamental divisor}) which generates \(\Pic X\). We say the
+\textit{index} of \(X\) is the integer \(i_X\) satisfying \(K_X+i_X \cdot H
+\equiv 0\), and the \textit{degree} of \(X\) is the self-intersection
+\(d_X=-K_X^3\). It is also convenient to introduce the number
+\(g_X=\frac{1}{2}(d_X+2)\), called the \textit{genus} (the reason for this
+terminology will be explained later.)
+
+\begin{remark}
+    If \(X\) is a prime Fano 3-fold, then we must have \(1\leq i_X\leq 4\).
+    Indeed the lower bound comes from the Fano condition. To find the upper
+    bound, note that if \(S\in |H|\) is a general element in the linear system
+    then \(K_S=-(i_X-1)H|_S\) by adjunction. In particular if \(i_X>1\) then
+    \(S\) is a del Pezzo surface and we have the well-known bound
+    \[1\leq K_S^2=(i_X-1)^2H^3\leq 9.\]
+    which shows \(i_X\) cannot exceed \(4\). Note \(i_X=4\) forces \(H^3=1\),
+    and the only such Fano 3-fold is \(\mathbb{P}^3\).
+\end{remark}
+
+The deformation type of \(X\) is determined by \(i_X\) and \(d_X\), so it
+suffices to compute the possible values of \(d_X\) for each \(i_X\in
+\{1,2,3,4\}\). For \(i_X=3\) the only possibility is \(H^3=2\) i.e.\ \(d_X=54\)
+(\(H^3=1\) is ruled out since the genus is an integer) and the variety is a
+quadric in \(\mathbb{P}^4\).
+
+For \(i_X=2\) the above remark shows \(1\leq d_X\leq 9\), but
+in fact only \(1\leq d_X\leq 5\) are realised. These are given by \(Y_d\)
+(\(1\leq d\leq 5\)), where \(Y_5\) was described above. \(Y_4\subset
+\mathbb{P}^5\) is a \((2,2)\) complete intersection, \(Y_3\subset \mathbb{P}^4\)
+is a cubic 3-fold, and \(Y_2\onto \mathbb{P}^3\) is a double cover.
+
+For \(i_X=1\), we have the following result.
+
+\begin{theorem}[(Ishkowskii)]
+    If \(X\) is a prime Fano 3-fold of index 1, then we have \(2\leq g_X \leq
+    12\) and \(g_X\neq 11\). This is called the \emph{Fano range}.
+\end{theorem}
+
+Thus there are \underline{seventeen} families of prime Fano 3-folds.
+
+\subsection{A closer look at index 1} There is a beautiful correspondence
+between Fano 3-folds of index \(1\), K3 surfaces, and curves which was first
+shown by Mukai. Indeed in this case the anticanonical bundle \(-K_X=H\) is a
+natural polarisation, and a general element in the linear system
+\(|H|\) is a smooth K3 surface \(S\).
+
+Moreover this surface naturally comes with the polarisation \(H|_S\), and a general element in this linear system is a genus \(g_S\) curve (the genus of a polarised K3 surface is defined this way). Then it can be shown that \(g_S\) coincides with \(g_X\).
+
+Mukai showed that general K3 surfaces arise in this way.
+
+\begin{theorem}[(Mukai)]
+    If \(g\) is in the Fano range, then a general polarised K3 surface of genus
+    \(g\) arises as a hyperplane section of a Fano 3-fold. Moreover, a general
+    canonical curve arises as a hyperplane section of a polarised K3 (and hence
+    as a complete intersection of a Fano 3-fold).
+\end{theorem}
+
+\subsection{Irrationality of the cubic 3-fold} A discussion on low dimensional
+Fano varieties would not be complete without mentioning this famous result.
+If \(X\) is a Fano 3-fold, then \(\HH^{3,0}(X)=\HH^0(X,\mathscr{O}_X(K_X))=0\)
+and hence we can consider \(\HH^3(X,\mathbb{Z})\subset
+\HH^3(X,\mathbb{C})=\HH^{2,1}(X)\oplus \HH^{1,2}(X)\). The space
+\(\IJac X=\HH^{2,1}(X,\mathbb{C})\dual / \HH_3(X,\mathbb{Z})\) is a
+polarised Abelian variety called the \textit{intermediate Jacobian of \(X\)}.
+
+The behaviour of this under birational transformations is well-understood.
+Firstly it is invariant under blowing up in codimension \(2\) locii, i.e.\ we
+have \(\IJac(\text{Bl}_{\text{pts}}X)=\IJac X\). On the other hand if
+\(C\subset X\) is a curve, then \(\IJac(\text{Bl}_CX)=\IJac X\times
+\Jac C\). Since Jacobians of curves are irreducible as Abelian varieties and
+\(\mathbb{P}^2\) has trivial intermediate Jacobian, we use weak factorisation to
+deduce that \(\IJac X\) is a product of Jacobians whenever \(X\) is rational.
+This is used to deduce the following.
+
+\begin{theorem}[(Clemens--Griffiths)]
+    A general cubic 3-fold is irrational.
+
+    \begin{proof}[Sketch]
+        If \(X\) is a cubic 3-fold, then \(\IJac X\) is a five dimensional
+        principally polarised Abelian variety. We compute that the theta divisor
+        \(\Theta\subset \text{IJac}X\) has minimal degree and an isolated
+        singularity \(x_0\). This can happen only if \(\IJac X\) is
+        indecomposable and not a Jacobian, and hence \(X\) is not rational.
+    \end{proof}
+\end{theorem}
+
+Similar arguments also give Torelli theorem for cubic 3-folds, by
+showing the projectivised tangent cone \(\mathbb{P}T_{x_0}\Theta\) is isomorphic
+to \(X\). Thus \(X\) is determined by the principally polarised Abelian variety
+\((\IJac X,\Theta)\), which is in turn determined by the polarised Hodge
+structure on \(\HH^3(X,\mathbb{C})\).
+
+\section{Semiorthogonal decompositions}
+Given a variety \(X/\mathbb{C}\), recall the construction of the derived
+category of coherent sheaves \(\deri(X)=\deri^b\Coh X\). If \(X\) is Fano, then
+a classical result of Bondal--Orlov shows that \(\deri(X)\) determines \(X\). We
+will refine this result and ask if \(X\) is determined by certain canonical
+subcategories.
+
+\begin{definition}
+    An object \(E\in \deri(X)\) is called \textit{exceptional} if
+    \(\Hom^{\bullet}(E,E)=\mathbb{C}[0]\). An \textit{exceptional collection} is
+    an ordered sequence \((E_1,...,E_n)\) of exceptional objects such that
+    \(\Hom^\bullet (E_i,E_j)=0\) whenever \(i>j\). We say an exceptional
+    collection is \textit{full} if it generates \(\deri(X)\) (i.e.\ is not
+    contained in a proper triangulated subcategory).
+\end{definition}
+
+Fano varieties are naturally equipped with exceptional collection. For example,
+a classical result of Beilinson shows \(\mathbb{P}^n\) is has a full exceptional
+collection \((\mathscr{O}_{\mathbb{P}^n}, \mathscr{O}_{\mathbb{P}^n}(1),...,
+\mathscr{O}_{\mathbb{P}^n}(n))\). This generalises to the following result.
+
+\begin{lemma}
+    If \(X\) is Fano and \(L\in \deri(X)\) is a line bundle, then \(L\) is
+    exceptional. Moreover, if \(L\) is an ample line bundle such that
+    \(\mathscr{O}(-K_X)=L^{\otimes r}\) then
+    \((\mathscr{O}_X, L,...,L^{\otimes r-1})\) is an
+    exceptional collection.
+    \begin{proof}
+        We will show the second part of the statement, the first is analogous.
+        We need to compute the group \(\Ext^q(L^{\otimes i},L^{\otimes j})\) for
+        \(r> i\geq j \geq 0\). This is equal to \(\HH^q(X,
+        \mathscr{O}_X(-K_X)\otimes L^{\otimes r+j-i})\). We know
+        \(r+j-i>0\) and hence \(L^{\otimes r+j-i}\) is ample. Thus the required
+        cohomology vanishes for \(q>0\) by the Kawamata--Veibig vanishing
+        theorem. On the other hand if \(q=0\) and \(i>j\) then the group is
+        \(\HH^0(X,L^{\otimes j-i})\) which vanishes since anti-ample bundles
+        don't have global sections.
+    \end{proof}
+\end{lemma}
+
+Weakening the definition of a full exceptional collection, we have the
+following.
+
+\begin{definition}
+    If \(\mathscr{D}\) is a triangulated category, then a
+    \textit{semi-orthogonal decomposition} denoted \(\mathscr{D}=\langle
+    \mathscr{D}_1,\mathscr{D}_2,...,\mathscr{D}_n\rangle\) is a sequence of full
+    triangulated subcategories that generate \(\mathscr{D}\) and satisfy
+    \(\mathscr{D}_i\subset \mathscr{D}_j\orth\) whenever \(i<j\).
+\end{definition}
+
+In particular, two-term semorthogonal decompositions \(\mathscr{D}=\langle
+\mathscr{D}_1,\mathscr{D}_2\rangle\) are determined by two additive subcategories
+\(\mathscr{D}_1,\mathscr{D}_2\) that are closed unders shifts and such that
+every \(E\in \mathscr{D}\) fits in an exact triangle \( E_2\to E\to
+E_1\dashrightarrow\) for \(E_1\in \mathscr{D}_1\), \(E_2\in \mathscr{D}_2\). Finding
+semi-orthogonal decompositions of \(\mathscr{D}_1\) and \(\mathscr{D}_2\) and
+iterating gives semi-orthogonal decompositions of \(\mathscr{D}\) with
+multiple terms.
+
+Thus, for example, every partition of a full exceptional collection gives a
+semi-orthogonal decomposition. If \(L\) is an exceptional object, then the
+corresponding component \(\langle L \rangle\) is equivalent to the derived
+category of a point (since every object has form \(L\otimes V^\bullet\) for a
+complex of vector spaces \(V^\bullet\)).
+
+\begin{example}
+    The category \(\deri(\mathbb{P}^1)\) is ``built out of two points'', in the
+    sense that there is a full exceptional collection
+    \((\mathscr{O}_{\mathbb{P}^1},\mathscr{O}_{\mathbb{P}^1}(-1))\).  Indeed we
+    have already seen the orthogonality condition, and if \(E\in
+    \deri(\mathbb{P}^1)\) is indecomposable then it is either of the form
+    \(\mathscr{O}_{\mathbb{P}^1}(k)[i]\) for some \(k,i\in \mathbb{Z}\) or of
+    the form \(\mathscr{O}_x[i]\) for some skyscraper sheaf \(\mathscr{O}_x\)
+    and \(i\in \mathbb{Z}\). The existence of the required exact triangle can
+    then be deduced from triangles of the form
+    \(\mathscr{O}_{\mathbb{P}^1}^{\oplus k-1}\to
+    \mathscr{O}_{\mathbb{P}^1}(1)^{\oplus k} \to
+    \mathscr{O}_{\mathbb{P}^1}(k)\dashrightarrow\) and \(
+    \mathscr{O}_{\mathbb{P}^1}\to \mathscr{O}_x\to
+    \mathscr{O}_{\mathbb{P}^1}(-1)[1]\dashrightarrow\).
+\end{example}
+
+\subsection{Admissible subcategories} Semi-orthogonal decompositions can be
+determined from just one component, hence it suffices to look for certain
+well-behaved subcategories.
+
+\begin{definition}
+    A full subcategory \(\mathscr{D}'\subset \mathscr{D}\) is \textit{left
+    (right) admissible} if the inclusion functor has a left (resp.\ right)
+    adjoint. We say \(\mathscr{D}'\) is \textit{admissible} if it is both left
+    and right admissible.
+\end{definition}
+
+\begin{proposition}
+    If \(\mathscr{D}=\langle \mathscr{D}_1,\mathscr{D}_2\rangle\) is a
+    semi-orthogonal decomposition, then \(\mathscr{D}_1\) is left admissible and
+    \(\mathscr{D}_2\) is right admissible. Conversely if \(\mathscr{D}_1\subset
+    \mathscr{D}\) is a left admissible subcategory then \(\langle
+    \mathscr{D}_1, \orth \mathscr{D}_1\rangle\) is a semi-orthogonal
+    decomposition. Likewise for right admissible subcategories
+    \(\mathscr{D}_2\subset \mathscr{D}\).
+
+    \begin{proof}
+        If \(\mathscr{D}=\langle \mathscr{D}_1,\mathscr{D}_2\rangle\) is a
+        semi-orthogonal decomposition then every \(E\in \mathscr{D}\) sits in a
+        unique(!) triangle \(E_2\to E\to E_1\dashrightarrow\) with \(E_i\in
+        \mathscr{D}_i\). Then the required adjoint functors are given by
+        \(E\mapsto E_i\). Conversely if the inclusion \(i:\mathscr{D}_2\to
+        \mathscr{D}\) has a right adjoint \(i^!:\mathscr{D}\to \mathscr{D}_2\),
+        then for any \(E\in \mathscr{D}\) we have the adjunction map \(E\to
+        i\circ i^!E\) with cone \(E_1\). Remains to show \(E_1\in
+        \mathscr{D}_2\orth\), which holds since for any \(F\in \mathscr{D}_2\)
+        we have \[\Hom^\bullet(iF, E)=\Hom^\bullet(F,i^!E)=\Hom^\bullet(iF,
+        i\circ i^!E)\] i.e.\ the term \(\Hom^\bullet(iF, E_1)\) must vanish in
+        the long exact sequence associated to \(E\to i\circ i^!E\to
+        E_1\dashrightarrow\).
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    If \(\mathscr{D}\) has a Serre functor \(\mathbb{S}\) (e.g.\ if
+    \(\mathscr{D}=\deri(X)\) for \(X\) smooth) then
+    semi-orthogonal decompositions always come in pairs \(\mathscr{D}=\langle
+    \mathscr{D}_1,\mathscr{D}_2 \rangle = \langle \mathbb{S}\mathscr{D}_2,
+    \mathscr{D}_1 \rangle\). In particular a category is left admissible if and
+    only if it is right admissible. Now if \(\mathscr{D}=\langle
+    \mathscr{D}_1,\mathscr{D}_2,\mathscr{D}_3\rangle\) is a semi-orthogonal
+    decomposition such that the subcategory \(\langle \mathscr{D}_2,
+    \mathscr{D}_3\rangle\) has a Serre functor \(\mathbb{S}_{23}\), then we
+    obtain a new semi-orthogonal decomposition \(\mathscr{D}=\langle
+    \mathscr{D}_1, \mathbb{S}_{23}\mathscr{D}_3,\mathscr{D}_2\rangle\). This
+    general process of \textit{mutation} can be seen as an action of a braid
+    group on the semi-orthogonal decomposition.
+\end{remark}
+
+Where to find admissible subcategories? The following theorem gives one source.
+
+\begin{theorem}
+    If \(X,Y\) are smooth varieties and \(\Phi:\deri(X)\to \deri(Y)\) is fully faithful,
+    then the image of \(\Phi\) is admissible.
+\end{theorem}
+
+Exceptional objects can be seen as a special instance of the above. Note that \(E\in \mathscr{D}\) is an exceptional object if and only if the map
+\(\deri(\text{pt})\to \mathscr{D}\) given by \(V^\bullet \mapsto E\otimes
+V^\bullet\) is fully faithful. The image is right admissible as \(F\mapsto
+\Hom(E,F)\) is the right adjoint by the tensor--hom adjunction.
+
+Thus exceptional object induces a semi-orthogonal decomposition
+\(\mathscr{D}=\langle E\orth, E\rangle\). Iterating this construction, we can
+induce semi-orthogonal decompositions from exceptional collections.
+
+\begin{definition}
+    If \(E_1,...,E_m\) is an exceptional collection in \(\deri(X)\) then the
+    \textit{Kuznetsov component} of \(\deri(X)\) with respect to this exceptional
+    collection is \(\text{Ku}(X)=E_1\orth \cap E_2\orth \cap ... \cap
+    E_m\orth\). Thus \(\deri(X)=\langle \text{Ku}(X),E_1,...,E_m\rangle\) is a
+    semi-orthogonal decomposition.
+\end{definition}
+
+While the definition of a Kuznetsov component depends on the choice of an
+exceptional collection, such a choice is often canonically made. We will see
+some examples.
+
+
+\subsection{Semi-orthogonal decompositions on families} Take a quadric
+\(Q\subset \mathbb{P}^3\). If \(Q\) is smooth then it is isomorphic to
+\(\mathbb{P}^1\times \mathbb{P}^1\), so there is a full exceptional collection
+\((\mathscr{O}_Q(-1,0), \mathscr{O}_Q(0,-1), \mathscr{O}_Q, \mathscr{O}_Q(1,1))\). Of these, the latter two are canonical (they come from the structure sheaf and the canonical bundle) so we choose those as
+our exceptional objects and hence we have the Kuznetsov component
+\[\text{Ku}(Q)=\langle \mathscr{O}_Q(-1,0),\mathscr{O}_Q(0,-1)
+\rangle=\deri(\text{pt})^{\oplus 2}.\]
+
+If \(Q\) is nodal singular (i.e.\ given by \(\mathbb{V}(xy-z^2)\subset
+\mathbb{P}^3\)), then the Kuznetsov component is generated by the ideal sheaf of
+the line \(\ell=\mathbb{V}(x,z)\) so we have
+\(\text{Ku}(Q)=\deri(k[\epsilon]/(\epsilon^2))\).  The intuition is that as the
+quadric surface degenerates from smooth to singular, the Kuznetsov component
+undergoes a similar transition.  To formalise this, we will study families of
+varieties.
+
+\begin{definition}
+    Let \(\pi:X\to B\) be a Gorenstein morphism. A \textit{relative
+    exceptional object} is a perfect complex \(E\in \deri(X)\) such that
+    \(\sheafHom_B^\bullet(E,E)\coloneq \pi_\ast \sheafHom^\bullet(E,E)\cong
+    \mathscr{O}_B[0]\). A \textit{relative exceptional collection} is a sequence
+    of relative exceptional objects \(E_1,...,E_m\) with
+    \(\sheafHom_B(E_i,E_j)=0\) for \(i>j\).
+\end{definition}
+
+The Gorenstein assumption guarantees the Serre functor takes bounded complexes
+to bounded complexes, and the assertion that \(E\) is perfect (i.e.\
+quasi-isomorphic to a bounded complex of vector bundles) guarantees that it is
+well-behaved under tensor products. It follows that the map \(\pi^\ast(-)\otimes
+E:\deri(B)\to \deri(X)\) is fully faithful with admissible image, so
+we can induce semi-orthogonal decompositions as before.
+
+Going back to quadrics, let \(\pi:\mathcal{Q}\to B\) be a family of quadric
+surfaces with \(\dim B = 1\), and \(\mathcal{Q}, B\) smooth. It follows that the
+fibers are at worst nodal. Then \((\mathscr{O}_{\mathcal{Q}},
+\mathscr{O}_{\mathcal{Q}}(1))\) is a relative exceptional collection giving us a
+semi-orthogonal decomposition
+\[
+    \deri(\mathcal{Q})=\left\langle \text{Ku}(\mathcal{Q}), \pi^\ast \deri(B),
+    \pi^\ast \deri(B)\otimes \mathscr{O}_{\mathcal{Q}}(1) \right\rangle.
+\]
+To understand the Kuznetsov component better, consider the 2:1 cover associated
+to \(\pi\) obtained as follows. We have the relative Hilbert scheme
+\(\text{Hilb}_\text{lines}(\mathcal{Q})\to B\), with Stein factorisation
+\(\text{Hilb}_\text{lines}(\mathcal{Q})\to \tilde B\to B\). Thus the map
+\(\text{Hilb}_\text{lines}(\mathcal{Q})\to \tilde B\) is proper with connected
+fibers, while the map \(\tilde B\to B\) is a \(2:1\) cover branched at the
+discriminant locus in \(B\).
+
+We can think of \(\tilde B\) is the relative moduli space of torsion-free
+sheaves \(F\) in the fibers of \(\pi\) with an equality of Hilbert polynomials \( p_H(F)=p_H(\mathscr{O}_{\mathbb{P}^1\times \mathbb{P}^1}(-1,0)).\)
+As a result there is a universal family in \(\Coh(\tilde B \times
+\mathcal{Q})\), giving a Fourier--Mukai transform \(\Phi:\deri(\tilde B)\to
+\deri(\mathcal{Q})\). It can be shown that this is fully faithful with image
+\(\text{Ku}(\mathcal{Q})\), so that the semi-orthogonal decomposition is
+\[
+    \deri(\mathcal{Q})=\langle \deri(\tilde B), \pi^\ast \deri(B), \pi^\ast
+    \deri(B)\otimes \mathscr{O}_{\mathcal{Q}}(1) \rangle.
+\]
+Since relative exceptional collections are well-behaved under pullbacks, this
+explains the relation between the Kuznetsov components of smooth and nodal
+quadrics-- if the fiber of \(\mathcal{Q}\) over \(b\in B\) is smooth, the
+moduli space \(\tilde B\) has two points corresponding to \(\mathscr{O}(-1,0)\)
+and \(\mathscr{O}(0,-1)\). On the other hand \(\tilde B\to B\) is branched
+precisely over the \(b\in B\) corresponding to nodal quadrics, where the fiber
+of \(\tilde B\) looks like \(\Spec k[\epsilon]/(\epsilon^2)\).
+
+\subsection{Decompositions via birational transformations} Orlov's blow-up
+formula explains how Kuznetsov components transform under birational maps-- in
+general blowing up along a codimension \(r\) locus \(Z\into X\) adds \(r-1\)
+copies of \(\deri(Z)\) twisted by some exceptional bundles to \(\deri(\text{Bl}_ZX)\).
+
+More specifically if \(X\) is a 3-fold with a smooth point \(x\in X\), then the
+blow-up \(p:\text{Bl}_xX\to X\) has exceptional fiber \(E\cong \mathbb{P}^2\)
+and we have \(\deri(\text{Bl}_xX)= \langle \mathscr{O}_E(-2), \mathscr{O}_E(-1),
+p^\ast \deri(X)\rangle\). In particular, the Kuznetsov component of \(X\)  is
+``essentially undamaged'', it simply picks up two points. On the other hand if
+\(C\subset X\) is a smooth curve then we have \(\deri(\text{Bl}_CX)=\langle
+\deri(C), p^\ast \deri(X) \rangle\) i.e.\ the Kuznetsov component  picks up
+\(\deri(C)\). Note the striking similarity with intermediate Jacobians!
+
+To see a concrete example, fix two quadrics \(Q_1,Q_2\subset \mathbb{P}^3\) and
+consider the associated pencil. This gives a family \(\mathcal{Q}\) over
+\(B=\mathbb{P}^1\), which can be realised as a blow-up \(p:\mathcal{Q} \to
+\mathbb{P}^3\) along the elliptic curve \(C=Q_1\cap Q_2\) giving us
+\[
+    \deri(\mathcal{Q})=\langle \deri(C), p^\ast \mathscr{O}_{\mathbb{P}^3},
+    p^\ast \mathscr{O}_{\mathbb{P}^3}(1), p^\ast
+    \mathscr{O}_{\mathbb{P}^3}(2),p^\ast \mathscr{O}_{\mathbb{P}^3}(3)  \rangle.
+\]
+
+How does this relate to the semi-orthogonal decomposition computed previously?
+Note the map \(\pi:\mathcal{Q}\to B\) has singular fibers at four points in
+\(B\), so the \(2:1\) branched cover \(\tilde B\to B\) is an elliptic curve.
+In particular, both the semi-orthogonal decompositions are made of the derived
+category of an elliptic curve and four exceptional objects. These are in fact
+related and \(\tilde B = C\), but the proof is somewhat ad hoc.
+
+\begin{remark}
+    We just saw that it is possible to have multiple semi-orthogonal
+    decompositions that are not related in an obvious way (eg.\ by mutation).
+    This is quite typical! There is however a conjectural proposal by
+    Halpern--Leistner relating semi-orthogonal decompositions that arise
+    `geometrically'.
+\end{remark}
+
+\begin{example}
+    Playing the above game in \(\mathbb{P}^5\), consider the pencil associated
+    to two general quadrics \(Q_1,Q_2\). The resulting \((2,2)\)-complete
+    intersection \(Q_1\cap Q_2\) is the index \(2\) Fano 3-fold \(Y_4\), and
+    the pencil can be realised as a blow-up
+    \(\mathcal{Q}=\text{Bl}_{Y_4}(\mathbb{P}^5)\to \mathbb{P}^1\). Thus we again
+    have two ways to compute \(\deri(\mathcal{Q})\)-- since the blow-up is along
+    a codimension \(2\) locus, Orlov's blow-up formula tells us
+    \[\deri(\mathcal{Q})=\langle \deri(Y_4), p^\ast \deri(\mathbb{P}^5)\rangle.\]
+    On the other hand, the pencil \(\pi:\mathcal{Q}\to \mathbb{P}^1\)
+    has singular fibers over six points, so that the
+    associated double cover \(\tilde B\) is a genus \(2\)
+    curve. A general smooth quadric \(Q\) in the pencil has an exceptional
+    collection \(\mathscr{O}_Q, \mathscr{O}_Q(1),\mathscr{O}_Q(2),
+    \mathscr{O}_Q(3)\) and a Kuznetsov component coming from two spinor bundles,
+    which we can use to find a relative exceptional collection on \(\tilde{Q}\).
+    This, together with the derived category of \(\tilde{B}\) give us a
+    semi-orthogonal decomposition
+    \[
+        \deri(\tilde Q) = \langle \deri(\tilde B) , \pi^\ast \deri(\mathbb{P}^1),
+        ..., \pi^\ast \deri(\mathbb{P}^1)\otimes \mathscr{O}_{\tilde
+        Q}(3)\rangle.
+    \]
+    Note that one semi-orthogonal decomposition has six exceptional objects
+    (coming from \(\deri(\mathbb{P}^5)\)), while the other has eight! This was
+    explained by Bondal and Orlov who recovered the two exceptional objects by
+    computing \(\deri(Y_4)=\langle \deri(\tilde B), \mathscr{O}_{Y_4},
+    \mathscr{O}_{Y_4}(1) \rangle.\) In fact such a formula holds for all prime
+    Fano 3-folds of index \(2\).
+\end{example}
+
+\subsection{Mukai bundles} We discuss a powerful result on how to find
+exceptional objects.
+
+\begin{theorem}[(Mukai)]
+    If \(X\) is a prime Fano 3-fold of index \(1\) and genus \(g\geq 6\), then
+    for \(r=2,3\) and \(s\geq r\) satisfying \(rs=g\) there is a unique vector
+    bundle \(\mathcal{E}_r\) of rank \(r\) and \(c_1(\mathcal{E}_r)=-H\) that is
+    exceptional. Moreover, it is stable and satisfies
+    \(\HH^\bullet (X,\mathcal{E}_r)=0\). Its dual \(\mathcal{E}_r\dual\) is
+    globally generated by \(r+s\) sections, giving a map \(X\to
+    \textnormal{Gr}(r,r+s)\). This map is an embedding unless \(g=6\) and \(X\)
+    is ``special'', i.e.\ a double cover of \(Y_5\).
+\end{theorem}
+
+It is hard to overstate the importance of this theorem. For instance, it leads
+to the classification of prime Fano 3-folds of index \(1\). In particular they
+are complete intersections for \(g\leq 5\). For \(g=6\), they are either
+special or \((2,1,1)\)-complete intersections in \(\text{Gr}(2,5)\). For
+\(g=8\) they are linear sections of \(\text{Gr}(2,6)\) and for genus
+\(10\) they are obtained as the intersection of a linear section of
+\(\text{Gr}(2,6)\) with the zero section of a vector bundle.
+
+As a second application, we have a canonical choice of exceptional objects
+\(\mathcal{E}_r, \mathscr{O}_X\) so the Kuznetsov component of \(X\) is defined
+with respect to these, and we have \(\deri(X)=\langle\text{Ku}(X), \mathcal{E}_r,
+\mathscr{O}_X \rangle\).
+
+\textbf{But there's a problem.} There is no complete and correct proof in the
+literature, so a proof of this result is a work in progress
+[Bayer--Kuznetsov--Macri].
+
+\subsection{Perry's categorical intermediate Jacobian} Kuznetsov components and
+intermediate Jacobians share many similar properties-- an attempt to explain
+this is a categorification of Jacobians. An ingredient in this
+categorical Jacobian are Blanc's topological \(K\)-theories \(K_0^\text{top}\mathscr{D},
+K_1^\text{top}\mathscr{D}\) defined for a suitably enriched
+\(\mathbb{C}\)-linear category \(\mathscr{D}\). When
+\(\mathscr{D}=\deri(X)\) this coincides with the topological \(K\)-theory
+\(K_i^\text{top}\mathscr{D}=K_i^\text{top}X\) and we have
+\(K^\text{top}_{0,1}\mathscr{D}\otimes
+\mathbb{Q}=\HH^{\text{even},\text{odd}}(X,\mathbb{Q})\).
+
+The construction is additive on semi-orthogonal decompositions, and has an Euler
+pairing. There are two Chern characters-- one from the usual Grothendieck group
+\(K_0\mathscr{D}\to K_0^\text{top}\mathscr{D}\), and another to the Hochschild
+cohomology which has a canonical filtration. This can be used to show the
+following result.
+
+\begin{theorem}[(Perry)]
+    Assume \(\mathscr{D}\subset \deri(X)\) is admissible. Then
+    \(K^\textnormal{top}_{0,1}(\mathscr{D}\) carries a natural integral polarised
+    Hodge structure compatible with the above properties. Moreover if
+    \(n=\dim X\) is odd and
+    \(\HH^\textnormal{odd}(X,\mathbb{Z})=\HH^n(X,\mathbb{Z})\), then
+    \(\HH^n(X,\mathbb{C})\cong K_1^\textnormal{top}\deri(X)\) as integral Hodge
+    structures. If additionally \(\HH^{p,n-p}(X)=0\) except for
+    \(p=\frac{n\pm 1}{2}\), then \(\HH^n(X)\) coincides with
+    \(\IJac X\).
+\end{theorem}
+
+\begin{corollary}
+    In the above situation, a semiorthogonal decomposition \(\deri(X)=\langle
+    \mathscr{D}_1,...,\mathscr{D}_n \rangle\) gives a decomposition
+    \(\IJac X=\IJac \mathscr{D}_1\times ... \times
+    \IJac \mathscr{D}_n\) where the Jacobians \(\IJac \mathscr{D}_i\)
+    are computed from the weight \(1\) intermediate Hodge structure on
+    \(K_1^\text{top}\mathscr{D}_i\).
+\end{corollary}
+
+\section{Stability conditions and moduli spaces}
+We will now see how to elucidate Kuznetsov components of Fano 3-folds by
+studying moduli spaces of Bridgeland-semistable objects.
+
+\begin{definition}
+    A \textit{stability condition} on an Abelian category \(\mathscr{A}\) is an
+    additive map \(Z:K_0\mathscr{A} \to \mathbb{Z}\) (called the \textit{central
+    charge}) that satisfies \(Z(E)\in \mathbb{H}_-\) for any \(0\neq E\in
+    \mathscr{A}\) and has the Harder--Narasimhan property.
+\end{definition}
+
+We explain what the Harder--Narasimhan property is. Note since \(Z\) sends the
+class of a non-zero object into the semi-closed upper half plane, the
+\textit{phase} of an object is a well defined real number in \((0,1]\). We say
+\(0\neq E\in \mathscr{A}\) is \(Z\)-semistable if all non-zero sub-objects of
+\(E\) have smaller phase, or equivalently a smaller slope (where the slope of
+\(E\) is \(\mu(E)=-\frac{\text{Re}ZE}{\text{Im}ZE}\)). Then \(Z\) satisfies the
+Harder--Narasimhan property if every \(0\neq E\in \mathscr{E}\) admits a
+filtration \(0=E_0\subset E_1\subset ... \subset E_n = E\) such that all factors
+\(E_i/E_{i-1}\) are semistable and satisfy
+\(\mu(E_1/E_0)>\mu(E_2/E_1)>...>\mu(E_n/E_{n-1})\).
+
+\begin{example}
+    If \(\mathscr{A}=\Coh C\) for a smooth projective curve, then
+    \(Z=i\cdot \text{rank}-\text{deg}\) gives a stability condition.
+\end{example}
+
+We also define a \textit{weak stability condition}, in which we allow non-zero
+objects \(E\) to have \(Z(E)=0\) (in which case the slope is \(+\infty\)).
+
+\begin{example}
+    If \(S\) is a smooth projective surface and \(H=[C]\) is a polarisation,
+    then \(Z=i\cdot \text{rank}-H\cdot c_1\) (i.e.\ \(Z(E)= i\cdot
+    \text{rank}(E|_C)-\text{deg}(E|_C)\)) is a weak stability function.
+\end{example}
+
+To extend this to triangulated categories, we define first the `heart of a
+bounded t-structure'. The prime example is an Abelian category \(\mathscr{A}\)
+as a subcategory of \(\deri^b \mathscr{A}\).
+
+\begin{definition}
+    If \(\mathscr{D}\) is a triangulated category, then a \textit{heart} is a
+    full additive subcategory \(\mathscr{A}\subset \mathscr{D}\) such that
+    \(\mathscr{A}[k_1]\subset \orth\mathscr{A}[k_2]\)  whenever \(k_1>k_2\),
+    and every \(0\neq E\in \mathscr{D}\) admits a filtration (i.e.\ a sequence
+    of maps)
+    \[
+        0=E_0\to E_1\to ... \to E_n = E
+    \]
+    with \(\cone(E_{i-1}\to E_i)\in \mathscr{A}[k_i]\) for \(k_1>k_2>...\).
+\end{definition}
+
+To draw the analogy with stability functions on Abelian categories, observe
+that if \(E,F\in \mathscr{A}\) are semistable objects with slopes
+\(\mu(E)>\mu(F)\), then \(\Hom(E,F)=0\). Thus \(\mathscr{A}\) is filtrated by
+`slices' of semistable objects much like how \(\mathscr{D}\) is filtrated by
+shifts of \(\mathscr{A}\). A stability condition combines these two ideas.
+
+\begin{definition}
+    A \textit{stability condition} on \(\mathscr{D}\) is given by the heart of a
+    bounded t-structure \(\mathscr{A}\) and a stability function on
+    \(\mathscr{A}\). A weak stability condition is defined analogously.
+\end{definition}
+
+\subsection{Tilting of hearts} How to construct hearts? We have already seen
+\(\mathscr{A}\) is a heart of \(\deri^b\mathscr{A}\). If \(\Phi\) is an
+autoequivalence of \(\mathscr{D}\), then applying \(\Phi\) to existing hearts
+also gives new hearts. But we need a more systematic way to get new hearts, and
+this can be done by perturbing existing ones.
+
+\begin{definition}
+    A torsion pair \((T,F)\) in an Abelian category \(\mathscr{A}\)  is a pair
+    of full additive subcategories such that \(T\subset \orth F\) and every
+    \(E\in \mathscr{A}\) sits in a short exact sequence \(0\to E_T\to E\to
+    E_F\to 0\) with \(E_T\in T\), \(E_F\in F\).
+\end{definition}
+
+The prime example is that of torsion sheaves and torsion-free sheaves on a
+smooth variety.
+
+Torsion pairs can be thought of as a coarse filtration of \(\mathscr{A}\) into
+two blocks. Thus for instance if \(\mathscr{A}\) has a stability function, then
+for any \(\mu\in (0,1] \) we have an induced torsion pair
+\(T=\mathscr{A}^{>\mu}, F=\mathscr{A}^{\leq \mu}\) where the torsion part
+contains all objects whose semistable factors have slope \(>\mu\).
+
+\begin{proposition}
+    If \(\mathscr{A}\) is the heart of a bounded t-structure and \((T,F)\) is a
+    torsion pair on \(\mathscr{A}\), then the extension closure
+    \(\mathscr{A}^\sharp=\langle T, F[1] \rangle\) is the heart of a bounded
+    t-structure. Hearts that arise in this way are called \emph{tilts} of
+    \(\mathscr{A}\).
+\end{proposition}
+
+Concretely, if \(\mathscr{A}\) is the natural heart of \(\deri^b\mathscr{A}\)
+then \(\mathscr{A}^\sharp\) contains precisely those complexes \(E\) which have
+\(\HH^{-1}(E)\in F\), \(\HH^0(E)\in T\), and \(\HH^i(E)=0\) otherwise. Such
+\(E\) can always be represented by a 2-term complex \(E^{-1}\xrightarrow{d}E^0\)
+with \(\ker d\in F\), \(\coker d\in T\).
+
+\subsection{Constructing hearts in Kuznetsov components} In general, the process
+of taking semi-orthogonal decompositions is not compatible with taking hearts of
+bounded t-structures. However, if we are dealing with a single exceptional
+object then hearts descend to Kuznetsov components under reasonable assumptions.
+
+\begin{proposition}
+    Suppose \(\mathscr{D}\) has an exceptional object \(E\) that lies in a heart
+    \(\mathscr{A}\). Moreover, suppose \(\Hom^q(E,F)=0\) for all \(F\in
+    \mathscr{A}\) unless \(q=0,1\). Then \(\mathscr{A}\cap E\orth\) is the
+    heart of a bounded structure in \(E\orth\).
+
+    \begin{proof}
+        For \(F\in E\orth\), we wish to show that each cohomology object with
+        respect to \(\mathscr{A}\) is also in \(E\orth\). Now there is a
+        spectral sequence \(E_2^{p,q}=\Hom^q(E, \HH_{\mathscr{A}}^pF)\Rightarrow
+        \Hom^{p+q}(E,F)=0\) which shows that \(\Hom^q(E,
+        \HH_{\mathscr{A}}^pF)=0\) for all \(p,q\) as required.
+    \end{proof}
+\end{proposition}
+
+ Note if \(\mathscr{D}\) has an exceptional object \(E\) that lies in a heart
+ \(\mathscr{A}\) such that \(\mathbb{S}E\in \mathscr{A}[1]\) under the Serre
+ functor, then the hypotheses of the above theorem are satisfied. Indeed,
+ for \(F\in \mathscr{A}\) and \(q\geq 2\) we have \(\Hom(E,F[q])=\Hom(F[q],
+ \mathbb{S}E)=0\).
+
+\begin{proposition}
+    In the above setting, if \(Z\) gives a stability condition on
+    \(\mathscr{A}\) with \(\textnormal{Im}Z(E)>0\) then \(Z|_{\mathscr{A}\cap
+    E\orth}\) is a stability condition on \(\mathscr{A}\cap E\orth\).
+\end{proposition}
+
+\begin{example}
+    For a del Pezzo surface \(S\) with polarisation \(H\), one can consider
+    the corresponding weak stability condition and note that there is an
+    exceptional collection \(E_1,...,E_m\) such that for all \(i,j\) we have
+    \(\mu_H(E_i)>\mu_H(E_j)-H\cdot (-K_S)\). If all \(E_i\) are semistable (this
+    holds for the canonical polarisation, for example) then the Kuznetsov
+    component \(E_1\orth \cap ...
+    \cap E_m\orth\) has a bounded t-structure obtained as follows. Take \(\mu\in
+    \mathbb{R}\) such that \(\mu_H(E_i)-H(-K_S)\leq \mu<\mu_H(E_i)\) for all
+    \(i\), and consider the torsion pair \((\Coh^{{>\mu}}S, \Coh^{\leq \mu}S)\)
+    on \(\Coh S\).  The tilt \(\Coh^\mu S\) contains all \(E_i\), and we have
+    \(\mathbb{S}E_i = E_i(K_S)[2]\in \Coh^\mu [1]\) by a simple slope
+    computation. Thus \(\Coh^\mu S \cap E_1\orth \cap ... \cap E_m\orth\) is the
+    heart of a t-structure.
+
+    As a corollary, we see that such collections on del Pezzo surfaces have no
+    phantoms. Indeed if \(K_0(E_1\orth \cap ... \cap E_m\orth)\) is torsion, then
+    there are no stability conditions and hence we must have \(E_1\orth \cap ...
+    \cap E_m\orth = 0\) (otherwise we could restrict stability conditions from
+    \(\Coh S\).)
+\end{example}
+
+The above ideas can be used to show the following.
+
+\begin{theorem}
+    For any Fano 3-fold of index \(\leq 2\), there is a stability condition on
+    the Kuznetsov component.
+\end{theorem}
+
+It was shown by Pertrusi and Yang that these stability conditions are often
+invariant under the Serre functor on the Kuznetsov component. Moreover often
+there is a unique stability condition with such invariance property. This leads
+to Torelli--type theorems.
+
+\begin{example}[The cubic 3-fold] Recall that \(\deri(Y_3)=\langle \text{Ku}(Y_3),
+    \mathscr{O}_{Y_3}, \mathscr{O}_{Y_3}(1)\rangle\) so let \(i\) be the
+    inclusion of the Kuznetsov component. Consider the pulled back
+    skyscraper \(i^\ast\mathscr{O}_y\) for \(y\in Y_3\), which sits in an exact
+    sequence \(I_y(1)\into \mathscr{O}_{Y_3}(1)\onto \mathscr{O}_y \). But there
+    is a surjection \(\mathscr{O}^{\oplus 4}_{Y_3}\onto
+    I_y(1)\) with kernel \(K_y\), and we see that \(i^\ast
+    \mathscr{O}_y=K_y(2)\).
+
+    It is then a theorem that the sheaves \(K_y\) belong to a four dimensional
+    moduli space of stable sheaves \(\Moduli(v)\), where \(v\) is the Chern
+    character. In particular there is an embedding \(Y_3\into \Moduli(v)\)
+    given by \(y\mapsto K_y\). Sheaves \(E\) in the complement
+    \(\Moduli(v)\setminus Y_3\) arise from the following construction: pick
+    a cubic surface \(S_3\subset Y_3\). This has seventy two maps to
+    \(\mathbb{P}^2\), and for any \(\pi:S_3\to \mathbb{P}^2\) we have that
+    \(\pi^\ast\mathscr{O}(1)\) is a divisor of the form \(H+L_1-L_0\). Here
+    \(L_1-L_0\) is a root of the associated \(E_6\) root system. More
+    importantly, there is a short exact sequence \(E\into
+    \mathscr{O}_{Y_3}^{\oplus 3}\onto \mathscr{O}_{S_3}(H+L_1-L_0)\) which
+    shows \(E\) is locally free. It follows that \(Y_3\) is precisely the locus
+    of non locally--free sheaves in \(\Moduli(v)\).
+
+    But the moduli space also has an Abel--Jacobi map \(\Moduli(v)\to
+    \IJac Y_3=\text{CH}_1(Y_3)\) and under this map, we have
+    \(K_y\mapsto 0\) while other objects \(E\) get mapped to \([L_1]-[L_0]\).
+    In their analysis of the theta divisor \(\Theta\subset \IJac Y_3\),
+    Clemens and Griffiths show that it is given by classes of the form
+    \([L_1]-[L_0]\). Thus \(\Moduli (v)\) maps surjectively onto \(\Theta\)
+    and \(Y_3\subset \Moduli(v)\) lies in the kernel. Computing normal bundle
+    sheaves, they show that \(0\in \Theta\) coincides with \(0\in
+    \text{Cone}(Y_3)\) formally locally. The map is an isomorphism away from
+    \(Y_3\in \Moduli(v)\), \(0\in \Theta\). Thus \(\Theta\) is smooth away
+    from \(0\) and \(Y_3\) is the exceptional locus of the blow--up, giving
+    another way to derive the Torelli theorem for cubic 3-folds.
+
+    What does this have to do with Kuznetsov components? In this case we can
+    show \(\Moduli(v)\) is also the moduli space of all stable objects in
+    \(\text{Ku}(Y_3)\). As a corollary, we get a very short proof of the theorem
+    that \(\text{Ku}(Y_3)\) determines \(Y_3\). Indeed there is a unique
+    stability condition invariant under the Serre functor, and this gives a four
+    dimensional moduli space \(\Moduli(v)\). The 3-fold \(Y_3\) lies in this
+    space as the union of all rational curves.
+\end{example}

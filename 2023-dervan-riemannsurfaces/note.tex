@@ -1,0 +1,2271 @@
+\title{Riemann surfaces}
+\author{\textit{Based on a lecture series by} Ruadhai Dervan.}
+\date{Winter, 2023}
+\maketitle
+
+\marginpar{Lecture 1, 10/10/23} This course aims to be an introduction to
+algebraic geometry, complex geometry, and parts of geometric analysis. We will
+explain the theory of Riemann surfaces, these are smooth 2-manifolds with a lot
+of structure which enables the notion of a holomorphic function (in one
+variable.) We will use this setting to explore various facets of modern
+geometry-- the study of differential geometry (differential forms and Hodge
+structures), of algebraic geometry (compact Riemann surfaces are naturally
+projective varieties), geometric analysis, and to a lesser extent topology and
+complex analysis.
+
+\subsection{About} This course on Riemann surfaces is a part of the SMSTC
+training program for graduate students. The lectures were delivered in-person in
+the University of Glasgow, and were transcribed live. The notes can be found
+online at
+\url{https://pas201.user.srcf.net/documents/2023-riemann-surfaces.pdf}. 
+
+All errors and corrections should be communicated to by email to
+\url{pas201@srcf.net}.
+
+\subsection{Assessment} By presentation on some advanced topics after the
+lectures. There will also be two exercise sheets, but these won't be marked.
+
+\subsection{Prerequisites} We assume some familiarity with complex analysis,
+basic notions of topology, (and not very advanced) differential geometry.
+
+We recap some important ideas from complex analysis.
+
+\begin{definition}
+    A function \(f:U\to \mathbb{C}\) defined on an open \(U\subseteq
+    \mathbb{C}\)  is \emph{holomorphic} if for all \(z_0\in U\), the limit
+    \[f'(z_0)\coloneq \lim_{z\to z_0} \frac{f(z)-f(z_0)}{z-z_0}\]
+    exists. Equivalently, writing \(z=x+iy\) and \(f(z)=u(x,y)+iv(x,y)\)  for
+    real-valued functions \(u,v\), the function \(f\) is holomorphic if it is
+    smooth and satisfies the Cauchy-Riemann equations
+    \[
+        \frac{\partial u}{\partial x}=\frac{\partial v}{\partial x}, \quad
+        \frac{\partial u}{\partial y}=-\frac{\partial v}{\partial y}.
+    \]
+\end{definition}
+
+\begin{theorem}
+    A function \(f:U\to \mathbb{C}\) is holomorphic if and only if it is
+    analytic, i.e.\ for all \(z_0\in U\) there is a neighbourhood
+    \(U'\subseteq U\) of \(z_0\) such that \(f|_{U'}\) is given by a
+    convergent power series \(f(z)=\sum_{n=0}^\infty c_n(z-z_0)^n\).
+\end{theorem}
+
+In particular, polynomials in \(z\) are holomorphic. The proof of the theorem
+above uses the following important result.
+
+\begin{theorem}[(Cauchy's integral formula)]
+    Suppose \(f:U\to \mathbb{C}\) is holomorphic and write \(D=\{z\;|\;
+    |z-z_0|\leq r\}\subset U\). Then for all \(a\) in the interior of \(D\), we
+    have
+    \[
+        f(a)=\frac{1}{2\pi i}\int_{\partial D}\frac{f(z)}{z-a}dz
+    \]
+    where the integral is over the boundary of \(D\) (a circle oriented
+    anticlockwise).
+\end{theorem}
+
+
+\begin{corollary}[(Identity principle)]
+    Given two holomorphic functions \(f,g:U\to \mathbb{C}\) on an open connected
+    domain \(U\subseteq {C}\), if we have \(f|_V=g|_V\) for a non-empty open set
+    \(V\subseteq U\) then we have \(f=g\).
+\end{corollary}
+
+\section{Riemann surfaces}
+The definition of a Riemann surface will be modelled after that of a smooth
+manifold, except that we will use holomorphic transition functions instead.
+\begin{definition}
+    A Riemann surface is a Hausdorff topological space \(X\) with an open cover
+    \(X=\bigcup_{\alpha}U_\alpha\), and for each \(\alpha\) a homeomorphism
+    \(\phi_\alpha:U_\alpha \to \widetilde{U}_\alpha\) to an open subset
+    \(\widetilde{U}_\alpha\subset \mathbb{C}\) such that whenever
+    \(U_\alpha\cap U_\beta \neq \emptyset\), the function
+    \(\phi_\alpha\circ \phi_\beta^{-1}\) is holomorphic where defined. We say
+    each pair \((U_\alpha, \phi_\alpha)\) is a \textit{chart}, and the
+    collection of all charts forms an \textit{atlas}.
+\end{definition}
+
+\begin{remark}
+    A higher dimensional complex manifold is analogously defined, where we ask
+    for the charts to go into \(\mathbb{C}^n\) with transition maps holomorphic
+    in each coordinate.
+\end{remark}
+
+In practice, we work locally. For \(p\in X\), \(p\) is in some open
+\(U_\alpha\) and then \(\phi_\alpha\) is a complex-valued function on
+\(U_\alpha\) which we write as \(z\) . Thus locally we are doing complex
+analysis. The transition functions being holomorphic ensures this local
+coordinate is well-defined up to a holomorphic function, i.e.\ if another chart
+provides a local coordinate \(w\) then \(w=f(z)\) for some holomorphic
+invertible function \(f\).
+
+\begin{definition}
+    A function \(f:X\to \mathbb{C}\) is called \textit{holomorphic} if
+    \(f|_{U_\alpha}\) is holomorphic (in the local coordinate) for all charts
+    \(U_\alpha\subset X\).
+\end{definition}
+
+As opposed to differential geometry where a manifold has many smooth functions
+on it, a Riemann surface might have no non-constant holomorphic functions (eg.\
+if it is compact). On the other hand, maps between Riemann surfaces are usually
+abundant.
+
+\begin{definition}
+    Let \(X\) be a Riemann surface with atlas \(\{(U_\alpha, \phi_\alpha)\}\)
+    and \(Y\) a Riemann surface with atlas \(\{(V_\alpha,\phi_\alpha)\}\). A
+    map \(f:X\to Y\) is \textit{holomorphic} if for all pairs of indices
+    \(\alpha, \beta\), the map \(\phi_\beta\circ f\circ \phi_\alpha^{-1}\) is
+    holomorphic where defined.
+\end{definition}
+
+We say a bijection \(f\) is a biholomorphism if \(f^{-1}\) is holomorphic, and
+we usually treat biholomorphic Riemann surfaces as identical.
+
+\begin{example} The following constructions are standard.
+    \begin{enumerate}
+        \item The complex plane \(\mathbb{C}\) itself is a complex manifold,
+            with a single chart (with the identity map). Likewise any open
+            \(U\subset \mathbb{C}\) is a complex manifold with a single chart.
+
+        \item  The \(2\)-sphere \(S^2=\mathbb{C}\cup \{\infty\}\) is a complex
+            manifold called the \textit{Riemann sphere}, with two charts
+            \(S^2\setminus \{\infty\} \cong \mathbb{C}\) (via the
+            identity) and \(S^2\setminus \{0\}\cong \mathbb{C}\)
+            (via \(z\mapsto \frac{1}{z}\)).
+
+        \item If \(\pi:S\to X\) is a topological covering space and \(X\) is a
+            Riemann surface, then \(S\) canonically obtains the structure of a
+            Riemann surface that makes \(\pi\) holomorphic.
+
+        \item Conversely we can construct Riemann surfaces as quotients--
+            consider a lattice \(\Lambda \subset \mathbb{C}\) (i.e.\ a rank two
+            additive subgroup generated by two \(\mathbb{R}\)-linearly
+            independent complex numbers). We can take the quotient topological
+            space \(\mathbb{C}/\Lambda\) which is homeomorphic to a torus, and
+            equip it with charts on which each open set is small enough to lie
+            within a fundamental domain of the \(\Lambda\)-action after pulling
+            back to \(\mathbb{C}\) . This is an \textit{elliptic curve}.
+    \end{enumerate}
+\end{example}
+
+We will now discuss two important classes of examples in detail.
+
+\subsection{Affine algebraic curves}
+Take a polynomial \(p(z,w):\mathbb{C}^2\to \mathbb{C}\) in two complex
+variables, and consider the set \(S=\{(z,w)\in \mathbb{C}^2\;|\;
+p(z,w)=0\}\). This is an \textit{algebraic curve}. When is this a Riemann
+surface? This has to do with whether the space is singular or not-- in
+particular we want to be able to locally write \(w\) as a function of \(z\) (or vice
+versa). The implicit function theorem deals with precisely this.
+
+\begin{theorem}[(Implicit function theorem)]
+    For \(p,S\) as above and \((z_0,w_0)\in S\), if \(\frac{\partial
+    p}{\partial w}(z_0,w_0)\neq 0\) then there are open balls \(B_1\ni z_0\) and
+    \(B_2\ni w_0\) in \(\mathbb{C}\) such that \(S\cap (B_1\times
+    B_2)\subseteq \mathbb{C}^2\) is the graph of a holomorphic function
+    \(\sigma: B_1\to B_2\), i.e.\ \(S\cap (B_1\times B_2) = \{(z,\sigma
+    z)\;|\; z\in B_1\}.\)
+    In particular, \((z_0,w_0)\) has a neighbourhood in \(S\) that is
+    homoeomorphic to \(B_1\).
+    \begin{proof}
+        We may assume \((z_0,w_0)=(0,0)\). First consider the holomorphic
+        function \(p(0,w)\), this is a polynomial in one variable with
+        \(p(0,w)=0\) for \(w=0\) and \(\frac{\partial p}{\partial w}(0,0)\neq 0\)
+        by hypothesis. Thus \(0\) is a simple zero. As zeros of holomorphic
+        functions are isolated, we can find a \(\delta_2 > 0\) with
+        \(p(0,w)\neq 0\) whenever \(0<|w|<2\delta_2\). By continuity of \(p\),
+        there is a \(\delta_1>0\) such that \(p(z,w)\neq 0\) whenever
+        \(|w|=\delta_2\), \(|z|\leq \delta_1\). Let \(B_1,B_2\) be the open
+        balls around the origin of radii \(\delta_1,\delta_2\) respectively.
+        Then for \((z,w)\in S\cap (B_1\times B_2)\), will write \(w\) as a
+        function of \(z\).
+
+        For this, we use that for holomorphic \(f\) and a simple closed
+        curve \(\gamma\), we have
+        \[
+            \frac{1}{2\pi i}\int_\gamma \frac{f'(w)}{f(w)}dw =
+            \#\{\text{zeros of \(f\) in the region bounded by \(\gamma\).}\}
+        \]
+        Consider the holomorphic functions \(f_z(w)=p(w,z)\) for \(z\in B_1\),
+        and the contour \(\gamma(t)=\delta_2\cdot e^{2\pi i t}\).
+        Then \(N(z)=\frac{1}{2\pi i}\int_\gamma \frac{f_z'(w)}{f_z'(w)}dw\) is
+        an integer that varies continuously with \(z\), and so considering
+        \(z=0\) gives us \(N(z)=1\) identically. Thus for each \(z\in B_1\)
+        there is a unique \(w\in B_2\) with \(f_z(w)=0\). In fact the zero is
+        then given by
+        \[\sigma(z)=\frac{1}{2\pi i}\int_\gamma w\frac{f'_z(w)}{f_z(w)}dw,\]
+        which expresses \(w\) as a holomorphic function of \(z\) as required.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    For \(p,S\) as above, \(S\subset \mathbb{C}^2\) is a Riemann surface if
+    for all \((z_0,w_0)\in S\), either \(\frac{\partial p}{\partial
+    z}(z_0,w_0)\neq 0\) or \(\frac{\partial p}{\partial
+    w}(z_0,w_0)\neq 0.\) In this case, we say \(S\) is the \emph{affine
+    algebraic curve} defined by \(p\).
+\end{corollary}
+
+
+\subsection{Projective curves}
+Recall the projective plane is \(\mathbb{P}^2=\mathbb{C}^3\setminus \{0\}/\sim\)
+where \((z_1,z_2,z_3)\sim (\lambda z_2,\lambda z_2, \lambda z_3)\) for all
+\(\lambda\in \mathbb{C}^\times\). This is compact-- this fact is easily seen by
+observing that \(\mathbb{P}^2\) is the quotient of the (compact) subset of unit
+vectors in \(\mathbb{C}^3\) by the action of the compact group \(S^1\subset
+\mathbb{C}^\times\). Points in \(\mathbb{P}^2\) can be labelled by the
+homogeneous coordinates \([z_0:z_1:z_2]\), likewise for higher dimensional
+projective spaces.
+
+Write \(U_0=\{[z_0:z_1:z_2]\;|\; z_0\neq 0\}\) and note that this is
+homeomorphic to \(\mathbb{C}^2\) since all points have homogeneous coordinates
+of the form \([1:z:w]\). The complement \(\mathbb{P}^2\setminus U_0\) is
+homeomorphic to \(\mathbb{P}^1\), so we can say \(\mathbb{P}^2=\mathbb{C}^2\cup
+\mathbb{C}\cup  \{\infty\}\).
+
+Note polynomials in \(z_0,z_1,z_2\) don't take well-defined values on
+\(\mathbb{P}^2\), but the vanishing locus of a homogeneous polynomial is
+nonetheless well-defined. Indeed, if \(p(z_0,z_1,z_2)\) is homogeneous of degree
+\(d\) then for \(\lambda\in \mathbb{C}^\times\) we have \(p(\lambda z_0,
+\lambda z_1, \lambda z_2) = \lambda^dp(z_0,z_1,z_2)\). Thus it makes sense to
+ask when a homogeneous polynomial \(p\) defines a Riemann surface inside
+\(\mathbb{P}^2\).
+
+\begin{proposition}
+    If \(p(z_0,z_1,z_2)\) is a homogeneous polynomial such that
+    the only solution to \(\frac{\partial p}{\partial z_0}=\frac{\partial
+    p}{\partial z_1}=\frac{\partial p}{\partial z_2}= 0\) is \((0,0,0)\), then
+    the vanishing set \(S\) of \(p\) inside \(\mathbb{P}^2\) is naturally a
+    compact Riemann surface.
+
+    \begin{proof}
+        We will show that \(S\cap U_0 \subset \mathbb{C}^2\) is a Riemann
+        surface by using the implicit function theorem. It will be true
+        similarly and in a compatible way for \(U_1\) and \(U_2\), giving the
+        required charts. The compactness then follows since \(\mathbb{P}^2\) is
+        compact and \(S\subset \mathbb{P}^2\) is closed.
+
+        To use the implicit function theorem, we need to rule out the
+        possibility that there is a \([1:z:w]\in S\) where \(\frac{\partial
+        p}{\partial z_1}(1,z,w)=\frac{\partial p}{\partial z_2}(1,z,w)=0\). Note since \(p\) is homogeneous, say of degree \(d\), we have Euler's
+        identity \(\sum_{i=0}^2 z_i \frac{\partial p}{\partial z_i} = d\cdot
+        p\).  Thus if \(\frac{\partial p}{\partial z_1}(1,z,w)=\frac{\partial
+        p}{\partial z_2}(1,z,w)=0\)  we must have \(\frac{\partial p}{\partial
+        z_0}(1,z,w)=0\), contradicting the hypothesis that \((0,0,0)\) is the
+        only point where this happens.
+     \end{proof}
+\end{proposition}
+
+\begin{example}
+    Let \(p(z,w)=z^5+w^5-zw-1\). We homogenize to get
+    \(p(z_0,z_1,z_2)=z_1^5+z_2^5-z_0^3z_1z_2-z_0^3\), with vanishing set
+    \(S\subset \mathbb{P}^2\). Then \(S\cap U_0\) is the vanishing locus of the
+    original polynomial, while \(S\cap (\mathbb{P}^2\setminus U_0)\) has five
+    points \([0:1:e^{\frac{-2\pi i k}{5}}]\), \(k=0,\ldots,4\).
+\end{example}
+
+\begin{remark}
+    One can show that a Riemann surface is always orientable, i.e.\ there is an
+    atlas where all the Jacobians of the transition functions have positive
+    determinant. Thus compact Riemann surfaces are given by adding a holomorphic
+    structure to an \(n\)-holed torus, \(n\geq 0\). Donaldson sketches a proof
+    of this using morse theory.
+\end{remark}
+
+\begin{remark}
+    Historically Riemann surfaces arose as the natural domains of `germs' of
+    multi-valued holomorphic functions. We won't go into this.
+
+\end{remark}
+
+
+\section{Holomorphic maps}
+Holomorphic functions are well understood, so we can be ambitious and aim to
+have a structure theory of maps between Riemann surfaces (which are locally
+holomorphic). This can shed light on important structure of the Riemann
+surfaces-- for instance a compact Riemann surface has no non-constant
+holomorphic maps to \(\mathbb{C}\). By contrast, affine curves \(S\subset
+\mathbb{C}^2\) have many holomorphic functions.
+
+\begin{example}[Maps between torii]
+    Consider \(\mathbb{C}/\Lambda\) for \(\Lambda\) a lattice. When does a
+    linear map \(G:\mathbb{C}\to \mathbb{C}\) induce a holomorphic map
+    \(\mathbb{C}/\Lambda \to \mathbb{C}/\Lambda\)?
+    \marginpar{Lecture 2, 17/10/23}Clearly we need
+    \([G(z)]=[G(z+\lambda)]\in \mathbb{C}/\Lambda\) for all \(\lambda \in
+    \Lambda\), so if \(G(z)=az+b\) then this amounts to the requirement that
+    \(a\Lambda \subset \Lambda\). Thus for instance \(a=1\) works, i.e.\
+    translations always induce maps \(\mathbb{C}/\Lambda \to
+    \mathbb{C}/\Lambda.\) For a non-trivial example, consider \(\Lambda=\langle
+    1,i\rangle\) and \(G(z)=(1+i)z\). This gives a \(2:1\) cover from the torus
+    to itself.
+\end{example}
+
+\begin{example}
+    Just like holomorphic functions, we have a notion of \textit{meromorphic
+    functions} on a Riemann surface i.e.\ \(f:X\to \mathbb{C}\cup \{\infty\}\)
+    that are not identically \(\infty\) such that for all charts \(\psi:U\to
+    \psi(U)\subseteq \mathbb{C}\),  the function \(f\circ \psi^{-1}\) is
+    meromorphic on \(\psi(U)\). Viewing \(\mathbb{C}\cup \infty\) as the Riemann
+    sphere, we see that meromorphic functions are just
+    holomorphic maps to \(\mathbb{P}^1\).
+\end{example}
+
+To get general theory, we use the inverse function theorem.
+
+\begin{theorem}[(Inverse function theorem)]
+    Let \(U\ni 0\) be an open subset of \(\mathbb{C}\), and \(f:U\to
+    \mathbb{C}\) holomorphic such that \(f'(0)\neq 0\). Then there is a possibly
+    smaller neighbourhood \(U'\subseteq U\) of \(0\) such that \(f:U'\to
+    f(U')\) has a holomorphic inverse.
+
+    \begin{proof}
+        Similar to implicit function theorem.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    Suppose \(U\ni 0\) is an open subset of \(\mathbb{C}\) and \(f:U\to
+    \mathbb{C}\) is a holomorphic function that vanishes on \(0\) but is not
+    identically zero. Then there is some \(k\geq 1\) such that on a possibly
+    smaller neighbourhood \(U'\subseteq U\) of \(0\), we have \(f(z)=g(z)^k\)
+    for a holomorphic function \(g:U'\to \mathbb{C}\) with \(g'(0)\neq 0\).
+
+    \begin{proof}
+        This is automatic-- since \(f\) is analytic and vanishes at the origin,
+        we have \(f(z)=z^k(a_0+a_1z+\ldots)\) for \(k\geq 1\), \(a_0\neq 0\).
+        Thus \(f(z)=z^kh(z)\) for some holomorphic function \(h\) with
+        \(h(0)\neq 0\). Then by the inverse function theorem applied to
+        \(z\mapsto z^k\), the function \(z\mapsto z^{1/k}\) is well-defined on a
+        neighbourhood of \(h(0)\) and we can set \(g(z)=z
+        \cdot h(z)^{1/k}\) to get the required result.
+    \end{proof}
+\end{corollary}
+
+\begin{proposition}
+    Suppose \(F:X\to Y\) is a non-constant holomorphic map between connected
+    Riemann surfaces. Then for all \(x\in X\), there exist neighbourhoods \(U\ni
+    x\), \(V\ni f(x)\) and biholomorphisms \(\phi:U\to \phi(U)\subseteq
+    \mathbb{C}\), \(\psi:U\to \psi(U)\subseteq \mathbb{C}\) such that
+    \(\phi(x)=0\) and \(\psi\circ F\circ \phi^{-1}\) is
+    given by \(z\mapsto z^k\) for some integer \(k\geq 1\).
+
+    \begin{proof}
+        This is a consequence of the above results. Start with any charts
+        \(\phi', \psi'\) around \(x, f(x)\) respectively and set \(f=\psi'\circ
+        F\circ \phi'^{-1}\). This is a holomorphic map, and after composing the
+        charts with translations we may assume \(f(0)=0\). Then \(f(z)=g(z)^k\)
+        for some holomorphic \(g\) satisfying \(g(0)=0\), \(g'(0)\neq 0\).
+        Define \(\phi=g\circ \phi'\), and note this is holomorphic and
+        invertible on a possibly smaller open neighbourhood of \(x\). Thus we
+        have a new chart in which \(\psi'\circ F\circ \phi^{-1}\) has the
+        required form.
+    \end{proof}
+\end{proposition}
+
+Note the \(k\) in the above proposition depends on both \(F\) and \(x\), but is
+independent of the choice of charts. To emphasise the dependence on \(x\) we
+will often write \(k_x\).
+
+\begin{definition}
+    In the situation of the theorem above, we say \(x\in X\) is a
+    \textit{ramification point} of \(F\) if \(k_x>1\). The subset of all
+    ramification points \(R\subseteq X\) is called the \textit{ramification
+    locus}, and its image \(F(R)\subseteq Y\) is called the \textit{branch
+    locus}.
+\end{definition}
+
+Since the ramification locus \(R\) is defined locally by \(x\in R\iff F'(x)=0\)
+and since \(F'\) is holomorphic in each chart, we see that \(R\) is discrete
+(and hence finite if \(X\) is compact). Likewise if \(Y\) is compact (or \(F\)
+is proper), then the branch locus \(F(R)\) is finite (resp.\ discrete).
+
+Now assume \(F\) is proper, and consider the preimage \(F^{-1}(y)\subset X\) of
+a point \(y\in Y\). This set is discrete and compact, hence is finite. So we can
+count it. Define (temporarily) the \textit{degree of \(F\) at \(y\)} to be
+\[
+    d(y)=\sum\nolimits_{x\in F^{-1}(y)}k_x.
+\]
+
+This is a temporary definition because in fact it does not depend on \(y\) at
+all. Thus we define the \textit{degree of \(F\)} to be its degree at any \(y\in
+Y\).
+
+\begin{proposition}
+    The integer \(d(y)\) does not depend on \(y\).
+
+    \begin{proof}
+        We will show the function \(d:Y\to \mathbb{Z}\) is locally constant on
+        \(Y\), hence constant since \(Y\) is connected. Given \(y\in Y\) with
+        preimages \(x_1,\ldots,x_n\in X\), pick neighbourhoods \(V\ni Y\),
+        \(U_i\ni x_i\) sufficiently small so that \(U_i\cap U_j=\emptyset\) for
+        \(i\neq j\), \(F(U_i)\subseteq V\), and the
+        restriction \(F:U_i\to V\) is given by \(z\mapsto z^{k_i}\) in local
+        coordinates. Here \(k_i=k_{x_i}\), and \(i=1,\ldots,n\). We wish to find a
+        possibly smaller neighbourhood \(W\ni y\) on which \(d\) is constant.
+
+        Claim that there is a neighbourhood \(W\ni y\) such that
+        \(F^{-1}(W)\subseteq U_1\cup U_2\cup \ldots \cup U_n\). The properness
+        hypothesis is essential here. Indeed, the natural map \(\mathbb{C}\sqcup
+        \mathbb{P}^1\to \mathbb{P}^1\) is not proper and so while \(\infty \in
+        \mathbb{P}^1\) has one pre-image, any point in the neighbourhood of
+        \(\infty\) has two. Now having seen why the claim is non-trivial, we
+        will prove it using point-set topology arguments. Choose a sequence of
+        open sets \(V_1\supseteq V_2 \supseteq \ldots \ni y\) such that \(\bigcap
+        \overline{V_i}=\{y\}\). If the claim were false, then in particular
+        \(W=V_i\) does not suffice and we can choose a point
+        \(z_i\in F^{-1}(V_i)\setminus (U_1\cup  \ldots \cup U_n)\) for each
+        \(V_i\). This gives a sequence \(z_1,z_2,\ldots\) in the set
+        \(F^{-1}(\overline{V_1})\setminus (U_1\cup \ldots \cup U_n)\), which by the
+        properness hypothesis is compact. Thus there is a subsequence converging
+        to some \(z\notin U_1\cup \ldots \cup U_n\). But by continuity of \(F\) and
+        choice of \(V_i\) , we have \(F(z)=y\). This is a contradiction since we
+        know all pre-images of \(y\) are contained in some \(U_i\).
+
+        Having proved the claim, the result follows since for any \(y'\in W\),
+        we have
+        \[
+            d(y')=\sum\nolimits_{x\in F^{-1}y'}k_x = \sum\nolimits_{i=1}^n
+            \sum\nolimits_{x\in
+            F^{-1}y'\cap U_i} k_x
+        \]
+        but locally on \(U_i\), the map is \(z\mapsto z^{k_i}\) and hence we
+        have \(\sum\nolimits_{x\in F^{-1}y'\cap U_i} k_x =k_i\) since either
+        \(y'=y\) (and it has one preimage in \(U_i\)) or \(y'\neq y\) (and it
+        has \(k_i\) simple preimages).
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    Any proper non-constant holomorphic map between Riemann surfaces is
+    surjective.
+\end{corollary}
+
+\begin{remark}
+    The above corollary could also have been obtained from the open mapping
+    principle.
+\end{remark}
+
+We next use this to obtain topological consequences-- in particular, counting
+poles of meromorphic functions leads to a classification of compact Riemann
+surfaces.
+
+\begin{corollary}
+    Let \(X\) be a compact Riemann surface. If there is a meromorphic function
+    \(f:X\to \mathbb{C}\cup \{\infty\}\) with a single simple pole, then \(f\)
+    provides a biholomorphism \(X\cong \mathbb{P}^1\).
+
+    \begin{proof}
+        Note we can view \(f\) as a holomorphic map \(X\to \mathbb{P}^1\). Since
+        \(X\) is compact, \(f\) is proper and hence has degree
+        \(d=d(\infty)=1\). Thus \(F\) is a continuous bijection between compact
+        Hausdorff spaces, so by the topological inverse function theorem, \(f\)
+        is a homeomorphism. To show its a biholomorphism it suffices to show the
+        inverse continuous map \(f^{-1}\) is in fact holomorphic. But this is
+        clear since in a local chart around any \(x\in X\), \(f\) has
+        non-vanishing derivative and so the local inverse is holomorphic by the
+        inverse function theorem.
+    \end{proof}
+\end{corollary}
+
+This concludes for now the study of maps between Riemann surfaces. In higher
+dimensions, there are many more interesting maps but codimension one phenomena
+are nonetheless controlled by the same rules which describe maps between Riemann
+surfaces.
+
+\section{Calculus on surfaces}
+We wish to eventually develop a theory of holomorphic differential forms and de
+Rham cohomology on Riemann surfaces. Before that, we give an account of the
+differential geometry of smooth surfaces.
+
+\subsection{Tangent and cotangent spaces}
+There are various ways to define vector fields and differential forms on
+surfaces, for instance these can be realised most naturally as sections of the
+tangent and cotangent bundles respectively. Here we will take a more
+abstract approach, defining tangent vectors as infinitesimal paths and
+differential forms as derivations of smooth functions.
+
+\begin{lemma}
+    Let \(U\subseteq \mathbb{R}^2\) be an open neighbourhood of \(0\),
+    \(f:U\to\mathbb{R}\) a smooth function, and
+    \(\gamma_1,\gamma_2:\mathbb{R}\to U\) two smooth paths with
+    \(\gamma_1(0)=\gamma_2(0)=0\). Let \(\chi:U\to V\subseteq \mathbb{R}^2\) be
+    a diffeomorphism with \(\chi(0)=0\), and set \(\tilde{f}=f\circ \chi^{-1}\),
+    \(\tilde{\gamma}_1=\chi\circ \gamma_1\), \(\tilde{\gamma}_2=\chi\circ
+    \gamma_2\). Then the following hold.
+    \begin{enumerate}[(i)]
+        \item If both partial derivatives \(\frac{\partial f}{\partial x_1}\)
+        and \(\frac{\partial f}{\partial x_2}\) vanish at \(0\) then the same
+        is true for \(\tilde{f}\).
+        \item If the derivatives \(\frac{d\gamma_1}{dt}(0)\) and
+        \(\frac{d\gamma_2}{dt}(0)\) agree then the same is true for
+        \(\tilde{\gamma}_1\) and \(\tilde{\gamma}_2\).
+    \end{enumerate}
+    \begin{proof}
+        These are straightforward consequences of the chain rule.
+    \end{proof}
+\end{lemma}
+
+Given the diffeomorphism invariance of these notions, we can make the following
+definitions. Let \(S\) be a (real, smooth) surface with a point \(p\in S\),
+\(f\)  a smooth real-valued function defined on a neighbourhood of \(p\), and
+\(\gamma_1,\gamma_2: \mathbb{R}\to S\) smooth paths with
+\(\gamma_1(0)=\gamma_2(0)=p\).
+
+\begin{definition}
+    We say \(f\) is \textit{constant to first order} at \(p\) if \(\frac{\partial
+    f}{\partial x_1}\) and \(\frac{\partial f}{\partial x_2}\) both vanish at
+    \(p\) in some local chart. Likewise we say \(\gamma_1,\gamma_2\) are
+    \textit{equal to first order} at \(p\) if their derivatives agree in a
+    local chart.
+\end{definition}
+
+\begin{definition}
+    The \textit{cotangent space} \(T^\ast_p S\)  of \(S\) at \(p\) is the set of equivalence
+    classes of smooth functions on open neighbourhoods of \(p\in S\), where
+    \(f_1\) and \(f_2\) are equivalent if and only if \(f_1-f_2\) is constant
+    to first order at \(p\).
+
+    Dually, the \textit{tangent space} \(T_pS\)  of \(S\) at \(p\) is the set of
+    equivalence classes of smooth paths \(\gamma:\mathbb{R}\to S\) with
+    \(\gamma(0)=p\) where two paths are equivalent if they agree to first
+    order at \(p\).
+\end{definition}
+
+Note there is an obvious map \(C^\infty(S)\to T_p^\ast S\) sending a function
+\(f\) to its equivalence class, for which we will write \([df]_p\) (and omit
+the brackets whenever convenient). This gives \(T_p^\ast S\) a natural vector
+space structure, and in fact we can check that it is two dimensional. Indeed
+choosing local coordinates \(x_1,x_2\) around \(p\), these provide smooth
+functions and so we have two classes \([dx_1]_p, [dx_2]_p\in T_p^\ast S\). One checks that
+\[
+    [df]_p = \frac{\partial f}{\partial x_1}(p)\cdot [dx_1]_p + \frac{\partial
+    f}{\partial x_2}(p)\cdot [dx_2]_p,
+\]
+hence any choice of local coordinates provides a basis for the cotangent space
+at the point. Similarly \(T_pS\) is a vector space, by choosing linear representatives of paths.
+
+The two vector spaces are naturally dual to each other-- if
+\(\gamma:\mathbb{R}\to S\) is a path with \(\gamma(0)=p\) and \(f\) is a smooth
+function defined on a neighbourhood of \(p\), then the derivative \((f\circ
+\gamma)'(0)\in \mathbb{R}\) depends only on the classes \([df]_p\in T_p^\ast
+S\), \([\gamma]\in T_pS\). Thus we have a perfect bilinear pairing
+\begin{align*}
+    T_pS\times T_p^\ast S \to \mathbb{R}, \qquad
+    ([\gamma], [f]) \mapsto (f\circ\gamma)'(0)
+\end{align*}
+giving an isomorphism \(T_p^\ast S=\Hom_\mathbb{R}(T_pS, \mathbb{R})\).
+
+As a set, the \textit{cotangent bundle} of \(S\) is given by \(T^\ast
+S=\bigsqcup_p T^\ast_pS\). This can naturally be given the structure of a vector
+bundle over \(S\), but we won't go into the details of this. Smooth sections of
+this bundle are called \(1\)-forms, but since we did not give the vector
+bundle structure on \(T^\ast S\) we will define what it means to be a
+\(1\)-form explicitly.
+
+\begin{definition}
+    A smooth \(1\)-form \(\alpha\) on \(S\) is a map \(\alpha:S\to T^\ast S\)
+    satisfying \(\alpha(p)\in T_p^\ast S\) for all \(p\), and varying smoothly
+    with \(p\) in the following sense: in local coordinates \((x_1,x_2)\)
+    around any \(p\in S\), we can write \(\alpha=\alpha_1 dx_1 + \alpha_2 dx_2\)
+    for smooth functions \(\alpha_1, \alpha_2\).
+\end{definition}
+
+This notion of smoothness is well-defined. Indeed if \((y_1,y_2)\) were another
+pair of local coordinates around \(p\in S\), then the corresponding cotangent
+vectors are related as
+\[
+    dx_i  = \frac{\partial x_i}{\partial y_1}dy_1 + \frac{\partial x_i}{\partial
+    y_2} dy_2
+\]
+wherever defined so the coefficients of the \(1\)-form \(\alpha\) remain smooth.
+
+(Co)tangent vectors behave functorially with respect to smooth maps between
+surfaces-- a map \(F:S\to Q\) naturally induces linear maps
+\begin{align*}
+    dF_p: T_pS \to T_{F(p)}Q, \quad [\gamma] \mapsto [F\circ \gamma] \\
+    F_p^\ast:T^\ast_{F(p)}Q \to T^\ast_pS, \quad [f]\mapsto [f\circ F].
+\end{align*}
+Note the behaviour is covariant on tangent vectors and contravariant on
+cotangent vectors. This pullback map extends to \(1\)-forms naturally, so if
+\(\alpha\) is a \(1\)-form on \(Q\) then the \(1\)-form \(F_p^\ast \alpha\) given
+by \((F_p^\ast\alpha)(p)= F_p^\ast(\alpha(F(p)))\) is still smooth.
+
+\subsection{Integration along curves}\marginpar{Lecture 3, 24/10/23}
+One of the things that makes differential forms useful is that they can be
+integrated along curves. In the simplest case, suppose \(\gamma:[0,1]\to
+S\) is a smooth curve in our surface whose image lies in a chart with local
+coordinates \(x_1,x_2\) and suppose \(\alpha\) is a
+\(1\)-form given on this chart as \(\alpha_1dx_1+\alpha_2dx_2\). Writing
+\(\gamma(t)=(\gamma_1(t),\gamma_2(t))\) in these local coordinates, we can
+define the integral of \(\alpha\) along \(\gamma\) as
+\[
+    \int_\gamma \alpha = \int_0^1(\alpha_1\cdot
+    \gamma_1'(t)+\alpha_2\cdot \gamma_2'(t))dt.
+\]
+One checks that this is independent of local coordinates chosen. For a general
+curve \(\gamma\), we cut it into smaller curves \(\gamma_1,\ldots,\gamma_n\) each
+of which is contained in a single coordinate chart, and then define
+\(\int_\gamma \alpha = \sum_{i=1}^n \int_{\gamma_i}\alpha\).
+
+The fundamental theorem of calculus holds i.e.\ \(\int_\gamma df =
+f(1)-f(0)\) for any smooth function \(f\). This can be proven locally on charts.
+
+\subsection{Higher differential forms} If we wish to analogously extend the
+theory of integration to surfaces, we need to define \(2\)-forms. Just as a
+function gives a \(1\)-form, there is an operator taking a \(1\)-form to a
+\(2\)-form.  But this is more involved; the classical motivation for the
+definition is as follows.
+
+Given a \(1\)-form \(\alpha\) on a surface \(S\), we
+ask when is \(\alpha=df\) for some function \(f\)? When \(S=\mathbb{R}^2\), we
+have \(\alpha=\alpha_1dx_1 +\alpha_2dx_2\) for a choice of coordinates. If
+\(\alpha=df\) then
+\(
+    \frac{\partial f}{\partial x_1}
+    = \alpha_1, \quad  \frac{\partial f}{\partial x_2} = \alpha_2.
+\)
+Thus by the symmetry of mixed partial derivatives, a necessary
+condition for \(\alpha\) to be of the form \(df\) is that the
+function \(R=\frac{\partial \alpha_1}{\partial x_2} - \frac{\partial
+\alpha_2}{\partial x_1}\) vanishes identically. This is also sufficient-- if \(R=0\) then we can find \(f\) as follows.
+Define functions \(f_1,f_2\) by
+\begin{align*}
+    f_2(x_1,x_2)=\int_0^{x_1}\alpha_1(t,0)+\int_0^{x_2}\alpha_2(x_1,t)dt,\qquad
+    f_1(x_1,x_2)=\int_0^{x_2}\alpha_1(0,t)+\int_0^{x_1}\alpha_2(t,x_2)dt.
+\end{align*}
+By construction, \(\frac{\partial f_i}{\partial x_i}=\alpha_i\). Then Green's
+theorem applied to the rectangle \(V\) with vertices \((0,0)\), \((x_1,0)\),
+\((0,x_2)\), \((x_1,x_2)\) shows \(f_1(x_1,x_2)-f_2(x_1,x_2)=\int_V
+Rdx_1dx_2\). Thus if \(R\) vanishes, then \(f_1=f_2\) and this is the required
+function \(f\).
+
+We generalise this to arbitrary surfaces, with the motivation that the problem
+in question is controlled by some anti-symmetric function. With this in mind,
+recall that for a real vector space \(E\) we define \(\Exter^2E^\ast\) to be the
+space of skew-symmetric bilinear maps \(E\times E\to \mathbb{R}\). There is a
+natural wedge-product operator
+\begin{align*}
+    \wedge:E^\ast \times E^\ast &\to \Exter^2 E^\ast \\
+    (\alpha, \beta)(e,f) &= \alpha(e)\beta(f)-\alpha(f)\beta(e).
+\end{align*}
+It is clear that this product is linear in each variable and \(\alpha\wedge
+\beta = -\beta\wedge \alpha\). If \(E\) is \(2\)-dimensional, one checks that
+\(\Exter^2E^\ast\) is \(1\)-dimensional and any basis \(\alpha_1,\alpha_2\) of
+\(E^\ast\) induces a basis \(\alpha_1\wedge \alpha_2\) of \(\Exter^2E^\ast\).
+
+We are interested in the case \(E=T_pS\) for a smooth surface \(S\), so
+\(E^\ast\) is the cotangent space \(T_p^\ast S\). A choice of local
+coordinates \(x_1,x_2\) induces a basis element \(dx_1\wedge dx_2\) for
+\(\Exter^2T_p^\ast S\).
+
+\begin{definition}
+    A (smooth) \(2\)-form \(\rho\) on \(S\) is a map from \(S\) to
+    \(\bigcup_{p\in S}\Exter^2T_p^\ast S\) such that \(\rho(p)\in
+    \Exter^2T_p^\ast S\) for all \(p\in S\), and such that \(\rho\) varies
+    smoothly in the sense that locally we have \(\rho=R(x_1,x_2)dx_1\wedge
+    dx_2\) for some smooth function \(R\).
+\end{definition}
+
+This is well defined independent of chart; for a different choice of coordinates
+\(y_1,y_2\), \(\rho\) has the form \( \rho=R(y_1,y_2)\cdot J(y_1,y_2) \cdot
+dy_1\wedge dy_2 \) where \(J(y_1,y_2)\) denotes the Jacobian of \(y_1,y_2\) with
+respect to \(x_1,x_2\), and \(dy_i=\frac{\partial y_i}{\partial x_1}dx_1 +
+\frac{\partial y_i}{\partial x_2}dx_2\).
+
+One can pull back \(2\)-forms just like one does for \(1\)-forms. In particular
+if \(F:S\to Q\) is a smooth map and \(\rho\) is a \(2\)-form on \(Q\) then one
+obtains a \(2\)-form \(F^\ast \rho\) on \(S\), expressed in local coordinates in
+a very similar way.
+
+\subsection{The exterior derivative} We write \(\Omega^i(S)\) for the set of smooth \(i\)-forms on \(S\), where a
+smooth \(0\)-form is nothing but a function. We have already seen that there is
+a differential \(d:\Omega^0(S)\to \Omega^1(S)\) sending a function \(f\) to
+\(df\). The content of the following result is that this extends nicely.
+
+\begin{lemma}
+    There is a unique way to define an \(\mathbb{R}\)-linear map
+    \(d:\Omega^1(S)\to \Omega^2(S)\) such that
+    \begin{enumerate}[(i)]
+        \item For \(\alpha\in \Omega^1(S)\) and open set \(U\subset S\), we have
+        \(\alpha|_U\in \Omega^1(U)\) and \((d\alpha)|_U=d(\alpha|_U)\).
+        \item If \(\alpha_1=\alpha_2\) on an open set \(U\subset S\), then
+        \(d\alpha_1=d\alpha_2\) on \(U\).
+        \item For any function \(f\in \Omega^0(S)\), we have \(d(df)=0\).
+        \item If \(f\in \Omega^0(S)\) and \(\alpha\in \Omega^1(S)\), we have
+        \(d(f\cdot \alpha)=df\wedge \alpha + f\cdot d\alpha\).
+    \end{enumerate}
+
+    \begin{proof}
+        If we have have defined \(d\) with these properties, then for a
+        \(1\)-form \(\alpha=\alpha_1\cdot dx_1+\alpha_2\cdot dx_2\) in local
+        coordinates on an open \(U\subset S\), we have
+        \begin{align*}
+            d\alpha &= d(\alpha_1\cdot dx_1 +\alpha_2 \cdot dx_2) \\
+                    &= d\alpha_1 \wedge dx_1 + d\alpha_2 \wedge dx_2 \\
+                    &= \ldots \\
+                    &= \left(\frac{\partial \alpha_2}{\partial x_1} -
+                    \frac{\partial \alpha_1}{\partial x_2}\right) dx_1\wedge
+                    dx_2.
+        \end{align*}
+        This shows uniqueness, and also gives a way to define \(d\) after one
+        checks it is independent of charts.
+    \end{proof}
+\end{lemma}
+
+Having expressed \(2\)-forms as derivatives, we now see how to integrate them.
+For this we need to assume \(S\) is oriented (so there are charts such that the
+coordinate-change Jacobians are everywhere positive). Let \(\rho\in
+\Omega^2(S)\) have compact support in a single chart. Then we can write
+\(\rho=R(x_1,x_2)dx_1\wedge dx_2\) in local coordinates, and define
+\[
+    \int_S\rho = \int_{\mathbb{R}^2}R(x_1,x_2)\cdot dx_1 dx_2
+\]
+where the right hand side is a Lebesgue integral. If \(y_1,y_2\) is another
+oriented chart with positive coordinate-change Jacobian, then that this is
+well-defined is the usual transformation law for multiple integrals.
+
+To integrate in general, we need the following technical lemma which says
+partitions of unity exist.
+
+\begin{lemma}
+    Let \(K\subset S\) be compact and let \(U_1,\ldots,U_n\) be open sets with
+    \(K\subseteq U_1\cup \ldots \cup U_n\). Then there are smooth non-negative
+    functions \(f_1,\ldots,f_n\) on \(S\) with \(f_1+\ldots+f_n=1\) on \(K\),
+    such that each \(f_i\) is supported on \(U_i\).
+\end{lemma}
+
+\begin{definition}
+    For a \(2\)-form \(\rho\in \Omega^2(S)\) with compact support, we define
+    \(\int_S\rho = \sum_i\int_S(f_i\cdot \rho)\) where the \(f_i\) form a
+    partition of unity over \(\text{Supp}(\rho)\) and each \(f_i\) is supported
+    on a coordinate chart.
+\end{definition}
+
+To see this makes sense, since \(\sum_i f_i =1\) we have \(\rho=\sum_i
+(f_i\cdot \rho)\) and each \(f_i\cdot \rho\) is supported on a coordinate chart
+so can be integrated locally. The integral is independent of the choice of
+partition of unity by linearity of Lebesgue integrals.
+
+\begin{theorem}[(Stokes' theorem)]
+    If \(\alpha\) is a compactly supported \(1\)-form on an oriented surface
+    \(S\) with boundary \(\partial S\), then \(\int_{\partial S}\alpha =
+    \int_Sd\alpha.\)
+\end{theorem}
+
+Note we haven't defined manifolds with boundary but a precise definition with
+nice pictures can be found on Wikipedia. Locally, the boundary plays the same
+role as the curve in Green's theorem. Since the result is local, we can reduce
+to this case.
+
+Thus on an oriented surface \(S\), we have spaces of \(0,1,2\)-forms
+\(\Omega^k(S)\) and exterior derivative operators \(d:\Omega^k(S)\to
+\Omega^{k+1}(S)\). We also know how to integrate \(k\)-forms on
+\(k\)-dimensional submanifolds (\(k\geq 1\)), and Stoke's theorem which
+relates the two integrals. Lastly, we have the wedge product
+\(\wedge:\Omega^1(S)\times \Omega^1(S)\to \Omega^2(S)\).
+
+\subsection{The de Rham complex}
+Let \(S\) be a smooth surface, and consider the sequence of maps
+\[
+    0\to \Omega^0(S)\xrightarrow{d} \Omega^1(S)\xrightarrow{d} \Omega^2(S)\to 0.
+\]
+We know \(d\circ d=0\) so this is a chain complex, and we can define the \textit{de Rham cohomology groups} as the cohomology spaces of this complex explicitly given by
+\begin{align*}
+    \HH^0(S) &= \ker(d:\Omega^0(S)\to \Omega^1(S)) \\
+    \HH^1(S) &= \frac{\ker(d:\Omega^1(S)\to \Omega^2(S))}{\img(d:\Omega^0(S)\to
+    \Omega^1(S))}\\
+    \HH^2(S) &= \frac{\Omega^2(S)}{\img(d:\Omega^1(S)\to \Omega^2(S))}.
+\end{align*}
+
+We say a \(k\)-form \(\alpha\) is \textit{closed} if \(d\alpha=0\) and
+\textit{exact} if \(\alpha=d\beta\) for some \((k-1)\)-form \(\beta\). Then every
+exact form is closed and the de Rham cohomology measures `failure of closed
+forms to be exact'.
+
+In general, \(H^0(S)=\mathbb{R}\) for a connected surface \(S\). We will now
+compute some examples.
+
+\begin{lemma}[(de Rham cohomology of \(\mathbb{R}^2\))]
+    We have \(\HH^0(\mathbb{R}^2)=\mathbb{R}\), and all other cohomology
+    groups vanish.
+
+    \begin{proof}
+        Since \(\mathbb{R}^2\) is connected, we know
+        \(\HH^0(\mathbb{R}^2)=\mathbb{R}\). The claim \(\HH^1(\mathbb{R}^2)=0\)
+        follows from the criterion for a closed \(1\)-form to be exact. Thus it
+        remains to show \(\HH^2(\mathbb{R}^2)=0\). Take a closed \(2\)-form
+        \(\rho=R(x_1,x_2)dx_1\wedge dx_2\) and claim we can find functions
+        \(\alpha_1,\alpha_2\) with \(R(x_1,x_2)=\frac{\partial
+        \alpha_1}{\partial x_2}-\frac{\partial \alpha_2}{\partial x_1}\), which
+        will show the required result. This can be done, for example, by setting
+        \(\alpha_2=0\) and \(\alpha_1(x_1,x_2)=\int_0^{x_2} R(x_1,t)dt\).
+    \end{proof}
+\end{lemma}
+
+\begin{proposition}
+    Let \(S=\mathbb{S}^2\) be the sphere. Then \(\HH^1(S)=0\).
+    \begin{proof}
+        Suppose \(\alpha\) is a closed \(1\)-form on \(S\). Take the standard
+        charts \(U,V\subseteq S\) given by removing the north and south
+        poles from \(S\) respectively. Then \(U,V\cong \mathbb{R}^2\) so we can
+        find functions \(f_U\), \(f_V\) on \(U,V\) respectively such that
+        \(df_U=\alpha|_U\), \(df_V=\alpha|_V\). On \(U\cap V\), we see that
+        \(f_U-f_V\) is locally constant hence is constant. Thus adding a
+        constant function to \(f_V\) if necessary, we see that \(f_U\)
+        and \(f_V\) agree on \(U\cap V\) and hence define a global
+        function \(f\in \Omega^0(S)\) with \(df=\alpha\).
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    Let \(T=\mathbb{S}^1\times \mathbb{S}^1\) be the torus. Then \(\HH^1(T)\) is
+    a two-dimensional vector space.
+
+    \begin{proof}
+        Consider the standard angular coordinates \(\vartheta, \varphi\in
+        [0,2\pi)\). Let \(\gamma_1,\gamma_2\) be the standard circles
+        corresponding to \(\vartheta=0\) and \(\varphi=0\) respectively, and
+        consider the map
+        \begin{align*}
+            F:\Omega^1(T)\to \mathbb{R}^2, \qquad
+                \alpha\mapsto \left(\int_{\gamma_1}\alpha,
+                \int_{\gamma_2}\alpha\right).
+        \end{align*}
+        This is linear and vanishes on exact \(1\)-forms by the fundamental
+        theorem of calculus, so we get a well-defined map \(F:\HH^1(T)\to
+        \mathbb{R}^2\). We will show \(F\) is injective and surjective.
+
+        If \(\alpha\) is a closed \(1\)-form such that
+        \(\int_{\gamma_1}\alpha=\int_{\gamma_2}\alpha = 0\), then writing
+        \(\alpha=Pd\vartheta + Qd\varphi\) locally shows that for any fixed
+        \(\varphi\) we have
+        \[
+            \int_{\gamma_2}\alpha = \int_0^{2\pi} P(u,
+            \varphi)du = 0
+        \]
+        and hence the function \(f(\vartheta, \varphi)=\int_0^\vartheta
+        P(u,\varphi)du\) is well-defined and satisfies \(\frac{\partial
+        f}{\partial \vartheta}=P(\vartheta,\varphi)\). Thus
+        \(\tilde{\alpha}=\alpha-df\) is a closed \(1\)-form of the form
+        \(Q\cdot d\varphi\). But \(d\tilde\alpha=0\) implies \(Q\) is
+        constant and we see that \(Q=0\) since  \(\int_{\gamma_2}Qd\varphi=0\).
+        Thus \(\alpha=df\) is exact.
+
+        To show surjectivity, we consider the \(1\)-forms \(d\vartheta\),
+        \(d\varphi\) which get mapped to \((1,0)\) and \((0,1)\)
+        respectively.
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    In general, a similar argument shows
+    \(\HH^1(S)=\Hom(\Pi_1(S,p), \mathbb{R})\)
+    where \(\Pi_1(S,p)\) is the fundamental group of \(S\) for some base point
+    \(p\). In particular if \(\Sigma_g\) is the closed orientable surface of
+    genus \(g\) then \(\HH^1(\Sigma_g)\cong \mathbb{R}^{2g}\).
+\end{remark}
+
+\subsection{Compactly supported cohomology}
+We next calculate \(\HH^2(S)\). For this, we need to first modify the definition
+of de Rham cohomology when \(S\) is non-compact, by setting
+\(\Omega^i_C(S)\subseteq \Omega^i(S)\) to be the subspace of compactly supported
+\(i\)-forms. The exterior derivative respects the compact support property,
+hence we can define \(\HH^i_C(S)\) to be the \(i\)-th cohomology of the complex
+\[
+    0\to \Omega^0_C(S)\xrightarrow{d} \Omega^1_C(S)\xrightarrow{d}
+    \Omega^2_C(S)\to 0.
+\]
+The main theorem is the following.
+
+\begin{theorem}
+    For any connected surface \(S\), we have \(\HH^2_C(S)=\mathbb{R}\).
+    \begin{proof}
+        We prove this in two steps-- first the special case \(S=\mathbb{R}^2\),
+        and then use this to handle general surfaces.
+
+        \underline{In the case of \(\mathbb{R}^2\)}, the proof is by explicit
+        integration.  We will consider the map \(I:\Omega^2_C(\mathbb{R}^2)\to
+        \mathbb{R}\) given by \(I(\rho)=\int_{\mathbb{R}^2} \rho\). This is
+        well-defined by the compact support property. Surjectivity follows since
+        we can explicitly find a smooth function \(\psi\) with \(I(\psi\cdot
+        dx_1\wedge dx_2)=\int_{\mathbb{R}^2}\psi \cdot dx_1dx_2=1\).
+        \marginpar{Lecture 4, 31/10/23}
+        Thus it remains to show that the kernel of \(I\) is
+        precisely the space of exact forms. One containment is obvious by
+        Stokes' theorem, so suppose \(I(\rho)=0\) and write
+        \(\rho=R(x,y)dx\wedge dy\) where (up to translation) \(R\) is supported
+        in some box \([0,N]^2\). We construct \(\alpha\in
+        \Omega^1_C(\mathbb{R}^2)\) with \(d\alpha=\rho\) by integrating \(R\)
+        cleverly.
+
+        First consider the `strong special case' when \(\int_{0}^N R(x,y)dx
+        =0\) for all \(y\). Define \(g(x,y)=\int_{0}^x R(t,y)dt\). Then
+        \(g(N,y)=0\) so \(g(x,y)dy\) is a compactly supported \(1\)-form and its
+        derivative is \(R(x,y)dx\wedge dy\)  as required. In general, consider
+        \(g(x,y)dy\). Then to reduce to the strong special case, we must manage
+        the quantity \(H(y)=\int_0^N R(x,y)dx\) which doesn't vanish in general. Take
+        \(b:\mathbb{R}\to \mathbb{R}\) a `bump function' with compact
+        support such that \(\int_{0}^Nb(x)dx=1\). Since \(H:\mathbb{R}\to
+        \mathbb{R}\) also has compact support, so does \(h(x,y)=b(x)H(y)\). Moreover,
+        \[\int_{\mathbb{R}^2} h(x,y)dx\wedge dy = \int_{0}^N H(y)dy =
+        \int_{\mathbb{R}^2}R(x,y)dx\wedge dy.\] Thus  \(\int_{0}^N
+        (R(x,y)-h(x,y))dx=0\), i.e.\ the \(2\)-form
+        \((R(x,y)-h(x,y))dx\wedge dy\) satisfies the hypotheses of the strong
+        special case and is hence exact. So to complete the proof, we need to show \(h(x,y)dx\wedge dy =d\beta\) for some compactly supported
+        \(1\)-form \(\beta\). But reversing \(x,y\) we know that
+        \(\int_{0}^Nh(x,y)dy = b(x)\int_{0}^N H(y)dy = 0\), so this again
+        is the strong special case.
+
+        Thus we wrote \(\rho\) as a sum of two \(2\)-forms, both of which
+        satisfy the hypotheses of the strong special case and are hence exact.
+
+        \underline{For a general connected surface \(S\)}, again consider the
+        map \(I:\Omega^2_C(S)\to \mathbb{R}\) given by \(\rho \mapsto
+        \int_S\rho\).  Surjectivity and vanishing on exact forms follows
+        similarly as before, so we must show that \(\ker I\) is precisely the
+        space of exact forms. Suppose \(\rho\in \Omega^2_C(S)\) is such that
+        \(\int_S \rho =0\). By the compact support property, there are finitely
+        many contractible charts \(U_1,\ldots,U_n\) such that \(\rho\) is supported
+        on a connected open set \(U_1\cup U_2\cup \ldots \cup U_n\). Since
+        we know the result for \(\mathbb{R}^2\), we know it holds for each
+        \(U_i\), so we show the result by induction on \(n\).
+
+        Suppose \(n>1\). By connectedness of \(\bigcup_i U_i\) we can arrange
+        that \(U_i\cap U_{i+1}\neq \emptyset\) for all \(i\), so that
+        \(V_1=U_1\cup \ldots\cup U_{n-1}\) and \(V_2=U_n\) are connected opens.
+        Then by induction hypothesis, any \(2\)-form \(\tilde\rho\) compactly
+        supported on \(V_i\) satisfying \(\int_S\tilde\rho=0\) must be exact. So
+        take a partition of unity \(f_1,f_2\) such that
+        \(\text{Supp}(f_i)\subset V_i\) and \(f_1+f_2=1\) on
+        \(\text{Supp}(\rho)\). Then \(\rho = \rho_1 +\rho_2\), where
+        \(\rho_i=\rho\cdot f_i\) supported on \(V_i\) . From \(\int_S\rho=0\),
+        we obtain a constant \(c=\int_S \rho_1=-\int_S\rho_2\). Choose a
+        \(2\)-form \(\sigma\) supported on \(V_1\cap V_2\) such that
+        \(\int_S\rho = c\). Then setting \(\tilde\rho_1=\rho_1-\sigma\) and
+        \(\tilde\rho_2=\rho_2+\sigma\), we see that by induction hypothesis
+        \(\tilde\rho_i=d\alpha_i\) for some \(\alpha_1,\alpha_2\). Then for the
+        \(1\)-form \(\alpha=\alpha_1+\alpha_2\), we have \(\rho=d\alpha\) as
+        required.
+    \end{proof}
+\end{theorem}
+
+\section{Complex differential forms}
+In the previous section, \(S\) was a smooth surface with no additional
+structure. At a point \(p\in S\) the cotangent space \(T_p^\ast S\) is defined so that a real-valued function \(f:S\to \mathbb{R}\) induces a cotangent vector \([df]_p\) (seen as an \(\mathbb{R}\)-linear map \(T_pS\to \mathbb{R}\)). Likewise, we can consider the \textit{complexified cotangent space} \(T_P^\ast
+S^\mathbb{C}=\Hom_\mathbb{R}(T_PS,\mathbb{C})\) defined so that a complex-valued
+function \(f:S\to \mathbb{C}\) induces a cotangent vector \([df]_P:T_pS\to \mathbb{C}\). This makes sense for any surface \(S\).
+
+We now specialise to Riemann surfaces, where there is a distinguished class of
+holomorphic functions. What does this extra structure buy us?
+
+\begin{definition}
+    Let \(V\) be a real vector space. A \textit{complex structure} on \(V\) is
+    an \(\mathbb{R}\)-linear map \(J:V\to V\) such that \(J^2=-\text{Id}\).
+    Given such a vector space with complex structure, we say an
+    \(\mathbb{R}\)-linear map \(A:V\to \mathbb{C}\) is \textit{complex linear}
+    if \(A(Jv)=i\cdot A(v)\) for all \(v\in V\) and it is \textit{complex
+    anti-linear} if
+    \(A(Jv)=-i\cdot A(v)\) for all \(v\in V\).
+\end{definition}
+
+The cotangent spaces of a Riemann surface are naturally equipped with a complex
+structure.
+
+\begin{lemma}
+    Given a Riemann surface \(S\) and a point \(p\in S\), there is a unique way
+    to define a complex structure on \(T_pS\) such that the
+    differential of any holomorphic function is complex linear.
+    \begin{proof}[Sketch proof]
+        This is a consequence of the fact that on open sets in \(\mathbb{C}\),
+        the map sending a holomorphic function to its derivative is
+        \(\mathbb{C}\)-linear. Choosing a local complex coordinate \(z=x+iy\)
+        around \(p\), the complex structure \(J:T_pS\to T_pS\) then is given by
+        multiplication by \(\sqrt{-1}\) i.e.\ a tangent vector determined by a
+        path \(\gamma:\mathbb{R}\to S\) gets sent to the tangent vector
+        \([i\cdot \gamma]\).
+    \end{proof}
+\end{lemma}
+
+Let \(V\) be an \(\mathbb{R}\)-vector space with a complex structure.
+Considering the \(\pm i\)-eigenspaces, we have the following useful piece of
+linear algebra: any \(\mathbb{R}\)-linear map \(A:V\to \mathbb{C}\) can be
+written as a sum of a complex linear map \(A'=\frac{1}{2}(A-i\cdot A\circ J)\)
+and a complex anti-linear map \(A''=\frac{1}{2}(A+i\cdot A\circ J)\), thus
+giving an orthogonal decomposition of \(\Hom_\mathbb{R}(V,\mathbb{C})\).
+
+In the setting of Riemann surfaces, this gives a decomposition \(T_p^\ast
+S^\mathbb{C}=T_p^\ast S'\oplus T_p^\ast S''\) of the complexified cotangent
+space into a complex linear part (\textit{the holomorphic cotangent space}) and
+an anti-linear part (\textit{the anti-holomorphic cotangent space})
+respectively. The complex structure on \(T_pS\) was chosen such that for any
+holomorphic function \(f\) we have \([df]_p\in T_p^\ast S'\) and
+\([d\overline{f}]_p\in T_p^\ast S''\).
+
+
+\subsection{Decomposing \(1\)-forms and exterior derivatives} The decomposition
+of the cotangent space extends to the space of smooth complex \(1\)-forms naturally,
+and we write \(\Omega^1(S,\mathbb{C})=\Omega^{1,0}(S)\oplus \Omega^{0,1}(S)\).
+The exterior derivatives \(d:\Omega^0(S,\mathbb{C})\to
+\Omega^1(S,\mathbb{C})\) and \(d: \Omega^1(S,\mathbb{C})\to
+\Omega^2(S,\mathbb{C})\) decompose in a compatible fashion: there is a
+commutative square
+\[ \begin{tikzcd}[row sep=huge, column sep=huge]
+        \Omega^{0,1}(S) \rar{-\partial (=-d)} & \Omega^2(S,\mathbb{C}) \\
+        \Omega^0(S,\mathbb{C})\uar{\bar\partial} \rar{\partial} &
+        \Omega^{1,0}(S)\uar{\bar\partial (=d)}
+    \end{tikzcd}\]
+where the \textit{Dolbeault operators} \(\partial, \bar\partial\) are given by
+composing \(d\) with the natural projections \(\Omega^1(S,\mathbb{C})\to
+\Omega^{0,1}(S), \Omega^{1,0}(S)\). In particular, we have \(d=\partial
++\bar\partial\) and \(\partial^2=\bar\partial^2=0\). The construction is explicit on a chart--
+choosing a local complex coordinate \(z=x+iy\), the vectors \(dz=dx+idy\) and \(d\bar z= dx-idy\) give bases of \(T_p^\ast S'\) and \(T_p^\ast
+S''\) respectively for \(p\) in the chart. Given a complex function \(f\) on this chart, we can write
+\[
+    df = \underbrace{\frac{1}{2}\left( \frac{\partial f}{\partial
+       x}-i\frac{\partial f}{\partial y}\right)}_{\frac{\partial
+       f}{\partial z}}dz +
+       \underbrace{\frac{1}{2}\left( \frac{\partial f}{\partial
+       x}+i\frac{\partial f}{\partial y}\right)}_{\frac{\partial
+       f}{\partial \bar z}}d\bar z
+\]
+which tells us how to define the operators \(\partial\) and \(\bar\partial
+\) on \(\Omega^0_{S,\mathbb{C}}\). Explicitly, we have \(\partial f =
+\frac{\partial f}{\partial z}dz\) and \(\bar\partial = \frac{\partial f
+}{\partial \bar z}d\bar z\). Likewise, computing the derivative
+\(d:\Omega^1(S,\mathbb{C})\to \Omega^2(S,\mathbb{C})\) locally gives
+\begin{align*}
+    d(f\cdot dz +g\cdot d\bar z)&=\bar\partial(f\cdot dz)+\partial(g\cdot d\bar
+    z)\\ &= \left(\frac{\partial g}{\partial z}-\frac{\partial f}{\partial \bar
+    z}\right)dz\wedge d\bar z.
+\end{align*}
+
+
+\subsection{Holomorphic \(1\)-forms} A formal consequence of the definitions is that
+\(\bar \partial f=0\) is locally the Cauchy--Riemann equation, thus the subspace
+of holomorphic functions in \(\Omega^0(S,\mathbb{C})\) is precisely \(\ker
+\bar\partial\).  In particular for a holomorphic function \(f\), we have
+\(df=\partial f=f'\cdot dz\) locally where \(f'\) is the usual complex
+derivative.
+
+We extend this idea to define holomorphic \(1\)-forms, which will be holomorphic
+complex linear forms.
+
+\begin{definition}
+    A \textit{holomorphic \(1\)-form} is a \((1,0)\)-form satisfying
+    \(\bar\partial \beta\)=0.
+\end{definition}
+
+Locally if \(\beta=f\cdot dz\), then \(\beta\) is holomorphic if and only if \(f\) is holomorphic.
+
+Note for a holomorphic \(1\)-form \(\beta\) we have \(d\beta=\partial \beta +
+\bar\partial \beta =  0\), so holomorphic \(1\)-forms are always closed.
+This gives an analogue to Cauchy's theorem: if \(Q\subset S\) is a surface
+with boundary, then by Stokes' theorem we have \[\int_{\partial Q}\beta = 0.\]  Thus the integral of a holomorphic \(1\)-form vanishes on any closed
+contour. The `meromorphic' analogue is as follows-- let \(\alpha\) be a
+meromorphic \(1\)-form on \(S\), i.e.\ a \(1\)-form that is holomorphic on the
+complement of a discrete subset \(D\subset S\) and is given locally as
+\(\alpha=f\cdot dz\) for some meromorphic function \(f\) (one checks this notion
+is well-defined independent of chart). Choosing \(D\) minimal, the points of
+\(D\) give the poles of \(\alpha\). Let \(p\) be a pole, \(C\) a small loop
+around \(p\).
+
+\begin{definition}
+    The residue of \(\alpha\) at \(p\) is
+    \[\text{Res}_p(\alpha)=\frac{1}{2\pi i}\int_C \alpha\]
+    which is the usual residue in local coordinates (i.e.\ the coefficient of
+    \(z^{-1}dz\) in a Laurent expansion of \(\alpha\).)
+\end{definition}
+
+\begin{proposition}
+    Let \(\alpha\) be a meromorphic \(1\)-form on a compact Riemann surface
+    \(S\). Then the sum of the residues of \(\alpha\) over all poles is zero.
+
+    \begin{proof}
+        By compactness, the set of poles is finite say \(p_1,\ldots,p_n\). Around
+        each \(p_j\), choose a small disc \(D_j\) with boundary given by a loop
+        \(C_j\). We have
+        \[\sum_{j=0}^n \text{Res}_{p_j}(\alpha)= \sum_{j=0}^n \left(
+        \frac{1}{2\pi i}\int_{C_j}\alpha \right) =\frac{1}{2\pi
+        i}\int_{\bigcup_j C_j} \alpha.\]
+        Set \(\tilde S\) to be the complement of \(D_1\cup \ldots \cup D_n\). Then
+        the boundary of \(\tilde{S}\) is \(-\bigcup_j C_j\) and \(\alpha\) is a
+        holomorphic \(1\)-form on \(\tilde S\), so we have
+        \(\int_{\bigcup_jC_j}\alpha = -\int_{\partial\tilde S}d\alpha = 0\).
+    \end{proof}
+\end{proposition}
+
+\subsection{The Laplacian}
+Since \(d^2=(\partial +\bar\partial)^2=0\), we have \(\partial \bar\partial =
+-\bar\partial \partial\). This gives a canonical operator \(\Omega^0_S\to
+\Omega^2_S\) on a Riemann surface.
+
+\begin{definition}
+    The \textit{Laplacian} is defined to be \(\Delta=2i\cdot
+    \partial\bar\partial \). We say a function \(f\) is \textit{harmonic} if \(\Delta f=0\).
+\end{definition}
+
+Choosing a local complex coordinate \(z=x+iy\), we have \(\Delta f =
+-\frac{1}{2}(\frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial
+y^2})dx\wedge dy\) so this is just the usual Laplacian (an operator that takes
+smooth functions to smooth functions) multiplied by a chosen volume-form. The
+presentation using differential operators removes the choice of this volume
+form and makes the operator canonical.
+
+If \(f\) is holomorphic, then its real and imaginary parts are harmonic.
+Indeed, writing \(\text{Re}(f)=\frac{1}{2}(f+\bar f)\), we see that
+\(\partial\bar\partial (f+\bar f)=\partial \bar \partial  f +
+\overline{\partial \bar\partial f}=0\), likewise for the imaginary part.
+
+\begin{exercise}
+    If \(\varphi\) is real valued and defined on a neighbourhood \(U\subset
+    S\) of \(p\), show that there is a \(U'\subset U\) such that
+    \(\varphi|_U'\) is the real part of a harmonic function on \(U'\). Thus
+    every real function has a corresponding imaginary `harmonic conjugate'.
+\end{exercise}
+
+\begin{exercise}[Maximum principle]
+    Suppose \(\varphi\) is non-constant, real valued, harmonic on a
+    connected open set \(U\subset S\). Then show that for any \(x\in U\) there
+    is a point \(x'\in U\) with \(\varphi(x')>\varphi(x)\).
+\end{exercise}
+
+\begin{theorem}[(Inverting the Laplacian)]
+    \label{thm:laplace-inversion}
+    Suppose \(\rho\) is a \(2\)-form on a compact surface \(S\). Then
+    \(\int_S\rho=0\)if and only if there is a smooth function \(f\) with
+    \(\Delta f=\rho\), and if so \(f\)is unique up to the addition of a
+    constant.
+\end{theorem}
+
+This is the main technical result of the course. We will use it to prove the
+uniformisation theorem and the Riemann-Roch theorem, which in turn can be used
+to show that all compact Riemann surfaces are algebraic.
+
+\begin{remark}
+    The result on inverting the Laplacian really applies to all elliptic linear
+    partial differential operators on compact manifolds. In this context, the
+    result is often called the `Fredholm alternative'.
+\end{remark}
+
+\section{Topological applications}
+
+We will now study the applications of the theory developed-- in particular the
+Euler characteristic, the Riemann--Hurwitz theorem, and Dolbeault cohomology.
+\marginpar{Lecture 5, 07/11/23} We will later also look at analytic
+applications, solving Laplace's equation on a Riemann surface.
+
+\subsection{The Euler characteristic} This is a purely topological notion. We
+will use some techniques from differential topology without proving them, and
+this will result in the lecture being a little sketchier. The goal is to
+understand the topological genus of a Riemann surface through differential
+forms.
+
+Let \(S\) be a smooth surface. We can triangulate it to define the Euler
+characteristic as
+\[
+    \chi(S)=\#\{\text{vertices}\}-\#\{\text{edges}\}+\#\{\text{faces}\}.
+\]
+The important fact is that this is independent of the triangulation chosen;
+one proves this by showing that the Euler characteristic is invariant under
+refinement (subdivision) of the triangulation and that any two triangulations
+admit a common refinement.
+
+By explicit triangulation, one can calculate that the Euler
+characteristic of \(\Sigma_g\) (the compact surface of genus \(g\)) is
+\(2-2g\). In fact this is precisely how we define genus, i.e.\ for a surface
+\(S\) we have
+\[
+    g(S)=1-\frac{1}{2}\chi(S).
+\]
+
+But the genus appears in other forms, for example in the first de Rham
+cohomology as we have seen previously. We will see how the two notions are
+related. Suppose \(S\) is oriented, and let
+\(\alpha\) be a \(1\)-form such that the set \(\Delta\subset S\) where
+\(\alpha\) vanishes is discrete. For any \(p\in \Delta\), we can choose local
+coordinates \(x_1,x_2\) such that \(p=(0,0)\) and
+\(\alpha=\alpha_1dx_1+\alpha_2dx_2\). Thus for small \(r>0\), the only zero of the function
+\[
+    (\alpha_1,\alpha_2): \overline{B(0,r)}\to \mathbb{R}^2
+\]
+is at the origin. In particular, when restricted to the boundary,
+\((\alpha_1,\alpha_2)|_{\partial B(0,r)}\) gives a curve in
+\(\mathbb{R}^2\setminus 0\) which has a well-defined winding number (the
+signed number of times the curve wraps around the origin anticlockwise). One
+checks that this is independent of local coordinates (diffeomorphism invariance)
+and independent of choice of \(r\) (homotopy invariance) since it is a
+continuous integer-valued function. Thus we can make sense of the
+\textit{winding number of a \(1\)-form around a point}, also called the
+\textit{index of the \(1\)-form at the point}.  Write
+\(\nu_p(\alpha)\) for this number, noting that it can be computed in various ways for example by integrating \(d\theta\) around \((\alpha_1,\alpha_2)\partial
+B(0,r)\)  in local polar coordinates.
+
+Note that this notion makes sense even for \(p\notin \Delta\), but if
+\(\alpha(p)\neq 0\) then we can choose \(r\) sufficiently small so that
+\((\alpha_1,\alpha_2):\overline{B(0,r)}\to \mathbb{R}^2\) does not hit the
+origin. Thus the winding number of the boundary curve around the origin is
+necessarily zero.
+
+\begin{proposition}[(Poincar\'e--Hopf theorem for smooth \(1\)-forms)]
+    For \(S, \alpha, \Delta\) as above, the Euler characteristic of \(S\) can be
+    computed as \[\chi(S)=\sum_{p\in \Delta} \nu_p(\alpha).\]
+    \begin{proof}[Very sketchy proof]
+        One could (dually, equivalently) use vector fields rather than
+        \(1\)-forms by fixing a volume form. The result is then the usual
+        Poincar\'e--Hopf theorem\footnote{One of the consequences of the
+        Poincar\'e--Hopf theorem is the hairy ball theorem.}.
+
+        One first uses the Gauss map to show that the number \(\sum_{p\in
+        \Delta}\nu_p(\alpha)\) is indepentent of \(\alpha\), see [Milnor,
+        \textit{"Topology from the differentiable viewpoint"}, Chapter 6]. This
+        lets us choose a specific \(1\)-form whose winding number we can relate
+        to the triangulation. In particular, given a triangle we choose a
+        function \(f\) definedon a neighbourhood which has minima on the three
+        vertices, maxima in the interior of the face, and saddle points on the
+        edges. The zeroes of \(df\) are the critical points of \(f\), precisely
+        the seven points described above. Then the winding number of \(df\)
+        around a minimum or a maximum is \(+1\) by an explicit calculation
+        (using Taylor series, say), and at a saddle point it is \(-1\). One
+        glues these functions to get a globally defined smooth function, and use
+        its differential to get the required computation.
+    \end{proof}
+\end{proposition}
+
+On a compact Riemann surface \(S\), we like holomorphic and meromorphic
+\(1\)-forms.  To a holomorphic \(1\)-form \(\alpha\), we associate a real
+\(1\)-form \(A=\frac{1}{2}(\alpha +\bar\alpha)\). Locally if \(\alpha=f(z)dz\),
+then \(A= \frac{1}{2}(f(z)dz +\bar f(z)d\bar z)\) hence \(A\) vanishes if and
+only if \(\alpha\) does. In particular \(A\) vanishes on a discrete set
+\(\Delta\) so can be used to compute the Euler characteristic of \(S\).
+
+We will show that the index of \(A\) at \(p\in S\) computes the vanishing
+multiplicity of \(\alpha\) at \(p\) (defined by writing \(\alpha=f(z)dz\)
+locally), written \(m_p(\alpha)\). This will give
+the following version of the Poincar\'e--Hopf formula.
+
+\begin{proposition}[(Poincar\'e--Hopf theorem for holomorphic \(1\)-forms)]
+    For \(S\) a compact Riemann surface with a holomorphic \(1\)-form
+    \(\alpha\) vanishing on a discrete set \(\Delta\), we have
+    \[
+        \sum_{p\in \Delta}m_p(\alpha) = -\chi(S).
+    \]
+    \begin{proof}
+        Say \(f=f_1dz+if_2dz\) for smooth real functions \(f_1,f_2\), and local
+        coordinate \(z=x+iy\). Then we see that \(A=f_1dx-f_2dy\), i.e.\ the
+        winding number of \(A\) around \(p\in \Delta\) is the negative of the
+        winding number of \((f_1,f_2)=f:\partial B(0,r)\to \mathbb{R}^2\). Now
+        by the argument principle, this number \(-\nu_p(A)\)
+         is equal to the vanishing multiplicity of \(f(z)\) at
+        \(p\).  Thus the total number of zeros of \(\alpha\) with multiplicity
+        is \(2g-2=-\chi(S)\).
+    \end{proof}
+\end{proposition}
+
+Note this quantity has to be positive. Thus if \(g=0\) there are no holomorphic
+\(1\)-forms at all. If \(g=1\), any holomorphic \(1\)-form would have to be
+nowhere vanishing (and indeed such \(1\)-forms exist).
+
+Holomorphic \(1\)-forms are too restrictive. Instead we consider meromorphic
+\(1\)-forms. Fix a volume-form \(\omega\) on \(S\), locally given by
+\(ig(z)dz\wedge d\bar z\) for a positive function \(g\). This gives a hermitian
+metric on \(T^\ast S\): for a cotangent vector \(v\in T_p^\ast S\), we
+define \(|v|^2\) so that \(v\wedge \bar v = |v|^2 \omega(p)\).  Note \(|v|^2\geq
+0\), and it vanishes if and only if \(v=0\).
+
+Let \(\alpha\) be a meromorphic \(1\)-form on \(S\). Choose a real-valued
+function \(\rho\) on \(\mathbb{R}\) with \(\rho(t)=1\) for small \(t\) and
+\(\rho(t)=t^{-1}\) for large \(t\). Define a new differential form
+\(\tilde\alpha\) satisfying \(\tilde\alpha = \rho(|\alpha|^2)\alpha\) away from
+the poles of \(\alpha\), and \(\tilde\alpha = 0\) at poles of \(\alpha\).
+Then locally near a pole of \(\alpha\), we have
+\[
+    \tilde\alpha = \frac{1}{|f(z)|^2}f(z)R\cdot dz = \bar f(z)^{-1} R\cdot dz
+\]
+where \(R\) is a smooth positive function. In particular this is a smooth
+\(1\)-form that vanishes at the poles. Thus the zero set of \(\tilde\alpha\) is
+the set of zeros and poles of \(\alpha\). Moreover, at a pole of order \(d\) of
+\(\alpha\), \(\tilde\alpha\) has index \(-d\) since \(\bar f\) is
+anti-holomorphic. This gives us the following.
+
+\begin{corollary}
+    If \(\alpha\) is a nontrivial meromorphic \(1\)-form on a compact Riemann
+    surface of genus \(g\), then the number of zeros of \(\alpha\) minus the
+    number of poles of \(\alpha\) (counted with multiplicity) is \(2g-2\).
+\end{corollary}
+
+\subsection{Riemann--Hurwitz formula} The results of the previous section allow
+for a quick proof of this classical result. Let \(f:X\to Y\) be a nonconstant
+holomorphic map between compact Riemann surfaces. We defined a multiplicity
+\(k_x\) associated to each \(x\in X\) such that locally the map is \(z\mapsto
+z^{k_x}\), with \(k_x=1\) at all points except
+for a finite set of ramification points.
+
+\begin{definition}
+    The \textit{ramification index} of \(f\) is defined to be
+    \(
+        R_f= \sum_{x\in X} (k_x-1),
+    \)
+    noting that the sum is finite.
+\end{definition}
+
+We also defined the degree \(d\) of \(f\), the number of points in any preimage
+counted with multiplicity. These quantities are related as follows.
+
+\begin{theorem}[(Riemann--Hurwitz)]
+    The genera \(g_X\) of \(X\) and \(g_Y\) of \(Y\) are related as
+    \[
+        2-2g_Y = d(2-2g_X)-R_f.
+    \]
+    \begin{proof}
+        We will prove this assuming that there is a meromorphic \(1\)-form on
+        \(\beta\) on \(Y\). This is a harmless assumption, we will later use the
+        Riemann--Roch theorem to prove that this always holds for every Riemann
+        surface.
+
+        Given this, \(f^\ast \beta\) is a meromorphic \(1\)-form on \(X\). If
+        \(x\in X\) is a point around which \(f\) looks like \(z\mapsto z^k\),
+        then writing \(\beta=g(w)dw\) locally around \(f(x)\) gives \(f^\ast
+        \beta = kz^{k-1}g(z^k)dz\). Thus if \(\beta\) has a zero of order
+        \(\ell\) at y=\(f(x)\), then \(f^\ast \beta\) has a zero of order
+        \(k\ell + k -1\) at \(x\). So the contribution to the count of zeros and
+        poles of \(f^\ast\beta\) coming from \(y\) is
+        \[
+            \sum_{x\in f^{-1}(y)}(k_x\ell + k_x - 1) = d\cdot \ell + \sum_{x\in
+            f^{-1}y}(k_x-1).
+        \]
+        The result follows from the formula of Euler characteristic in terms of
+        meromorphic \(1\)-forms.
+    \end{proof}
+\end{theorem}
+
+\begin{exercise}
+    Another application is the `degree--genus formula', which states that given
+    a surface \(S\subset \mathbb{P}^2\) defined using a homogeneous degree \(d\)
+    polynomial, we have \(g(S)=\frac{1}{2}(d-1)(d-2)\). As a corollary, one
+    notes that not all Riemann surfaces can be embedded in \(\mathbb{P}^2\).
+\end{exercise}
+
+\subsection{Dolbeault cohomology} We continue to relate complex differential
+forms to geometry. Recall that we used the exterior derivative
+\(d:\Omega^q(S)\to \Omega^{q+1}(S)\) to define the de Rham cohomology.We now use
+the operator \(\bar\partial:\Omega^{p,q}(S)\to \Omega^{p,q+1}(S)\) to define
+\textit{Dolbeault cohomology}, where \(\Omega^{p,q}(S)\subset \Omega^{p+q}(S)\)
+is the space of \((p,q)\)-forms on \(S\). For example, \(\Omega^{0,0}(S)\) is
+the space of complex functions on \(S\), while \(\Omega^{0,1}(S)\) is the space
+of \(1\)-forms locally given by \(fd\bar z\) for a complex function \(f\).
+
+\begin{definition}
+    The Dolbeault cohomology groups of \(S\) are
+    \begin{align*}
+        \HH^{0,0}(S)&=\ker(\bar\partial : \Omega^{0,0}(S)\to \Omega^{0,1}(S))\\
+        &=\{\text{global holomorphic functions}\}\\
+        \HH^{1,0}(S)&=\ker(\bar\partial : \Omega^{1,0}(S)\to \Omega^{1,1}(S))\\
+        &=\{\text{global holomorphic \(1\)-forms}\}\\
+        \HH^{0,1}(S)&=\frac{\Omega^{0,1}(S)}{\img(\bar\partial:\Omega^{0,0}(S)\to
+        \Omega^{0,1}(S))}\\
+        \HH^{1,1}(S)&=\frac{\Omega^{1,1}(S)}{\img(\bar\partial:\Omega^{1,0}(S)\to
+        \Omega^{1,1}(S))}.
+    \end{align*}
+\end{definition}
+
+\begin{exercise}
+    For \(S= \mathbb{C}\), note that \(\HH^1(S)=0\) but
+    \(\HH^{1,0}(S)\) is infinite dimensional. Now consider a \((0,1)\)-form on
+    \(\mathbb{C}\) of the form \(fd\bar z\). Show that there is a complex
+    function \(g\) on \(\mathbb{C}\) with \(\bar\partial g = fd\bar z\). So
+    \(\HH^{0,1}(\mathbb{C})=0\). This is called the \(\bar\partial\)--Poincar\'e
+    lemma.
+\end{exercise}
+
+Note that while we have good geometric interpretations of \(\HH^{0,0}\) and
+\(\HH^{1,0}\), interpreting \(\HH^{0,1}\) takes a bit more work. Suppose we try
+to find a meromorphic function on a Riemann surface \(S\) with a simple pole at
+\(p\in S\) and no other poles. This would, for instance, show that \(S\cong
+\mathbb{P}^1\). Finding such a function locally is trivial --- just pick a local
+coordinate \(z\) in a neighbourhood \(U\ni p\) and choose the function
+\(\frac{1}{z}\). Let \(\beta\) be a smooth cut-off function near \(p\)  (i.e.\ a
+real function supported on \(U\) and equal to \(1\) near \(p\)). So \(\beta(\frac{1}{z})\) induces a smooth function on \(S\setminus \{p\}\). We
+want a smooth function \(g\) on \(S\) such that \(g+\beta(\frac{1}{z})\) is
+holomorphic on \(S\setminus \{p\}\). Now \(A=\bar\partial \beta(\frac{1}{z})\)
+has compact support in \(U\setminus \{p\}\) (since \(\beta=1\) near \(p\)),
+and we can extend \(A\) to a \((0,1)\)-form on \(S\) by extending by zero
+over \(p\). So we want to solve \(\bar \partial g = -A\) for \(A\in
+\Omega^{0,1}(S)\), and a solution exists if and only if the class \([A]\in
+\HH^{0,1}(S)\) equals zero.
+
+\begin{corollary}
+    Suppose \(S\) is a compact Riemann surface with \(\HH^{0,1}(S)=0\). Then
+    \(S\cong \mathbb{P}^1\).
+\end{corollary}
+
+\begin{theorem}
+    Let \(S\) be a compact Riemann surface. We have the following operations and
+    compatibilities on Dolbeault cohomology.
+    \begin{enumerate}
+        \item The map \(\sigma:\HH^{1,0}(S)\to \HH^{0,1}(S)\), taking a global
+        holomorphic one-form \(\alpha\) to its conjugate \(\bar\alpha\), is a
+        complex anti-linear isomorphism.
+        \item The bilinear map \(B:\HH^{1,0}(S)\times\HH^{0,1}(S)\to
+            \mathbb{C}\) given by \(B(\alpha, [\theta])=\int_S \alpha\wedge
+            \theta\) is a perfect pairing. In particular there is an isomorphism
+            \(\HH^{0,1}(S)\cong (\HH^{1,0}(S))^\ast\).
+        \item The map \(\HH^{1,0}(S)\oplus \HH^{0,1}(S)\to \HH^1(S)\) defined by
+        \((\alpha,\theta)\mapsto
+        \iota(\alpha)+\overline{\iota(\sigma^{-1}\theta)}\) is an isomorphism,
+        where \(\iota:\HH^{1,0}(S)\to \HH^1(S)\) sends a holomorphic \(1\)-form
+        to its cohomology class.
+        \item The map \(\gamma:\HH^{1,1}(S)\to \HH^2(S)\) defined by the natural
+        inclusion \(\img(\bar\partial:\Omega^{0,1}\to \Omega^2)\subset
+        \img(d:\Omega^1\to \Omega^2)\) is an isomorphism.
+    \end{enumerate}
+    \begin{proof}
+        These are all consequences of inverting the Laplacian. We first show
+        \(\sigma\) is surjective. Given \([\theta]\in \HH^{0,1}(S)\) we want a
+        \(\theta'=\theta+\bar\partial f\) with \(\partial \theta'=0\), since
+        then \(\alpha=\overline{\theta'}\) is a holomorphic \(1\)-form and
+        \([\theta]=\sigma(\alpha)\). So we want to solve \(\partial
+        \bar\partial f = -\partial \theta\). But since \(\int_S\partial
+        \theta =0\), we can invert the Laplacian \(\partial
+        \bar\partial=\frac{1}{2}i\Delta\) to produce \(f\).
+
+        The composition of \(\sigma\) with \(B\) is, up to a factor, the
+        Hermitian pairing \(\langle \alpha, \beta \rangle=\int_S
+        \alpha\wedge \bar\beta\) which is positive definite. So \(B\) is a
+        perfect pairing and \(\sigma\) is injective.
+
+        The remaining two can be proved similarly, and are left as exercises.
+    \end{proof}
+\end{theorem}
+
+We can now relate the topological genus to complex geometry.
+
+\begin{corollary}
+    For a compact Riemann surface \(S\) of genus \(g\), we have
+    \(\textnormal{dim}\,\HH^{1,0}(S)=\textnormal{dim}\,\HH^{0,1}(S)=g\).
+\end{corollary}
+
+\section{Inverting the Laplacian}
+\marginpar{Lecture 6, 14/11/23} Having seen the utility of
+\cref{thm:laplace-inversion}, we will now repay the technical debt and look at
+its proof. This will invoke key results from functional analysis which we will
+recall as necessary.
+
+\subsection{The Dirichlet norm} Let \(S\) be a Riemann surface,
+\(\alpha\in \Omega^{1,0}(S)\) given locally by \(fdz\) for \(f\) a smooth
+\(\mathbb{C}\)-valued function. Then \(i\alpha \wedge \bar\alpha\) is a
+\((1,1)\)-form on \(S\) given locally as \(i\cdot |f|^2
+dz\wedge d \bar z = |f|^2dx\wedge dy\). In particular this is a non-negative
+real \(2\)-form hence we have \[||\alpha||^2 \coloneq \int_S i\alpha \wedge
+\bar\alpha \geq 0.\] When \(\alpha\) has compact support, this quantity is
+finite and thus defines a norm on the space of compactly supported
+\((1,0)\)-forms \(\Omega^{1,0}_C(S)\). This norm is induced by the hermitian
+inner product \(\langle \alpha,\beta \rangle = \int_S i \alpha \wedge \bar
+\beta.\)
+
+Fixing a volume-form (i.e.\ a nowhere vanishing real \(2\)-form) \(\omega\), we
+can define a \textit{pointwise norm} \(|\alpha|^2\in \Omega^0(S)\),
+characterised by the property \(i\alpha \wedge \bar \alpha = |\alpha|^2
+\omega\). Then we have \(||\alpha||^2=\int_S |\alpha|^2 \omega,\) i.e.\ the norm
+on \(\Omega^{1,0}_C(S,\mathbb{C})\) comes from the \(L^2\)-norm on
+\(\Omega^0_C(S,\mathbb{R})\).  The norm on \((1,0)\)-forms is on the other hand
+independent of the choice of volume-form.
+
+Recall there is an isomorphism \(\Omega^{1,0}(S)\cong \Omega^{0,1}(S)\) given by
+complex conjugation, and there is an orthogonal decomposition
+\(\Omega^{1}(S,\mathbb{C})=\Omega^{1,0}(S)\oplus \Omega^{0,1}(S)\). Writing
+\(\alpha^{1,0}\) and \(\alpha^{0,1}\) for the two components of a complex
+\(1\)-form \(\alpha\) with respect to this decomposition, we can naturally
+extend the norm above to \(\Omega^1_C(S,\mathbb{C})\) as \(||\alpha||^2 =
+||\alpha^{1,0}||^2+||\alpha^{0,1}||^2\). Here \(||\alpha^{0,1}||\) is by
+definition \(||\overline{\alpha^{0,1}}||\).
+
+The space of compactly supported real \(1\)-forms is naturally the subspace
+\(\{\alpha\in
+\Omega^1_C(S,\mathbb{C})\;|\;\alpha^{1,0}=\overline{\alpha^{0,1}}\}\). Thus the
+norm restricts, and \(\Omega^1_C(S,\mathbb{R})\) has an inner product and a norm given as
+\[\langle A,B \rangle = 2i \int_S A^{1,0}\wedge B^{0,1}, \qquad ||A||^2 =
+2||A^{1,0}||^2.\]
+We can then use the exterior derivative to induce a norm on the space of
+smooth real-valued functions.
+
+\begin{definition}
+    The \textit{Dirichlet inner product} on \(\Omega^0_C(S,\mathbb{R})\) is
+    given by \(\langle f,g \rangle_D \coloneq \langle df,dg\rangle\). This
+    induces the \textit{Dirichlet norm}, given by \(||f||_D = ||df||\). These
+    definitions can also be made for the complex vector space
+    \(\Omega^0(S,\mathbb{C})\) analogously.
+\end{definition}
+
+Note that the Dirichlet inner product (norm) is \underline{not} an inner product
+(resp.\ norm) since, for instance, any non-zero constant function \(f\)
+satisfies \(||f||_D=0\). Conversely if \(||f||_D=||df||\) vanishes, then
+\(df=0\) since \(||\cdot ||\) is a norm on \(\Omega^1_C(S,\mathbb{C})\) and
+hence \(f\) is constant. Thus it makes sense to consider the space
+\(\Omega^0_C(S,\mathbb{R})/\mathbb{R}\) where we quotient out the subspace of
+constant functions.
+
+\begin{proposition}
+    The Dirichlet inner product (norm) is an inner product (resp.\ norm) on
+    \(\Omega^0_C(S,\mathbb{R})/\mathbb{R}\) and turns it into a pre-Hilbert
+    space (i.e.\ a vector space equipped with an inner product).
+\end{proposition}
+
+We remark that the definition of the Dirichlet inner product makes sense even when just one of the arguments has compact support.
+
+\begin{lemma}
+    If \(f,g\) are smooth functions on \(S\) and \(f\) has compact support,
+    then \(\langle f,g \rangle_D = \int_S f\cdot \Delta g = \int_S
+    \Delta f \cdot g.\)
+
+    \begin{proof}
+        A partition of unity argument reduces this to the local case. We then
+        have \(\langle f,g\rangle_D = 2i \int_S \partial f\wedge \bar\partial g
+        \), so writing \(\partial f \wedge \bar\partial g = \partial
+        (f\bar\partial g)-f\cdot\partial\bar\partial g \) and using Stokes'
+        theorem gives the required result. Note this is just integration by
+        parts.
+    \end{proof}
+\end{lemma}
+
+We can now prove one direction of \cref{thm:laplace-inversion}.
+
+\begin{corollary}
+    Let \(S\) be a compact Riemann surface with a real \(2\)-form \(\rho\).
+    Then up to adding a constant there is at most one \(f\in
+    \Omega^0(S,\mathbb{C})\) satisfying \(\Delta f = \rho\), and such an \(f\)
+    exists only if \(\int_S \rho = 0\).
+
+    \begin{proof}
+        To show uniqueness of the solution, we show \(\Delta f = 0\) (if and)
+        only if \(f\) is a constant. Indeed we have \(\int_S f\Delta
+        f = ||f||_D^2\), which vanishes if and only if \(df=0\) (i.e.\ \(f\) is
+        constant) by properties of norms.
+
+        If \(\rho = \Delta f\) for some function \(f\), then \(\int_S\rho =
+        2i \int_S \partial \bar\partial f = 2i \int_S d(\partial f)\) which
+        vanishes by Stokes' theorem.
+    \end{proof}
+\end{corollary}
+
+\subsection{The heart of the proof} Our goal is to show that
+a real \(2\)-form \(\rho\) on a compact Riemann surface \(S\) that satisfies
+\(\int_S\rho = 0\) \ is in the image of \(\Delta\). Suppose \(\int_S\rho=0\),
+and consider the pre-Hilbert space \(\Omega^0(S,\mathbb{R})/\mathbb{R}\).
+
+\begin{exercise}
+    For \(f\in \Omega^0(S,\mathbb{R})\), we have \(\Delta f = \rho \) if and
+    only if for all \(g\in \Omega^0(S,\mathbb{R})\), \(\int_S g(\rho - \Delta
+    f) = 0\).
+\end{exercise}
+
+Now we know for all \(f,g\) in this space, we have
+\(\int_S\psi(\rho-\Delta\varphi) = \int_S\psi\rho - \langle
+\varphi,\psi\rangle_D\). In particular, \(\Delta f = \rho\) if
+and only if \(\int_S g\rho = \langle f,g\rangle_D\) for all \(g\). This reduces
+the problem to studying the linear operator
+\[
+    \hat\rho :\Omega^0(S,\mathbb{R})/\mathbb{R} \to \mathbb{R}, \qquad g\mapsto
+    \int_S g\rho
+\]
+which is well-defined since \(\int_S \rho = 0\). \underline{Claim} this is a
+bounded linear operator on \(\Omega^0(S,\mathbb{R})/\mathbb{R}\) and hence
+extends to the metric completion \(H =
+(\Omega^0(S,\mathbb{R})/\mathbb{R})^{\wedge}\) which is the Hilbert space whose
+points are given by equivalence classes of Cauchy sequences in
+\(\Omega^0(S,\mathbb{R})/\mathbb{R}\).
+
+Then the Riesz representation theorem states that every bounded linear operator
+on \(H\) is of the form \(\langle \cdot, f\rangle_D\) for some \(f\in H\), thus
+giving a weak solution to the problem-- we have an \(f\in H\) such that
+\(\hat\rho(g)=\langle f, g\rangle_D\) for all \(g\). Finally, we
+\underline{claim} that \(f\) is in fact in
+\(\Omega^0(S,\mathbb{R})/\mathbb{R}\), i.e.\ \(f\) is smooth. This finishes the
+proof of \cref{thm:laplace-inversion}.
+
+\subsection{The boundedness claim} We first prove an analytic result about
+smooth functions on \(\mathbb{R}^2\). Let \(U\subset \mathbb{R}^2\) be a bounded
+convex open set of diameter \(d\) and area \(A\) with respect to the standard
+Lebesgue measure \(d\mu\). For a smooth function \(\varphi\) defined on an open
+set containing \(\bar U\), write \(\bar\varphi = \frac{1}{A} \int_U \varphi
+d\mu\) for its average. We show the deviation of \(\varphi\) from its average is
+bounded.
+
+\begin{lemma}[(Poincar\'e inequality)]
+    For \(U,d,A,\varphi\) as above and \(x\in U\), we have
+    \[
+        |\varphi(x)-\bar\varphi| \leq \frac{d^2}{2A}\int_{y\in
+        U}\frac{|\nabla \varphi(y)|}{|x-y|} d\mu.
+    \]
+
+    \begin{proof}
+        Up to translation and adding a constant, we can assume \(x=\mathbf{0}\)
+        is the origin and \(\varphi(\mathbf{0})=0\) so we have to bound
+        \(|\bar\varphi|\). Since \(U\) is convex, we
+        can use polar coordinates to write \(\bar\varphi =
+        \frac{1}{A}\int_0^{2\pi}\int_0^{R(\theta)}\varphi(r,\theta)rdrd\theta\).
+        Moreover, we can write \(\varphi(r,\theta)=\int_0^r \frac{\partial
+        \varphi}{\partial s}(s,\theta)ds\) since \(\varphi(\mathbf{0})=0\). Thus
+        we have
+        \begin{align*}
+            \bar\varphi
+            &= \frac{1}{A}\int_{\theta=0}^{2\pi} \int_{r=0}^{R(\theta)}
+            \int_{s=0}^r \frac{\partial \varphi}{\partial s}(s,\theta)
+            rdsdrd\theta\\
+            &= \frac{1}{A} \int_{\theta=0}^{2\pi} \int_{s=0}^{R(\theta)}
+            \left( \int_{r=s}^{R(\theta)} rdr\right) \frac{\partial
+            \varphi}{\partial s}(s,\theta) dsd\theta
+        \end{align*}
+        and \(\int_{r=s}^{R(\theta)}rdr =\frac{1}{2}(R(\theta)^2-s^2) \leq
+        \frac{1}{2}R(\theta)^2 \leq \frac{1}{2}d^2\). Additionally, we know
+        \(|\frac{\partial \psi}{\partial s}|\leq |\nabla \varphi|\) so putting
+        these together, we have the required inequality
+        \begin{align*}
+            |\bar\varphi|
+            &\leq \frac{d^2}{2A} \int_{\theta=0}^{2\pi} \int_{s=0}^{R(\theta)}
+             |\nabla\varphi(s,\theta)| \cdot \frac{1}{s} sdsd\theta \\
+            &\leq \frac{d^2}{2A} \int_{y\in U} \frac{|\nabla
+            \varphi(y)|}{|y|}d\mu.
+        \end{align*}
+    \end{proof}
+\end{lemma}
+
+\begin{corollary}
+    \label{cor:poincare-ineq}
+    Under the hypotheses above, we have \[\int_U
+    |\varphi-\bar\varphi|^2d\mu \leq \frac{d^2\pi}{2A}\int_U|\nabla
+    \varphi|^2 d\mu.\]
+    \begin{proof}
+        This is essentially a consequence of Yang's inequality on convolutions--
+        for functions \(g,h\) on \(\mathbb{R}^2\) such that \(g\) is
+        integrable and \(h\) is square-integrable, we have
+        \[
+            ||g\ast h||_{L^2} \leq ||g||_{L^1} \cdot ||h||_{L^2}
+        \]
+        where \(g\ast h(x)=\int_{y\in \mathbb{R}^2} g(y)h(x-y)d\mu\) is the
+        \textit{convolution} of \(g\) and \(h\), and \(||\cdot ||_{L^1},
+        ||\cdot ||_{L^2}\) denote the \(L^1\) and \(L^2\) norms respectively.
+        Convolution \(\ast\) is a commutative and associative operation
+        whenever defined.
+
+        To prove the corollary we choose \(g(x)=\frac{d^2}{2A}\frac{1}{|x|}\) if
+        \(0<|x|<d\) and \(0\) otherwise, noting this is
+        discontinuous but nonetheless integrable with
+        \(||g||_{L^1}=\frac{d^3\pi}{A}.\) Likewise, choose
+        \(h(x)=|\nabla \varphi(x)|^2\) for \(x\in U\) and \(0\)
+        otherwise. Then \(g\ast h\) is a positive function on
+        \(\mathbb{R}^2\) and the Poincar\'e inequality says
+        \(|\varphi(x)-\bar\varphi|\leq |g\ast h(x)|\) for all
+        \(x\in U\). In particular
+        \(\int_U|\varphi-\bar\varphi|^2d\mu\leq ||g\ast h||_{L^2}^2\), so Yang's inequality gives the result.
+    \end{proof}
+\end{corollary}
+
+We can now show \(\hat\rho:\Omega^0(S,\mathbb{R})/\mathbb{R}\to \mathbb{R}\)
+given by \(g\mapsto \int_S g\rho\) is a bounded operator. We first reduce to the
+case when \(\rho\) is supported in a single coordinate chart-- since
+integration over \(S\) defines an isomorphism \(H^2(S)\cong \mathbb{R}\), we
+know \( [\rho]= \int_S\rho =0\) i.e.\ \(\rho=d\theta\) for some \(1\)-form.
+By compactness of \(S\), we can use a partition of unity argument to write
+\(\theta = \theta_1+\ldots+\theta_n\) where each \(\theta_i\) is a \(1\)-form
+supported on a bounded convex coordinate chart. Then each \(\rho_i=d\theta_i\)
+is a \(2\)-form supported on such a chart, satisfies \(\int_S\rho_i = 0\), and
+we have \(\rho=\rho_1+\ldots+\rho_n\). Thus \(\hat\rho =
+\hat\rho_1+\ldots+\hat\rho_n\), and it suffices to show each operator
+\(\hat\rho_i\) is bounded.
+
+Assume \(\rho\) is a \(2\)-form supported on a bounded convex coordinate chart
+\(U\subset \mathbb{R}^2\). Using the standard nowhere-vanishing volume form
+\(dx\wedge dy\), we can identify \(2\)-forms with functions so that
+\(\rho=hdx\wedge dy\) for a smooth function \(h\) supported on \(U\). A function \(\varphi \in \Omega^0(S)\) induces a function
+on \(U\) by restriction, and we have
+\[
+    |\hat\rho(\varphi)|
+    = \bigg\vert \int_U h\varphi d\mu \bigg\vert
+    = \bigg\vert \int_U h(\varphi -\bar \varphi) d\mu \bigg\vert
+    \leq ||h||_{L^2(U)} \cdot ||\varphi-\bar\varphi||_{L^2(U)}
+\]
+where we recall \(\int_U h\bar\varphi d\mu = \bar\varphi \int_U hd\mu = 0\) and
+use the Cauchy--Schwartz inequality. Thus the corollary gives us
+\[|\hat\rho(\varphi)|\leq \frac{d^2\pi}{2 A} \cdot ||h||_{L^2(U)}\cdot ||\nabla
+\varphi||_{L^2(U)}.\] Lastly, note that
+\(||\nabla \varphi||_{L^2(U)}\leq ||d\varphi||_{L^2(X)}=||\varphi||_D\) and
+write \(C=\frac{d^2\pi}{2 A}\cdot ||h||_{L^2(U)}\)  so that we have the required
+inequality
+\[
+    |\hat\rho(\varphi)|\leq C\cdot ||\varphi||_D
+\]
+
+\subsection{The regularity claim} Riesz's representation theorem gives us a
+sequence of functions \(f_1,f_2,\ldots\) that is Cauchy with respect to the
+Dirichlet norm, such that for any \(g\in \Omega^0(S,\mathbb{R})\) we have
+\(\lim_{i\to \infty}\langle f_i,g\rangle_D= \hat\rho(g)\).
+
+We first show that the sequence \((f_i)\) converges to an \(L^2\) function on
+\(S\). This is easy locally-- on any coordinate chart \(U\) we may assume
+\(f_i\) has integral zero by adding a constant, so that we have
+\(||f_i-f_j||_{L^2(U)}\leq C\cdot ||f_i-f_j||_D\) by \cref{cor:poincare-ineq}.
+Thus the sequence is Cauchy with respect to the \(L^2\) norm which is complete
+on the space of square-integrable functions.
+
+To show the sequence is Cauchy in \(L^2(S)\), suppose \(U,V\) are open
+coordinate charts with \(U\cap V\neq \emptyset\) and \((f_i)\) converges in
+\(L^2(U)\). We know there are
+constants \(c_1,c_2,\ldots\) such that \((f_i+c_i)\) converges
+in \(L^2(V)\), and up to adding a fixed constant to each \(c_i\), we may also
+assume the two limits agree on \(L^2(U\cap V)\). But this implies \(c_i\rightarrow 0\) so in fact we could have
+chosen \(c_i=0\) to begin with. Since \(S\) is connected, it follows that the
+sequence \((f_i)\) converges in the \(L^2\) norm locally on each chart, and
+hence converges to some \(f\in L^2(S)\).
+
+It remains to show \(f\) is smooth, which can be done locally. This is then the
+content of the following result.
+
+\begin{proposition}[(Weyl's lemma)]
+    Suppose \(U\) is a bounded open set in \(\mathbb{C}\) and \(\rho\in
+    \Omega^2(U)\) is a smooth \(2\)-form. If \(f\in L^2(U)\) is such that for
+    any smooth compactly supported function \(g\) we have \(\int_U (\Delta f)g =
+    \int_U g\rho\) then \(f\) is smooth and satisfies \(\Delta f = \rho\).
+
+    \begin{proof}
+        Omitted, see \cite{donaldsonRiemannSurfaces}. The first step is to
+        reduce to \(\rho=0\) by convolutions, so that we have a weakly harmonic
+        function \(f\) (i.e.\ an \(L^2\) function such that \(\Delta f=0\) in a
+        weak sense). Then we want to show that weakly harmonic functions are
+        smooth, which we do by finding an explicit inverse to the Laplace
+        operator in terms of convolutions.
+    \end{proof}
+\end{proposition}
+
+\section{The Riemann--Roch theorem}
+\marginpar{Lecture 7, 21/11/23} Let \(S\) be a compact Riemann surface of genus \(g\), and let
+\(D=\{p_1,\ldots,p_d\}\) be a set of distinct points in \(S\).
+
+\begin{definition}
+    We denote by \(\HH^0(D)\) the vector space of meromorphic functions on
+    \(S\) with at worst a simple pole at each \(p_j\). Write
+    \(\HH^0(K-D)\) for the vector space of holomorphic \(1\)-forms vanishing
+    at each \(p_j\).
+\end{definition}
+
+The cohomological notation will be explained later. For now, these are complex
+vector spaces keeping track of functions and \(1\)-forms with interesting
+properties and the Riemann--Roch theorem will relate their dimensions. A partial
+result in the form of an inequality was first proven by Riemann, and Roch
+subsequently completed the work by computing the error term. This, together with
+its many generalisations (the Hirzebruch--Riemann--Roch theorem, the
+Grothendieck--Riemann--Roch theorem, and the Atiyah--Singer index theorem) is
+one of the most fundamental results of algebraic geometry.
+
+\begin{theorem}[(Riemann--Roch)]
+    For \(S,D\) as above, we have
+    \(\dim\HH^0(D)-\dim\HH^0(K-D)=d-g+1.\)
+\end{theorem}
+
+This is typically shown using algebro-geometric methods (Serre duality), but we
+don't know that \(S\) has an algebraic structure yet. In fact we will use this
+result to show all compact Riemann surfaces are algebraic, so our proof of the
+Riemann--Roch theorem will be analytic.
+
+\subsection{\(\mathbf{(0,1)}\)--cohomology classes control meromorphic
+functions} To motivate the proof, we revisit a construction from before.
+Suppose we want to construct a meromorphic function \(f\) on \(S\) with exactly
+one pole, simple at \(p\in S\). We can easily find a smooth function
+\(\psi\in \Omega^0(S\setminus \{p\}, \mathbb{C})\) that is meromorphic near
+\(p\) with a simple pole; for instance by taking the function \(\frac{1}{z}\) in
+a local chart and extending globally by multiplying with a cutoff function \(\beta\) which is \(1\) near \(p\) and vanishes outside a neighbourhood of \(p\). The problem is thus reduced to finding a smooth function \(g\in
+\Omega^0(S,\mathbb{C})\) such that \(g-\psi\) is holomorphic
+on \(S\setminus \{p\}\), or equivalently \(\bar\partial g= \bar\partial \psi\)
+on \(S\setminus \{p\}\).
+
+Consequently consider the smooth \((0,1)\)-form \(A=\bar\partial \psi\), which
+vanishes near \(p\) (since \(\psi\) is holomorphic there) so extends by \(0\)
+across \(p\) to give a global form on \(S\). We want to find \(g\in
+\Omega^0(S,\mathbb{C})\) which solves \(\bar\partial g + A=0\), the obstruction
+to this is precisely the class \([A]\in \HH^{0,1}(S)\) and we have a solution if
+and only if \([A]=0\). But even if \([A]\neq 0\), this obstruction class is
+defined (up to scaling) independently of choice of \(\psi\). Indeed if
+\(\varphi\in \Omega^0(S\setminus\{p\},\mathbb{C})\) is meromorphic near \(p\)
+with a simple pole, then for some \(\lambda \in \mathbb{C}\) (given by the
+residue) we have that \(\varphi-\lambda \psi\) is smooth everywhere (including
+near \(p\)) so \([\bar\partial \varphi]= \lambda[\bar\partial \psi]\in
+\HH^{0,1}(S)\). Thus the obstruction to finding a global meromorphic function is
+well-defined (up to scaling) as a \((0,1)\)-Dolbeault cohomology class. Moreover
+we can represent this class by a \((0,1)\)--form \(\bar\partial \psi\) for
+\(\psi\) supported on a small punctured neighbourhood of \(p\), smooth away from
+\(p\).
+
+For multiple distinct points \(p_1,\ldots,p_d\in S\), we get \((0,1)\)--forms \(A_j
+= [\bar\partial \psi_j]\) supported near \(p_j\) from the above construction.
+Similar arguments show we can find a meromorphic function with simple poles
+precisely on the \(p_i\) provided there are \(\lambda_j\in \mathbb{C}\setminus
+0\) with \(\lambda_1[A_1]+\ldots+\lambda_d[A_d]=0\) in \(\HH^{0,1}(S)\). Indeed, in
+that case \(\psi=\sum_j \lambda_j\psi_j \in \Omega^0(S\setminus
+\{p_1,\ldots,p_d\},\mathbb{C})\) is non-zero and meromorphic with a simple pole
+near each \(p_j\), and \(\bar\partial \psi\) extends to a global \((0,1)\)--form
+that is cohomologically trivial. Thus there is a smooth function \(g\) with
+\(\bar\partial \psi = \bar\partial g\) on \(S\setminus \{p_1,\ldots,p_d\}\) and
+\(\bar\partial g  (p_j)= 0\), so that \(g-\psi\) is the required meromorphic
+function.
+
+We can immediately use this reasoning to prove some results.
+
+\begin{corollary}
+    Suppose \(S\) has genus \(g\). Then given
+    \(g+1\) points \(p_1,\ldots,p_{g+1}\) in \(S\), there is a meromorphic
+    function on \(S\) with at worst simple poles, at least one pole, and smooth
+    away from \(p_1,\ldots,p_{g+1}\).
+    \begin{proof}
+        We know \(\HH^{0,1}(S)\) has dimension \(g\), so any \(g+1\) elements of
+        \(\HH^{0,1}(S)\) must be linearly dependent.
+    \end{proof}
+\end{corollary}
+
+In particular, we have a classification of compact Riemann surfaces of genus
+\(0\).
+
+\begin{corollary}
+    Suppose \(S\) has genus \(0\). Then \(S\) is biholomorphic to the Riemann
+    sphere.
+    \begin{proof}
+        Indeed then \(\HH^{0,1}(S)=0\), so we can find a meromorphic function
+        with a simple pole which gives the required biholomorphism.
+    \end{proof}
+\end{corollary}
+
+\subsection{The residue map} The second important ingredient in proving the
+Riemann--Roch theorem is the concept of residues. What is the residue of a
+meromorphic function \(f\) at a point \(p\in S\)? In a local coordinate \(z\),
+if \(f(z)=\sum_i a_i z^i\) then the residue is \(a_{-1}\). With respect to
+another local coordinate \(w=\lambda_1 z + \lambda_2 z^2+\ldots\), the residue is
+\(\lambda_1a_{-1}\).  Noting that \(\frac{\partial}{\partial z}=\lambda_1
+\frac{\partial}{\partial w}\in T_p^\text{hol}S\) (the holomorphic tangent
+space\footnote{The holomorphic tangent space can be defined as follows.
+Recall that the tangent space \(T_pS\) at \(p\in S\) has a natural complex
+structure \(J:T_pS\to T_pS\), which extends to a \(\mathbb{C}\)-linear complex
+structure \(J:T_pS\otimes \mathbb{C}\to T_pS\otimes \mathbb{C}\) by writing
+\(J(v+iw)=J(v)+iJ(w)\) for \(v,w\in T_pS\). Then \(J^2=-\text{Id}\) so \(J\) has
+eigenvalues \(\pm i\), and the holomorphic tangent space is the
+\(+i\)--eigenspace. Equivalently, one can check that this is precisely the
+subspace of \(T_pS\otimes \mathbb{C}\) where all anti-linear cotangent-vectors
+(i.e.\ elements of \(T_p^{0,1}S\) vanish.) In local coordinates, the holomorphic
+tangent space has vectors of the form \(\frac{\partial}{\partial z}\) for
+\(z=x+iy\) a local holomorphic coordinate.}), we thus see that the quantity
+\(a_{-1}\frac{\partial}{\partial z}\in T_p^\text{hol}S\) is independent of
+coordinates, and this is what we call the \textit{residue} of \(f\) at \(p\).
+
+\subsection{The obstruction-class map} For similar reasons, we can also define
+the obstruction-class at \(p\in S\) from the previous section as a map
+\(A:T_p^\text{hol}S \to \HH^{0,1}(S)\) by first fixing a smooth cutoff function
+\(\beta\), and then mapping \(\frac{\partial}{\partial z}\mapsto [\bar\partial
+\beta\cdot \frac{1}{z}]\).  Indeed for a different local coordinate
+\(w=\lambda_1z+\lambda_2z^2+\ldots\), we see that \(\frac{1}{z}-
+\lambda_1\frac{1}{w}\) is holomorphic near \(p\) so \([\bar\partial \beta\cdot
+\frac{1}{z}]=\lambda_1 [\bar\partial \beta\cdot \frac{1}{w}]\).
+
+We examine the dual map \(A^T: \HH^{0,1}(S)^\ast \to (T_p^\text{hol}S)^\ast\).
+Recall we can identify \(\HH^{1,0}(S)\) with \(\HH^{0,1}(S)^\ast\) via the
+perfect pairing \((\alpha,\beta)\mapsto \int_S \alpha\wedge \beta\). Note also
+that \((T_p^\text{hol}S)^\ast\) is simply the holomorphic cotangent space
+\(T_p^{1,0}S\). But there is an obvious evaluation map
+\(\text{ev}:\HH^{1,0}(S)\to T_p^{1,0}S\) sending a holomorphic \(1\)-form to its
+value at \(p\), and we now show that \(A^T\) is essentially this.
+
+\begin{lemma}
+    Under the identifications above, \(A^T=2\pi i\cdot \textnormal{ev}\).
+    \begin{proof}
+        This is a local result, so choose a coordinate \(z\). Given a
+        \((1,0)\)-form \(\alpha\), we see that \(A^T(\alpha)\) sends the tangent
+        vector \(\frac{\partial}{\partial z}\) to \(\langle \alpha,
+        A\frac{\partial }{\partial z}\rangle = \int_S \alpha \wedge
+        (\bar\partial \beta \cdot \frac{1}{z}).\) But if \(\alpha\) is locally
+        \(g(z)dz\), we see that the integral becomes \(\int_\mathbb{C}
+        \bar\partial \beta\cdot \frac{g(z)}{z}dz\) (noting that \(\beta\) is
+        supported on the coordinate chart around \(p\)). Choose a circle
+        \(\gamma\) around \(p\) on which \(\beta=1\), so that Stokes' theorem
+        gives us
+        \[\int_\mathbb{C} \bar\partial \beta\cdot \frac{g(z)}{z}dz =
+        \int_\gamma \frac{g(z)}{z}dz.\]
+        By Cauchy's residue theorem, this is \(2\pi i\cdot  g(p)\) as required.
+    \end{proof}
+\end{lemma}
+
+We can now prove the Riemann--Roch theorem.
+All (co)-tangent spaces considered in the rest of this section will be
+holomorphic (hence of \(\mathbb{C}\)-dimension one) and we will simply write
+\(T_pS\) instead of \(T_p^\text{hol}S\) and likewise \(T_p^\ast S\) instead of
+\(T_p^{1,0}S\).
+
+
+\begin{proof}[Proof of the Riemann--Roch theorem]
+    For a collection of points \(D=\{p_1,\ldots,p_d\}\subset S\), we
+    have a residue map \(R: \HH^0(D)\to \bigoplus_{j=1}^d T_{p_j}S\)
+    defined in the obvious way. The kernel of this map is the space of global
+    holomorphic functions, which are all constant since \(S\) is compact.
+
+    Likewise, we have a map \(A:\bigoplus_{j=1}^d T_{p_j}S\to \HH^{0,1}(S)\)
+    coming from obstruction-classes. We showed that \(A(v_1,\ldots,v_d)=0\) if and
+    only if \((v_1,\ldots,v_d)\) are the residues of a meromorphic function in
+    \(\HH^0(D)\), i.e.\ that the kernel of \(A\) is precisely the image of
+    \(R\). This gives us an exact sequence
+    \[0\to \mathbb{C}\to \HH^0(D)\xrightarrow{\;R\;} \bigoplus_{j=1}^d T_{p_j}S
+    \xrightarrow{\;A\;} \HH^{0,1}(S).\]
+
+    The proof is now linear algebra-- we have \(\dim\img(A)+\dim\HH^0(D)=d+1\)
+    from the exact sequence, and \(\dim\img(A)=\dim\HH^{0,1}(S)-\dim \ker
+    A^T.\) Lastly, note that \(A^T:\HH^{1,0}(S)\to \bigoplus_{j=1}^d
+    T_{p_j}^\ast S\) is the evaluation map, so its kernel is precisely
+    \(\HH^0(K-D)\). The result follows.
+\end{proof}
+
+\section{The uniformisation theorem}
+
+\begin{theorem}[(The uniformisation theorem)]
+    Let \(S\) be a non-compact simply connected Riemann surface. Then \(S\) is
+    biholomorphic to either \(\mathbb{C}\) or the upper half plane
+    \(\mathbb{H}\).
+\end{theorem}
+
+Note we have already shown any simply connected compact Riemann surface must be
+biholomorphic to \(\mathbb{P}^1\). Since the universal cover of any Riemann
+surface is a simply connected one, we have the following classification result.
+
+\begin{corollary}
+    Any Riemann surface is biholomorphic to one of the following.
+    \begin{enumerate}[(i)]
+        \item The Riemann sphere \(\mathbb{P}^1\);
+        \item the complex plane \(\mathbb{C}\);
+        \item the punctured plane \(\mathbb{C}\setminus \{0\}\cong
+            \mathbb{C}/\mathbb{Z}\);
+        \item a quotient \(\mathbb{C}/\Lambda\) where \(\Lambda \subset
+            \mathbb{C}\) is a lattice; or
+        \item a quotient \(\mathbb{H}/\Gamma\) where \(\Gamma\subset
+        \textnormal{PSL}(2,\mathbb{R})=\textnormal{Aut}\mathbb{H}\) is a
+        discrete group acting freely on \(\mathbb{H}\).
+    \end{enumerate}
+    \begin{proof}
+        Indeed, any Riemann surface is a quotient of its universal cover by an
+        action of its fundamental group and the uniformisation theorem which
+        surfaces can arise as universal covers. Examining their automorphism
+        groups gives the result.
+    \end{proof}
+\end{corollary}
+
+To prove the uniformisation theorem, we need the following analytic result which
+allows us to invert Laplacians on \(S\) (this time non-compact).
+
+\begin{theorem}
+    Let \(S\) be a connected, simply connected, non-compact Riemann surface. If
+    \(\rho\) is a real \(2\)-form of compact support on \(S\) with \(\int_S
+    \rho = 0\), then there is a real function \(\varphi\) on \(S\) with
+    \(\Delta \varphi = \rho\) such that \(\varphi \to 0\) at infinity.
+\end{theorem}
+
+Here we say \(\varphi\to 0\) at infinity in \(S\) if for all \(\epsilon > 0\)
+there is a compact \(K\subset S\) such that \(|\varphi(x)|<\epsilon \) for all
+\(x\notin K\). The proof is omitted, see \cite{donaldsonRiemannSurfaces}. It
+is similar to inverting the Laplacian in the compact case, and the simply
+connectedness provides compensation for the non-compactness.
+
+\begin{proof}[Proof of the uniformisation theorem]
+    Let \(S\) be a non-compact simply connected Riemann surface. As before, we
+    construct a meromorphic function (viewed as a map to \(\mathbb{P}^1\)) and
+    examine its image.
+
+    \underbar{There is a meromorphic function \(f\)  with a simple pole.} Fix
+    \(p\in S\), \(z\) a local coordinate around \(p\), and \(A=\bar\partial
+    \cdot \frac{1}{z}\) a \((0,1)\)-form with \(\beta\) a cutoff function. Let
+    \(\rho = \partial A\) so that \(\rho\) is a complex \(2\)-form with integral
+    zero (Stokes' theorem). Thus by the theorem applied to the real and
+    imaginary parts of \(\rho\) separately, we can find \(g\) with \(\Delta g =
+    \rho\) such that the real and imaginary parts of \(g\) tend to \(0\) at
+    infinity.
+
+    Let \(a\) be the real part of \(A-\bar\partial g\). This is a
+    \((0,1)\)-form so \(\bar\partial a=0\). Since \(\partial(A-\bar\partial
+    g)=0\), we have \(da=0\). Thus since \(\HH^1(S)=0\) (by simply
+    connectedness), there is a real valued \(\varphi\) satisfying
+    \(d\varphi  =a\). So \(d\varphi = (A-\bar\partial g ) + (\bar A -
+    \overline{\bar\partial g})\), \(A=\bar\partial g + \bar\partial
+    \varphi\), and \(\bar\partial (\beta\cdot
+    \frac{1}{z}-(g+\varphi))=0\). This gives us the required meromorphic
+    function \(f=\beta\cdot \frac{1}{z}-g-\varphi\) with a simple pole at \(p\),
+    such that the imaginary part of \(f\) tends to zero at infinity.
+
+    \underbar{The map \(f\) is injective.} Let \(\pm \mathbb{H}\) denote the
+    (open) upper and lower half-planes in \(\mathbb{C}\subset \mathbb{P}^1\),
+    and let \(S_\pm=f^{-1}(\pm \mathbb{H})\) denote their preimages so that
+    \(S_+\cup S_-\) is a dense open set in \(S\) (noting that \(f\) is an open
+    map). Note \(S_\pm\) are non-empty, since \(p\) is a simple pole
+    i.e.\ \(f\) is a local homeomorphism between neighbourhoods of \(p\in S\)
+    and \(\infty \in \mathbb{P}^1\).
+
+    Claim \(f_\pm:S_{\pm}\to \pm \mathbb{H}\) is surjective. Since we know it
+    is an open map, it suffices to show it is also proper. We do this
+    explicitly-- if \(B\subset \mathbb{H}\) is compact then there is an
+    \(\epsilon>0\) such that \(\text{Im}(z)>\epsilon\) for all \(z\in B\). Then
+    \(f^{-1}(B)=f_+^{-1}(B)\) is compact since \(\text{Im}f\) tends to zero at
+    infinity. Similarly \(f_-\) is proper.
+
+    We can now show \(f_\pm : S_\pm \to \pm\mathbb{H}\) is injective. Since
+    \(f_+\) is a holomorphic map between Riemann surfaces, we know it has a
+    degree which is (locally) constant on \(\mathbb{H}\). Showing injectivity is
+    equivalent to showing this degree is \(1\), so suppose \(f_+\) has degree
+    \(d_+\geq 2\). By surjectivity of \(f_+\), we see that for all \(n\in
+    \mathbb{N}_{\geq 0}\) we can find \(x_n,\tilde{x}_n\in S_+\) with
+    \(f(x_n)=f(\tilde{x}_n)=in\) so either \(x_n,\tilde{x}_n\) are distinct or
+    \(f'(x_n)=0\). Since \(f\) tends to zero at infinity, the sequences
+    \((x_n),(\tilde{x}_n)\) lie in a compact set \(K\) and hence converge to
+    \(x,\tilde x\) respectively. But the sequence \((in)\) converges to
+    \(\infty\in \mathbb{P}^1\), so \(f(x)=f(\tilde x)=\infty\) and hence
+    \(x=\tilde x = p\). This contradicts \(f\) being a local homeomorphism with
+    non-vanishing derivative on a neighbourhood of \(p\).
+
+    So \(f\) maps \(S_{\pm}\) bijectively onto the open upper and lower half
+    planes. This allows us to conclude \(f:S\to \mathbb{P}^1\) is injective.
+    Indeed if \(x_1,x_2\in S\) are such that \(f(x_1)=f(x_2)=z\in \mathbb{P}^1\)
+    then we can find disjoint discs \(D_1,D_2\) around \(x_1,x_2\) and a
+    neighbourhood \(N\ni z\) such that \(N\subset f(D_1)\cap f(D_2)\). Choose
+    \(z'\in N\cap \mathbb{H}\), this gives us distinct \(x_1'\in D_1\) and
+    \(x_2'\in D_2\) with \(f(x_1')=f(x_2')=z'\) contradicting that \(f\) is
+    injective on \(S_+\).
+
+    \underbar{The image of \(f\) is biholomorphic to \(\mathbb{C}\) or
+    \(\mathbb{H}\).} We have shown \(f:S\to \mathbb{P}^1\) is injective and
+    biholomorphic onto its image, which is an open set containing
+    \(\mathbb{H}\cup -\mathbb{H} \cup \{\infty\}=\mathbb{P}^1\setminus
+    \mathbb{R}\). Since \(S\) is connected and simply connected, we conclude
+    that \(\mathbb{P}^1\setminus f(S)\) is a compact interval \(I\) in
+    \(\mathbb{R}\subset \mathbb{P}^1\). If \(I\) contains a single point, then
+    \(f(S)\) is biholomorphic to \(\mathbb{C}\) and if \(I\) has nontrivial
+    length, then \(f(S)\) is biholomorphic to \(\mathbb{H}\) (by writing down
+    an explicit M\"obius map). This concludes the proof.
+\end{proof}
+This concludes the main theory of the course, the study of meromorphic functions
+on Riemann surfaces.
+
+\section{Line bundles and divisors}
+\marginpar{Lecture 8, 28/11/23}
+The terminology of meromorphic functions is seldom used in modern algebraic
+geometry. Instead, a generalised theory of line bundles and sections is used.
+These relate, for example, to the theory of embeddings into projective space.
+
+Let \(f_1,\ldots,f_n\) be meromorphic functions on a compact Riemann surface \(S\),
+and let \(\Delta\subset S\) be the (finite) set of poles outside which every
+\(f_j\) is holomorphic. Thus we have a holomorphic map \(S\setminus \Delta
+\to \mathbb{C}^n\), where `holomorphic' means holomorphic in each variable
+separately.
+
+\begin{exercise}
+    Show this can be extended to a holomorphic map from \(S\) to
+    \(\mathbb{P}^n=\mathbb{C}^n\cup \mathbb{P}^{n-1}\). Here we use a natural
+    definition of holomorphic-- the standard charts on \(\mathbb{P}^n\) cover
+    \(\mathbb{C}^n\) with holomorphic transition functions, and a smooth map is
+    holomorphic if it is holomorphic locally.
+\end{exercise}
+
+Instead of understanding this map near \(\Delta\), the theory is clearer if we work with line bundles.
+
+\begin{definition}
+    A rank \(r\) holomorphic vector bundle over a Riemann surface \(S\) is
+    given by an \(r+1\)-dimensional complex manifold \(E\) with a holomorphic
+    map \(p:E\to S\) such that for each \(x\in S\), the fiber \(p^{-1}(x)=E_x\)
+    has the structure of a complex vector space \(\mathbb{C}^r\) and there is
+    an open set \(U\subset S\) containing \(x\) with a holomorphic and fiberwise
+    linear isomorphism \(E|_U\cong U\times \mathbb{C}^n\).
+\end{definition}
+
+We think of the fibers \(E_x\) as `varying holomorphically with \(x\in S\)'. We
+will be interested in line bundles, where the rank \(r\) is \(1\).
+
+There are two further ways to think about vector bundles-- first through
+transition functions. If \(\{U_\alpha\}\) is a cover of \(S\) which trivialises
+\(E\), then we get two trivialisations on each intersection \(U_\alpha\cap
+U_\beta\). Namely we have \(E|_{U_\alpha}\cong U_\alpha\times \mathbb{C}^n\)
+and \(E|_{U_\beta}\cong U_\beta \times \mathbb{C}^n\), and on the
+intersection these differ by a holomorphic endomorphism of \((U_\alpha \times
+U_\beta)\times \mathbb{C}^n\) that is fiberwise linear. Thus we get a
+holomorphic map \(\varphi_{\alpha\beta}:U_\alpha\cap U_\beta \to
+GL(r,\mathbb{C})\) satisfying \(\varphi_{\alpha\alpha}=\text{id}\),
+\(\varphi_{\alpha\beta}=\varphi_{\beta\alpha}^{-1}\), and
+\(\varphi_{\alpha\gamma}=\varphi_{\alpha\beta}\circ \varphi_{\beta\gamma}\) on
+triple intersections. Conversely given any cover \(\{U_\alpha\}\) and collection
+of maps \(\{\varphi_{\alpha\beta}\}\) satisfying these compatibilities, we get a
+vector bundle in the natural way.
+
+Another approach to vector bundles is through sheaves. In geometry, we often
+have assignments such as
+\[
+    \{\text{open sets }U\subset S\}\to \mathscr{O}(U)\coloneq \{\text{holomorphic functions on }U\}
+\]
+where the right hand side is a vector space, and where restrictions give linear
+maps \(\mathscr{O}(U)\to \mathscr{O}(V)\) whenever \(V\subset U\). This is the
+\textit{sheaf of holomorphic functions on \(S\)}. Similarly we can define
+sheaves of continuous functions, smooth functions, differential forms etc.
+
+\begin{definition}
+    A \textit{presheaf of abelian groups} \(F\) on \(S\) is an assignment of
+    abelian groups \(U\mapsto F(U)\) for every open set \(U\subset S\), with
+    additive maps \(\text{res}_{V,U}:F(U)\to F(V)\) whenever \(V\subset U\)
+    satisfying \(\text{res}_{U,U}=\text{id}\), \(\text{res}_{W,V}\circ
+    \text{res}_{V,U}=\text{res}_{W,U}\) whenever defined. We call \(s\in F(U)\)
+    a \textit{section}.
+
+    A presheaf is a \textit{sheaf} if it satisfies two additional properties.
+    Firstly, if we have a cover \(U=\bigcup U_\alpha\) and \(s\in F(U)\) is such
+    that \(\text{res}_{U_\alpha,U}(s)=0\) for all \(\alpha\), then \(s=0\).
+    Secondly if we have a cover \(U=\bigcup U_\alpha\) and sections
+    \(s_\alpha\in F(U_\alpha)\) satisfying \(\text{res}_{U_\alpha\cap U_\beta,
+    U_\alpha}(s_\alpha) = \text{res}_{U_\alpha\cap U_\beta, U_\beta}(s_\beta)\),
+    then there is a section \(s\in F(U)\) satisfying
+    \(\text{res}_{U_\alpha,U}(s)=s_\alpha\).
+\end{definition}
+
+\begin{example}
+    A section of a vector bundle \(p:E\to S\) over \(U\subset S\) is a
+    holomorphic map \(s:U\to E|_U\) satisfying \(p\circ s =\text{id}\). This
+    gives a sheaf of sections of \(E\), which we denote by \(\mathscr{O}(E)\).
+
+    The sheaf of holomorphic functions, denoted \(\mathscr{O}\), is naturally
+    the sheaf of sections of the \textit{trivial line bundle}
+    \(\mathbb{C}\times S\to S\).
+\end{example}
+
+\begin{example}
+    One can form the tangent bundle (written \(-K\) or \(T_S\)) has fibers given
+    by the holomorphic tangent spaces. Likewise, the cotangent bundle \(K\) (or
+    \(T^\ast_S\)) has fibers given by the cotangent spaces, and this is the
+    bundle dual to \(T_S\). Sections of \(T_S\) and \(T^\ast_S\) are holomorphic
+    vector fields and \(1\)-forms respectively.
+\end{example}
+
+
+\subsection{The Picard group} A line bundle \(L\) on \(S\) naturally has a
+\textit{dual} \(L\dual\) . This is most easily defined from the transition
+functions perspective, where the transition functions for \(L\dual\) are inverse
+pointwise to those of \(L\). Likewise we can take tensor products of line
+bundles by multiplying transition functions. 
+
+Since \(\mathscr{O}\) has trivial
+transition functions, isomorphism classes of line bundles on \(S\) form a group
+called the \textit{Picard group of \(S\)}.
+
+We want to relate line bundles to meromorphic functions. For \(p\in S\), there
+is a line bundle \(L[p]\) whose sections is given by meromorphic functions which
+have at worst a simple pole at \(p\) and are holomorphic elsewhere. In terms of
+transition functions, we have a trivialising cover \(S=D\cup (S\setminus
+\{p\})\) where \(D\) is a disc around \(p\). Then our line bundle is determined
+by a holomorphic map \(D\cap (S\setminus \{p\})\to \mathbb{C}^\ast\), i.e.\ a
+nowhere vanishing function on \(D\setminus \{p\}\). We can simply choose a local
+coordinate \(z\) for this, and check that changing the choice gives isomorphic
+bundles.
+
+\begin{definition}
+    A divisor on a compact Riemann surface is a formal sum \(D=\sum_{j=1}^n
+    a_jp_j\) for \(a_j\in \mathbb{Z}\), \(p_j\in S\). Corresponding to this we
+    have the line bundle \(L[D]=\bigotimes_{j=1}^n L[p_j]^{\otimes a_j}\) where
+    a negative power corresponds to taking duals first.
+\end{definition}
+
+Divisors form an abelian group \(\text{Div}(S)\) with a group homomorphism
+\(\text{deg}:\text{Div}(S)\to \mathbb{Z}\) sending \(\sum_j a_j p_j\mapsto
+\sum_j a_j\). Moreover, the set of divisors has a partial order such that
+\(D\geq E\) if all the coefficients of \(D-E\) are non-negative.
+
+If \(f\) is a meromorphic function with zeros of order \(a_j\) at \(p_j\) and
+poles of order \(b_j\) at \(q_j\), we get a divisor \((f)=\sum a_jp_j - \sum
+b_j q_j\). Divisors arising in this way are called \textit{principal}, and the
+principal divisors form a subgroup of \(\text{Div}(S)\). The quotient
+\(\text{Cl}(S)\) is called the \textit{divisor class group}.
+
+These structures satisfy the following additional properties.
+\begin{enumerate}
+    \item Note that principal divisors have degree zero. Thus the degree map
+        descends to give a group homomorphism \(\text{Cl}(S)\to \mathbb{Z}\).
+    \item Two divisors \(D_1,D_2\) define isomorphic line bundles if and only if
+        \(D_1-D_2\) is principal.
+    \item The global holomorphic sections of \(L[D]\) correspond to meromorphic
+        functions \(f\) satisfying \((f)\leq D\). Thus for \(D=\sum a_jp_j\),
+        the vector space \(\HH^0(D)\) of meromorphic functions with at worst
+        poles of order \(a_j\) at \(p_j\) is the space of global sections of
+        \(L[D]\). We also write \(\HH^0(L[D])\) for \(\HH^0(D)\).
+\end{enumerate}
+
+The first of these implies that we have a map \(\text{Cl}(S)\to \text{Pic}(S)\).
+This is in fact an isomorphism, see \cite{donaldsonRiemannSurfaces}. Thus
+all line bundles arise from divisors, and we can talk of the degree of a line
+bundle.
+
+
+We can now restate Riemann--Roch as
+\[
+    \dim \HH^0(L) - \dim \HH^0(K-L) = \deg L - g + 1
+\]
+where \(K-L\) denotes \(T^\ast S \otimes L^\ast\). To get this form of
+Riemann--Roch, we have used the identification of global sections with
+meromorphic functions and a similar result that sections of \(K-L[D]\) are
+holomorphic \(1\)-forms vanishing along \(D\).
+
+\subsection{Embeddings in projective space} Let \(L\to S\) be a line bundle on a
+compact Riemann surface.
+
+\begin{definition}
+    A \textit{trivialisation} of \(L\) over an open set \(U\subset S\) is a
+    nowhere vanishing section of \(L\) on \(U\).
+\end{definition}
+
+Let \(s_0,\ldots,s_n\) be a basis of global sections of \(L\), and suppose for all
+\(p\in S\) there is an \(s_j\) with \(s_j (p) \neq 0\) (``\(L\) is
+basepoint-free''). Let \(\xi\) be a trivialisation of \(L\) over
+\(U\subset S\), so \(s_j=f_j\xi\) for holomorphic functions \(f_j\) on
+\(U\). Thus we have a map \(\varphi_L:U\to \mathbb{P}^n\), this is well-defined
+independent of trivialisation since another trivialisation would rescale all
+\(f_j(p)\) by the same amount. In particular these glue across open sets,
+and we have a map \(\varphi_L: S\to \mathbb{P}^n\) written
+\(\varphi_L(p)=[s_0(p):\ldots:s_n(p)]\).
+
+\begin{definition}
+    We say \(L\) is very ample if \(\varphi_L\) is a closed immersion.
+\end{definition}
+
+\begin{theorem}
+    Every compact Riemann surface has a very ample line bundle. In particular,
+    all compact Riemann surfaces are projective algebraic varieties.
+
+    \begin{proof}[Sketch]
+        The main idea is that once \(\text{deg}(D)\geq 2g\) then \(L[D]\) is
+        basepoint free, and once \(\text{deg}(D)\geq 2g+1\) then \(L[D]\) is
+        very ample.
+
+        Take divisor \(D\) with degree \(\geq 2g+1\). Note \(\deg K = 2g-2\),
+        since we showed that a holomorphic \(1\)-form has \(\chi(S)=2g-2\)
+        zeros with multiplicity. Thus \(\deg(K-D)\leq -1\) and there are no
+        global holomorphic sections of \(K-D\), giving us
+        \(\HH^0(K-L[D])=0\). Thus by Riemann--Roch we have
+        \(\dim\HH^0(L[D])\geq g+2\). Similarly for any point \(p\in S\), we can
+        show \(\dim \HH^0(L[D-p])< \dim \HH^0(L[D])\) i.e.\ not all sections of
+        \(L[D]\) vanish at \(p\).  Thus \(L[D]\) is basepoint-free.
+
+        The proof of very-ampleness is analogous. It is then a very general fact
+        (Chow's theorem) that all compact complex submanifolds of
+        \(\mathbb{P}^n\) admit the structure of projective varieties. For
+        Riemann surfaces, the proof goes roughly as follows-- if \(S\subset
+        \mathbb{P}^n\) is one dimensional then the homogeneous coordinates
+        \(z_i\) induce meromorphic functions  \(f_j=\frac{z_j}{z_0}\) on \(S\).
+        These meromorphic functions realise \(S\) as a branched cover
+        of \(\mathbb{P}^1\), so that the field of meromorphic functions on
+        \(S\) is a finite field extension of the corresponding field on
+        \(\mathbb{P}^1\). In particular any two meromorphic functions on
+        \(S\) are related by a polynomial, so \(S\) is contained in the
+        vanishing set of some polynomials. A little topology shows \(S\) is
+        genuinely the vanishing locus of these polynomials.
+    \end{proof}
+\end{theorem}
+
+This marks the end of the course. With another lecture we would have looked at
+sheaf cohomology using Cech covers and explained Riemann--Roch in these terms,
+writing \[\chi(L)\coloneq \dim \HH^0(L)-\dim\HH^1(L)=\deg L - g + 1.\] This is
+proven through Serre duality, \(\HH^0(K-L)\cong \HH^1(L)\). The motivation for
+cohomology is explained in \cite[chapter 12]{donaldsonRiemannSurfaces}, and
+this clarifies many constructions in the course --- in particular how to view
+higher cohomology groups as obstructions.
