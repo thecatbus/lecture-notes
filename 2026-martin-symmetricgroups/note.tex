@@ -140,3 +140,121 @@ of $L_i$s.
 \end{theorem}
 
 \marginpar{Lecture 2, 14/10/26} 
+\begin{definition}
+    For $G$-representations $L_i, V$ such that $L_i$ is irreducible, the \emph{$L_i$-multiplicity space} in $V$ is $\Hom_G(L_i, V)=M_i$.
+\end{definition}
+
+Suppose $\bbk=\ol\bbk$ is algebraically closed, and $V$ is a finite dimensional
+isotypic representation of $G$ (that is, $V\simeq L_i^{\oplus n_i}$ for some
+irreducible representation $L_i$). In this case, the canonical map $\Hom_G(L_i,
+V)\otimes L_i\to V$ is an isomorphism. If $V$ is semisimple and $\{M_i\}$ are the
+multiplicity spaces of irreducible representations $\{L_i\}$, then the
+analogously defined map $\bigoplus M_i\otimes L_i \to V$ is an isomorphism. If
+$V$ is not semisimple, then this map is only injective (and the image of the map
+is called the \emph{socle} of $V$).
+
+\begin{proposition}
+    The left regular representation of $G$, given by $V=\bbk G$ where $G$ acts by left
+    multiplication, is semisimple and has a $(\dim L_i)$-dimensional
+    multiplicity space for each irreducible representation $L_i$. In other words
+    it decomposes as \[V=\bigoplus_{L_i\in \textnormal{Irr}(G)} L_i^{\oplus \dim L_i}\]
+    with corollary that $|G|=\sum (\dim L_i)^2$.
+\end{proposition}
+
+\paragraph{Maschke's theorem again.} Call a $\bbk G$-module $P$
+\emph{projective} if every short exact sequence of $\bbk G$-modules $0\to N\to
+N'\xrightarrow{\alpha} P\to 0$ splits, i.e.\ there exists a map $\beta\colon
+P\to N'$ with $\alpha\beta = \id_P$. Every representation of $\bbk G$ is
+semisimple if and only if the trivial representation $\bbOne_G$ is projective.
+Then Maschke's theorem states that if $G$ is a finite group and the
+characteristic of $\bbk$ does not divide $|G|$, then $\bbOne_G$ is projective
+and hence every representation of $G$ is semisimple.
+
+\begin{remark}
+    If the characteristic of $\bbk$ divides $|G|$, then this \emph{always}
+    fails. For example take $G=\bbZ/p$ and $\bbk = \bbF_p$, and consider the
+    representation $V=\bbF_p^{\oplus 2}$ where $a\in G$ acts as
+    $\mat{1&a\\0&1}$. Then $V$ is a nontrivial self-extension of the trivial
+    representation $\bbOne_G$.
+\end{remark}
+
+\paragraph{Tensor products.} The \emph{tensor product} $V\otimes_\bbk
+W$ of two $G$-representations $V,W$ has the structure of a $G$-module given by
+$g(v\otimes w)=(gv) \otimes (gw)$. 
+
+\paragraph{Induction and Restriction.} For $H\leq G$, there is a
+\emph{restriction} functor $\text{Res}^G_H\colon \text{Rep}(G)\to \text{Rep}(H)$
+where the $\bbk G$ module $V$ is viewed as a $\bbk H$-module in the obvious way.
+We sometimes denote the restricted module as $\text{Res}^G_H V =
+V\!\downarrow^G_H = V\!\downarrow_H$. It has a left adjoint, the \emph{induction
+functor} $\text{Ind}^G_H\colon \text{Rep}(H)\to \text{Rep}(G)$ given by
+$\text{Ind}^G_H(-)=\bbk G\otimes_{\bbk H }(-)$. We then have \emph{Frobenius
+reciprocity}, \[\Hom_G(\text{Ind}^G_H U, V)= \Hom_H(U, \text{Res}^G_H V).\]
+
+\paragraph{Permutation modules.} A \emph{permutation module} is a representation
+of $G$ equipped with a basis on which $G$ acts, i.e.\ a basis $B$ such that
+$gb\in B$ for all $g\in G$ and $b\in B$. In this case we denote the module
+$\bbk[B]$. For example, the left regular
+representation is naturally a permutation module.
+
+\begin{proposition}
+    If $G$ acts transitively on a finite set $X$, then the corresponding
+    permutation module $\bbk [X]$ is isomorphic to the induced representation
+    $\textnormal{Ind}_H^G(\bbOne_H)$ where $H\leq G$ is the stabiliser of any point
+    $x\in X$, and $\bbOne_H$ is the trivial representation.
+\end{proposition}
+
+\paragraph{Duals.} If $V$ is a finite dimensional
+$\bbk$-vector space, then so is $V\dual = \Hom_\bbk (V,\bbk)$. If $e_1,\ldots,
+e_n$ is a basis of $V$ then $V\dual$ is naturally equipped with a dual basis
+$\varepsilon_1,\ldots, \varepsilon_n$ such that
+$\varepsilon_i(e_j)=\delta_{ij}$. If $V$ is a $G$-representation, then so is $V\dual$ via $g\varphi = \varphi \circ g^{-1}$.
+
+\paragraph{Some linear algebra.}
+Suppose $V$ is equipped with a symmetric bilinear form $\langle \cdot, \cdot
+\rangle$. This induces a natural map $V\to V\dual$ given by $v\mapsto \langle
+\cdot, v\rangle$. Even if $\langle \cdot,\cdot \rangle$ is non-singular (i.e.\
+$V\orth = 0$)  we could still have a subspace $W\subset V$ with $W\orth \cap W
+\neq 0 $. 
+
+So we will be interested in how big such intersections can get. 
+
+Let $e_1,\ldots, e_n$ be a basis of the subspace $W$. The \emph{Gram matrix} of
+$W$ with respect to this basis is the $n\times n$ matrix $A$ with $(i,j)$th
+entry $\langle e_i, e_j\rangle$.
+
+\begin{proposition}
+    The dimension of $W/(W\cap W\orth)$ is the rank of the Gram matrix.
+
+    \begin{proof}
+        The induced map $W\to W\dual$ given by $w\mapsto \langle \cdot,
+        w\rangle$ is precisely the map given by the Gram matrix when we equip
+        $W, W\dual$ with dual bases. The kernel of the map is $W\cap W\orth$, so
+        the answer follows from rank--nullity.
+    \end{proof}
+\end{proposition}
+
+\paragraph{Character theory.} Work over the field $\bbk = \bbC$, and let $V$ be
+a finite dimensional $\bbC G$-module. The \emph{character} of $V$ is a function
+$\chi_V\colon G\to \bbC$ given by $g\mapsto \text{tr}(g\colon V\to
+V)$. This is a \emph{class function}, i.e.\ it is invariant under conjugation.
+Some useful calculations --- 
+\begin{gather*}
+    \chi_{(V\oplus W)} = \chi_V + \chi_W, \qquad \chi_{(V\dual)} = \ol{\chi_V},
+    \qquad \chi_{(V\otimes W)} = \chi_V \cdot \chi_W, \qquad \chi_{\Hom(V,W)} =
+    \ol{\chi_V}\cdot \chi_W, \\ 
+    \text{for the permutation module determined by }G\circlearrowright B, \qquad
+    \chi_{\bbk[B]}(g) =\#\{b\in B\;|\; gb = b\}.
+\end{gather*}
+
+Character theory is most useful because of the following result. 
+
+\begin{proposition}
+    The space of class functions on $G$ has basis given by the characters of
+    irreducible representations.
+\end{proposition}
+
+In positive characteristic we need to use \emph{Brauer characters}.
+
+
+
