@@ -6,6 +6,7 @@
 \newcommand{\mat}[1]{\left(\begin{smallmatrix} #1 \end{smallmatrix}\right)}
 \newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
 \newcommand{\adj}{\textnormal{ad}}
+\renewcommand{\char}{\textnormal{ch}}
 \renewcommand{\gg}{\mathfrak{g}}
 \newcommand{\bb}{\mathfrak{b}}
 \newcommand{\nn}{\mathfrak{n}}
@@ -485,3 +486,133 @@ to take some average over all group elements. We don't have such tools here.
 \begin{lemma}
     The operator $\Omega$ is central, i.e.\ it commutes with $e$, $f$ and $h$.
 \end{lemma}
+
+\marginpar{Lecture 3, 15/10/26} 
+TODO LECTURE 3
+
+\marginpar{Lecture 4, 17/10/26} 
+\begin{proposition}\label{prop:h-acts-on-kere}
+    The operator $h$ acts as multiplication by $n$ on $\ker(e\colon V^\lambda\to
+    V^\lambda)$. In fact, $\ker(e) = \{x\in V^\lambda\;|\; hx = nx\}.$
+\end{proposition}
+
+To prove this we first recall the following. 
+
+\begin{exercise}
+    Prove the following identities of operators.
+    \begin{enumerate}[(i)]
+        \item $h f^k = f^k(h-2k)$
+        \item $ef^{n+1} = f^{n+1}e + (n+1) f^n (h-n)$
+    \end{enumerate}
+\end{exercise}
+
+\begin{proof}[Proof of \cref{prop:h-acts-on-kere}]
+    If $hx = nx$, then $ex \in (V^\lambda)_{n+2} = 0$ as generalised eigenspaces
+    of $h$ on $V^\lambda$ had eigenvalues $-n, \ldots, n$. So $x$ lies in $\ker(e)$.
+    Conversely let $x\in \ker(e)$, so $(h-n)^{\dim V_\lambda} x = 0$ (since
+    $\ker(e)$ is a generalised eigenspace for $h$ with eigenvalue $n$). By
+    lemma, we have \[0 = f^k(h-n)^{\dim V_\lambda} x = (h-n+2k)^{\dim V_\lambda}
+    f^k x\]
+    so that $f^k x$ lies in the $(h-n+2k)$-generalised eigenspace of $h$.
+    Observe that if $y$ is any non-zero element of $\ker(e)$ then $f^n y \neq
+    0$ (to see why, let $0=W_0<W_1<\cdots < W_r= V^\lambda$ be a composition
+    series; there is a unique $i$ with $y\in W_i$ but $y\notin W_{i+1}$. Let
+    $\ol{y}=y+W_{i-1}\in W_i/W_{i-1}\simeq L(n)$. Then $\ol y$ is a highest
+    weight vector in $L(n)$ so $f^n \ol{y}\neq 0$ in $W_i/W_{i-1}$, from whence
+    the conclusion follows.) But we have seen that $f^{n+1}x = 0$ (since $x$
+    lies in $(-n-2)$-generalised eigenspace) so by the above exercise, 
+    \[0=ef^{n+1}x = (n+1)f^n (h-n) x + f^{n+1}ex = (n+1)f^n(h-n)x.\]
+    Setting $y=(h-n)x$, we see that $y\in \ker(e)$ (since $e(h-n)x=(h-n-2)ex
+    =0$) and $f^ny = f^n(h-n)x = 0$ (since $n+1\neq 0$) and thus $y= 0$.
+\end{proof}
+
+\begin{exercise}
+Choose a basis $w_1,\ldots, w_a$ of $\ker(e\colon V^\lambda\to
+V^\lambda)$ and consider the strings $\langle w_i, fw_i, \ldots, f^n
+w_i\rangle$, and show that these give a decomposition of $V^\lambda$ into a
+direct sum of $L(n)$s.
+\end{exercise}
+
+Thus $h$ acts diagonally on all of $V^\lambda$.
+
+\begin{exercise}
+    Check that all of this is false over a field of positive characteristic. In
+    particular, let $\bbk = \ol{\bbF_p}$ and check the following:
+    \begin{enumerate}[(i)]
+        \item the representations $L(n)$ are not completely reducible when $n\geq p$
+        \item show that there are irreducible representations with no highest
+            weight, and that there are lots such (\emph{hint: show that
+            $e^p, f^p, h^p-h$ are all central, so a representation with
+            $e^p=\lambda\neq 0$ is not highest weight}.)
+    \end{enumerate}
+    However, irreducible representations for the algebraic group
+    $\sf{SL}_2(\ol{\bbF}_p)$ are parametrised over $n\in \bbZ_{\geq 0}$, and you
+    can describe them in terms of $L(n)$. Do so.
+\end{exercise}
+
+\paragraph{Consequences.}
+Let $\gg$ be a Lie algebra, and $V,W$ be $\gg$-representations. Then check that
+the map $\gg\to \End(V\otimes W)$ given by $x\mapsto x\otimes 1 + 1\otimes x$
+defines a homomorphism of Lie algebras.
+
+\begin{remark}
+    This is related to the fact that both group algebras and enveloping algebras
+    are \emph{Hopf algebras}. In general if $V,W$ are $A$-modules then $V\otimes
+    W$ is an $(A\otimes A)$-module, so to turn it into an $A$-module you need a
+    homomorphism $A\to (A\otimes A)$.
+\end{remark}
+
+For $\gg = \sl_2(\bbC)$, we see that $L(n)\otiems L(m)$ is thus a representation of
+$\sl_2$. What is its decomposition into irreducibles? We could just find all
+highest weight vectors, indeed you should do this by hand for small examples
+such as $L(1)\otimes L(n)$ and $L(2)\otimes L(n)$. 
+
+Indeed it is easy to see that if $v_n\in L(n)$ and $v_m\in L(m)$ are highest
+weight vectors, then check that so is $v_n\otimes v_m \in L(n)\otimes L(m)$.
+Thus $L(n)\otimes L(m) = L(n+m) + \text{(other factors)}$. The other factors
+must account for $(n+1)(m+1)-(n+m+1)$ dimensions.
+
+\begin{definition}
+    Let $V$ be a finite dimensional representation of $\sl_2$. The
+    \emph{(formal) character} of $V$ is the Laurent polynomial
+    \[\char V=\sum_{n\in \bbZ} (\dim V_n) z^n \qquad \in \bbZ_{\geq 0
+    }[z,z^{-1}].\]
+\end{definition}
+
+\begin{proposition}
+    The character of $V$ has the following properties. 
+    \begin{enumerate}
+        \item The character is independent of choice of basis for $\sl_2$.
+        \item We have $\char V|_{z=1}=\dim V$.
+            \begin{proof} This is precisely the claim that $h$ acts diagonisably
+            on $V$.\end{proof}
+        \item $\char L(n) = z^n + z^{n-2} + \cdots + z^{2-n} + z^{-n} =
+            \dfrac{z^{n+1}-z^{-(n+1)}}{z-z^{-1}} (= [n+1]_z).$
+        \item $\char V \simeq \char W$ if and only if $V\simeq W.$
+            \begin{proof}
+                Write $V\simeq \bigoplus a_n L(n)$, $W\simeq b_n L(n)$. Then
+                $V\simeq W$ if and only if $a_n = b_n$ for all $n\geq 0$ by our
+                theorem. Now $\{\char L(n)\;|\; n\geq 0\}$ is a basis of
+                $\bbZ[z,z^{-1}]^{\text{sym}}$, so the $a_n$s are determined by
+                $\char V$.
+            \end{proof}
+
+        \item $\char (V\otimes W) = (\char V )\cdot (\char W).$
+            \begin{proof}
+                Check that $V_a\otimes W_b \subseteq (V\otimes W)_{a+b}$, so
+                that $(V\otimes W)_r = \sum_{a+b = r}V_a\otimes V_b$. But this
+                is how we multiply polynomials.
+            \end{proof}
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    What is $L(1)\otimes L(3)$? By explicitly multiplying polynomials, we
+    compute that $[2]_z \cdot [4]_z = [3]_z + [5]_z$, and hence $L(1)\otimes
+    L(3)\simeq L(2)\oplus L(4)$. More generally, we have the
+\emph{Clebsch--Gordon rule} \[L(n)\otimes L(m)\simeq \bigoplus_{|n-m|\leq k \leq
+        n+m\\ k\equiv n-m \mod 2} L(k).\]
+    Pictorially it is easier: draw an $n\times m$ integer grid, and draw
+    L-shaped strings starting from the ends. These pictures are called
+    \emph{crystals}.
+\end{example}

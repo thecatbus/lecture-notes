@@ -15,9 +15,12 @@
 \renewcommand{\sp}{\mathfrak{sp}}
 \renewcommand{\sf}{\mathsf}
 
+\newcommand{\calP}{\mathcal{P}}
+
 \newcommand{\GL}[1]{\mathsf{GL}(#1)}
 
 \newcommand{\sym}[1]{\mathfrak{S}_{#1}}
+\newcommand{\sgn}{\textnormal{sgn}}
 
 This is a fairly gentle introduction to the representation theory of the
 symmetric group. The flavour will be both algebraic and combinatorial, in
@@ -256,5 +259,167 @@ Character theory is most useful because of the following result.
 
 In positive characteristic we need to use \emph{Brauer characters}.
 
+\section{Representations of the symmetric groups}
+\marginpar{Lecture 3, 19/10/26} 
+We now overview the combinatorial approach to representation theory of the
+symmetric groups, via a certain \emph{diagram calculus}. Thus for a finite set
+$X$, write $\Sym(X)=\{\text{bijections }X\to X\}$ for the \emph{symmetric group
+of $X$}. In particular, the standard symmetric groups $\sym{n}$ are the same as
+$\Sym([n])$ where $[n]$ denotes the set $\{1,\ldots, n\}$. Note also that
+$\sym{0}$ is the trivial group.
+
+While we are establishing conventions, we also note that composition goes from
+right to left: $(1\,2\,3)(1\,2)=(1\,3)$.
+
+\paragraph{Representations we have already met.}
+The group $\sym{n}$, like any other group, has the trivial representation which
+we denote $\bbOne_{\sym{n}}$. There is only one other one-dimensional
+representation, the \emph{alternating} or \emph{sign} representation, which we
+denote $\sgn\colon \sym{n}\to \{\pm 1\}$.
+
+There is also the natural representation $\sym{n}\circlearrowright \bbC^n$ given
+by permuting the standard basis $\{e_1,\ldots, e_n\}$, called the \emph{natural} or the
+\emph{permutation representation}. We write $V_n$ for this representation. Note
+that the element $(e_1+\cdots + e_n)\in V_n$ is $\sym{n}$-invariant, so $V_n$ is
+never irreducible (unless $n=1$).
+
+We make the following observations about the natural representations $V_n$: 
+\begin{gather*}
+    V_n = (\bbOne_{\sym{n-1}})\uparrow^{\sym{n}}_{\sym{n-1}}\,, \qquad V_n
+    \downarrow^{\sym{n}}_{\sym{n-1}} = V_{n-1} \oplus \bbOne_{\sym{n-1}}.
+\end{gather*}
+
+\begin{exercise}
+    Define the \emph{augmentation map} $\varepsilon\colon V_n\to \bbC$ by
+    $e_1\mapsto 1$. Show that if $n>1$, then $\ker(\varepsilon)$ is an irreducible
+    $(n-1)$-dimensional $\sym{n}$-subrepresentation of $V_n$. We call this the
+    \emph{standard representation of $\sym{n}$}.
+\end{exercise}
+
+\paragraph{Partitions.} Now recall that every element $\sigma\in \sym{n}$ can be
+decomposed as a product $\sigma = \sigma_1\cdots \sigma_k$ of disjoint cycles
+(in a way that every $i\in [n]$ appears in exactly one cycle).
+
+\begin{definition}
+    A \emph{partition $\lambda$ of $n$}, written $\lambda \vdash n$, is a
+    non-increasing sequence of positive integers summing to $n$. That is,
+    $\lambda$ is given by a tuple \(\lambda = (\lambda_1,\ldots,\lambda_r)\) of
+    integers \(\lambda_1\geq \cdots \geq \lambda_r> 0\), satisfying
+    \(\sum_{i=1}^r\lambda_i = n\). In this case we say the $\lambda_i$s are the \emph{parts} of $\lambda$, $n=|\lambda|$ is
+    the \emph{size} of $\lambda$, and $r=\ell(\lambda)$ is the \emph{length} of
+    $\lambda$. 
+
+    Write $\calP(n)=\{\lambda\;|\; \lambda\vdash n\}$ for the set of all
+    partitions of $n$.
+\end{definition}
+
+We adopt the convention that the length-zero tuple $\varnothing = ()$ is a partition
+of $0$, called the \emph{empty partition}. We also adopt a condensed notation
+that collapses equal parts together, for example we write $(4,3^2,1)$ for the
+partition $(4,3,3,1)\vdash 11$.
+
+Note that partitions of $n$ are naturally in bijection with cycle types, and
+thus conjugacy classes in $\sym{n}$. For example, the three partitions $(3)$,
+$(2,1)$, and $(1^3)$ corresponds to the three classes (3-cycles, transpositions,
+and identity) in $\sym{3}$.
+
+\begin{definition} The \emph{Young diagram} of a partition
+    $\lambda=(\lambda_1,\ldots,\lambda_r)$ is 
+$[\lambda] = \{(i,j)\in \bbN^2\;|\; 1\leq i\leq r, \quad 1\leq j \leq
+\lambda_i\}$.
+\end{definition}
+
+We draw Young diagrams with boxes (instead of lattice points), with rows and
+columns numbered as in a matrix. For example, here are all the partitions of
+$4$ and their Young diagrams.
+\[
+    {
+    \setlength{\arraycolsep}{2em}
+    \begin{array}{ccccc}
+        (4) & (3,1) & (2^2) & (2,1^2) & (1^4)\\
+        \ydiagram{4} & \ydiagram{3,1} & \ydiagram{2,2} &\ydiagram{2,1,1}
+                     &\ydiagram{1,1,1,1}
+    \end{array}
+    }
+\]
+
+\begin{definition} 
+    Given $\lambda=(\lambda_1,\ldots,\lambda_r)\vdash n$, the
+    \emph{conjugate partition} $\lambda'$ is given by $\lambda'=(\mu_1,\ldots,
+    \mu_{\lambda_1})$, where $\mu_j = \{i\in [r]\;|\; \lambda_i \geq j\}\). That
+    is, $\lambda'$ is the partition whose Young diagram contains $(i,j)$ if and
+    only if $(j,i)\in [\lambda]$.
+\end{definition}
+
+Thus pictorially, conjugation corresponds to flipping Young diagrams along the
+diagonal. For example, $(4,3,1)$ and
+$(3,2^2,1)$ are conjugate partitions of $8$. 
+\[
+    \ydiagram{4,3,1} \qquad \ydiagram{3,2,2,1}
+\]
 
 
+\begin{definition}
+    Let $\lambda=(\lambda_1,\ldots,\lambda_r)$ and $\mu=(\mu_1,\ldots,\mu_s)$ be
+    partitions of $n\in \bbN$. We say $\lambda$ \emph{dominates} $\mu$, written
+    $\lambda \unrhd \mu$, if $\sum_1^j\lambda_i\geq \sum_1^j\mu_i$ for all
+    $j\in\{1,\ldots,\min(r,s)\}.$
+\end{definition}
+
+This is a partial order on $\calP(n)$, for example $(4,3,1)$ and
+$(5,1^3)$ are incomparable in $\calP(8)$. Below is the Hasse diagram for
+$\calP(6)$.
+\[
+    \begin{tikzcd}[column sep=small]
+        &&& (4,1^2)\arrow[dr] && (3,1^3)\arrow[dr] &&& \\
+        (6)\rar & (5,1)\rar & (4,2)\arrow[ur]\arrow[dr] && (3,2,1)\arrow[ur]\arrow[dr] && (2^2,1^2)\rar & (2,1^4)\rar & (1^6)\\
+        &&& (3,3)\arrow[ur] && (2^3)\arrow[ur] &&&
+    \end{tikzcd}
+\]
+
+There is also the \emph{lexicographic
+order} on $\calP(n)$, where for distinct partitions
+$\lambda=(\lambda_1,\ldots,\lambda_r)$ and $\mu=(\mu_1,\ldots,\mu_r)$ of $n$ we
+say $\lambda>\mu$ if and only if there exists an $i\in \{1,\ldots, \min(r,s)\}$
+such that $\lambda_i>\mu_i$, and $\lambda_j = \mu_j$ for $j=1,\ldots, i-1$. It
+is easy to see that the lexicographic order \emph{extends} the domination order,
+i.e.\ if $\lambda\unrhd \mu$ then $\lambda \geq \mu$. The converse is false,
+since the lexicographic order is always a total order --- for example, the order
+on $\calP(6)$ is given by
+\[(6)\;>\;(5,1)\;>\;(4,2)\;>\;(4,1^2)\;>\;(3^2)\;>\;(3,2,1)\;>\;(3,1^3)\;>\;(2^3)\;>\;(2^2,1^2)\;>\;(2,1^4)\;>\;(1^6).\]
+
+\begin{definition} 
+    Given a partition $\lambda\vdash n$, a \emph{$\lambda$-tableau} (or a
+    \emph{Young tableau of shape $\lambda$}) is a bijection $[\lambda]\to [n]$.
+    We write $\Delta^\lambda$ for the set of all $\lambda$-tableaux.
+\end{definition}
+
+A $\lambda$-tableau can be naturally denoted by `filling in' the Young diagram
+with numbers $1,\ldots, n$ such that each number appears once. For example, here
+are all $(3,1)$-tableaux, i.e.\ the set $\Delta^{(3,1)}$.
+\begin{gather*}
+    \ytableaushort{123,4} \qquad 
+    \ytableaushort{231,4} \qquad 
+    \ytableaushort{312,4} \qquad 
+    \ytableaushort{321,4} \qquad 
+    \ytableaushort{213,4} \qquad 
+    \ytableaushort{132,4} \\
+    \ytableaushort{124,3} \qquad 
+    \ytableaushort{241,3} \qquad 
+    \ytableaushort{412,3} \qquad 
+    \ytableaushort{421,3} \qquad 
+    \ytableaushort{214,3} \qquad 
+    \ytableaushort{142,3} \\
+    \ytableaushort{143,2} \qquad 
+    \ytableaushort{431,2} \qquad 
+    \ytableaushort{314,2} \qquad 
+    \ytableaushort{341,2} \qquad 
+    \ytableaushort{413,2} \qquad 
+    \ytableaushort{134,2} \\
+    \ytableaushort{423,1} \qquad 
+    \ytableaushort{234,1} \qquad 
+    \ytableaushort{342,1} \qquad 
+    \ytableaushort{324,1} \qquad 
+    \ytableaushort{243,1} \qquad 
+    \ytableaushort{432,1} 
+\end{gather*}
