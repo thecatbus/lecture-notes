@@ -7,14 +7,18 @@
 \newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
 \newcommand{\adj}{\textnormal{ad}}
 \renewcommand{\char}{\textnormal{ch}}
-\renewcommand{\gg}{\mathfrak{g}}
+\newcommand{\frakg}{\mathfrak{g}}
+\newcommand{\frakh}{\mathfrak{h}}
+\newcommand{\fraka}{\mathfrak{a}}
 \newcommand{\bb}{\mathfrak{b}}
 \newcommand{\nn}{\mathfrak{n}}
+\renewcommand{\tt}{\mathfrak{t}}
 \renewcommand{\gl}{\mathfrak{gl}}
 \renewcommand{\sl}{\mathfrak{sl}}
 \newcommand{\so}{\mathfrak{so}}
 \renewcommand{\sp}{\mathfrak{sp}}
 \renewcommand{\sf}{\mathsf}
+\newcommand{\iddots}{\reflectbox{$\ddots$}}
 
 This is a course about symmetries controlled by the \emph{linear algebraic groups}
 \begin{align*}
@@ -49,8 +53,8 @@ Errors and corrections should be communicated to by email to
 \marginpar{Lecture 1, 08/10/26} 
 
 The Lie algebra associated to an algebraic group $G$ is the tangent space
-$\gg=\sf{T}_\id G$ at the identity element. The group structure on $G$ induces
-the structure of a \emph{Lie algebra} on $\gg$. We unpack this with an ad hoc definition first. 
+$\frakg=\sf{T}_\id G$ at the identity element. The group structure on $G$ induces
+the structure of a \emph{Lie algebra} on $\frakg$. We unpack this with an ad hoc definition first. 
 
 \begin{definition}[Ad hoc] A complex \emph{linear algebraic group} $G$ is a
     subvariety of the affine space $\Mat{n}(\bbC)$ of $n\times n$ matrices,
@@ -107,7 +111,7 @@ $R$-points of $G$} as
     \}
 \]
 There is a map $\bbE\to \bbC$ sending $\varepsilon\mapsto 0$, this in turn
-induces a map $\pi\colon G(\bbE)\to G(\bbC)$. The tangent space $\gg=\sf{T}_\id G$
+induces a map $\pi\colon G(\bbE)\to G(\bbC)$. The tangent space $\frakg=\sf{T}_\id G$
 is then defined as the pre-image $\pi^{-1}(\id)$.
 
 
@@ -115,7 +119,7 @@ is then defined as the pre-image $\pi^{-1}(\id)$.
     Show that $\sf{GL}_n(\bbC)$ is a linear algebraic group (\emph{hint: the condition
     $\det P \neq 0$ can be written as the vanishing of a polynomial by embedding
     $\sf{GL}_n(\bbC)$ into $\Mat{(n+1)}(\bbC)$}). Use this to show that the
-    associated Lie algebra is $\frak{gl}_n(\bbC) =\Mat{n}(\bbC)$.
+    associated Lie algebra is $\mathfrak{gl}_n(\bbC) =\Mat{n}(\bbC)$.
 \end{exercise}
  
 \begin{exercise}
@@ -143,18 +147,18 @@ subgroup, and its Lie algebra all have coincident finite dimensional
 representations.
  
 
-\paragraph{The Lie bracket.} What structure does $\gg=\sf{T}_\id G$ have that is
+\paragraph{The Lie bracket.} What structure does $\frakg=\sf{T}_\id G$ have that is
 inherited from the group structure on $G$? It is not multiplication. 
 
 What we do instead is to look at the commutator map $G\times G\to G$ sending
 $(p,q)\mapsto p^{-1}q^{-1}pq$. This sends $(\id,\id)\mapsto \id$, thus the
 derivative of the commutator gives a linear map 
 \[
-    \gg\times \gg \simeq T_{(\id,\id)}(G\times
-    G)\longrightarrow \sf{T}_\id G \simeq \gg.
+    \frakg\times \frakg \simeq T_{(\id,\id)}(G\times
+    G)\longrightarrow \sf{T}_\id G \simeq \frakg.
 \]
 This is simply the zero map, and is not quite what we want --- we want a
-\emph{bilinear} map $\frak{g}\times \frak{g}\to \frak{g}$, so we differentiate
+\emph{bilinear} map $\frakg\times \frakg\to \frakg$, so we differentiate
 the first and the second variable separately.
 
 To explain the construction, suppose $G$ is $\sf{GL}_n(\bbC)$ or another matrix
@@ -166,18 +170,18 @@ the ring $\bbk[\varepsilon, \delta]/(\varepsilon^2,\delta^2)$). We then see that
     P^{-1}Q^{-1}PQ=\id + \varepsilon\delta (XY-YX),
 \]
 so it makes sense to introduce the map
-$[\,,\,]\colon \frak{g}\times
-\frak{g}\to \frak{g}$ given by $[X,Y]=XY-YX$. This is the \emph{Lie bracket}.
+$[\,,\,]\colon \frakg\times
+\frakg\to \frakg$ given by $[X,Y]=XY-YX$. This is the \emph{Lie bracket}.
 
 \begin{exercise}
     The above calculation is an extrinsic proof of the fact that the Lie
-    bracket $[\,,\,]\colon\gg\times \gg \to \gg$ is \emph{antisymmetric}. To get an intrinsic proof that doesn't rely
+    bracket $[\,,\,]\colon\frakg\times \frakg \to \frakg$ is \emph{antisymmetric}. To get an intrinsic proof that doesn't rely
     on any embedding into matrix groups, use the fact that
     $(pqp^{-1}q^{-1})^{-1}=qpq^{-1}p^{-1}$ for any group elements $p,q$.
 \end{exercise}
 
 The next property of the Lie bracket is the \emph{Jacobi identity}:
-\[[[x,y],z]+[[y,z],x] + [[z,x],y]=0 \qquad \text{for all }x,y,z\in \gg.\] 
+\[[[x,y],z]+[[y,z],x] + [[z,x],y]=0 \qquad \text{for all }x,y,z\in \frakg.\] 
 We will deduce this over multiple exercises, seeing three reasons why it is
 true. Next time we will look at a fourth and a fifth explanation. 
 
@@ -203,22 +207,22 @@ Jacobi identity --- define an abstract Lie algebra. Fix a field $\bbk$ of
 characteristic $\neq 2,3$.
 
 \begin{definition}
-    Let $\gg$ be a $\bbk$-vector space. A \emph{Lie bracket} on $\gg$ is an
-    antisymmetric bilinear form $[\,,\,]\colon \gg\times\gg\to \gg$ that
-    satisfies the Jacobi identity. We say $\gg$ equipped with a Lie bracket is a
+    Let $\frakg$ be a $\bbk$-vector space. A \emph{Lie bracket} on $\frakg$ is an
+    antisymmetric bilinear form $[\,,\,]\colon \frakg\times\frakg\to \frakg$ that
+    satisfies the Jacobi identity. We say $\frakg$ equipped with a Lie bracket is a
     \emph{Lie algebra}.
 \end{definition}
 
 \begin{exercise}
     \marginpar{Lecture 2, 10/10/26}
     Here is another way to define a Lie bracket on a $\bbk$-vector
-    space $\gg$ --- it is given by an element $\mu\in \Exter^2(\gg\dual)\otimes \gg$
-    (i.e.\ a $\gg$-valued 2-form on $\gg\dual$) which lies in the kernel of the
-    induced exterior derivative $d_\mu \colon \Exter^\bullet(\gg\dual)\otimes \gg \to
-    \Exter^{\bullet+1}(\gg\dual)\otimes \gg$. Recall that this derivative is
+    space $\frakg$ --- it is given by an element $\mu\in \Exter^2(\frakg\dual)\otimes \frakg$
+    (i.e.\ a $\frakg$-valued 2-form on $\frakg\dual$) which lies in the kernel of the
+    induced exterior derivative $d_\mu \colon \Exter^\bullet(\frakg\dual)\otimes \frakg \to
+    \Exter^{\bullet+1}(\frakg\dual)\otimes \frakg$. Recall that this derivative is
     given by $d_\mu(1)=0$, $d_\mu\omega = \omega \circ \mu$ for $\omega\in
-    \gg\dual\otimes \gg$, extended by the graded Leibniz rule to the rest of
-    $\Exter^\bullet(\gg\dual)\otimes \gg$. Check the equivalence of the two
+    \frakg\dual\otimes \frakg$, extended by the graded Leibniz rule to the rest of
+    $\Exter^\bullet(\frakg\dual)\otimes \frakg$. Check the equivalence of the two
     definitions.
 \end{exercise}
 
@@ -262,17 +266,17 @@ characteristic $\neq 2,3$.
 \section{Representations of Lie algebras}
 
 \begin{definition}
-    A \emph{representation} of a Lie algebra $\gg$ on a $\bbk$-vector space $V$ is a
-    homomorphism of Lie algebras $\rho \colon \gg\to \gl(V)$. In this case we
-    say ``$\gg$ acts on $V$''.
+    A \emph{representation} of a Lie algebra $\frakg$ on a $\bbk$-vector space $V$ is a
+    homomorphism of Lie algebras $\rho \colon \frakg\to \gl(V)$. In this case we
+    say ``$\frakg$ acts on $V$''.
 \end{definition}
 
-For example, each Lie algebra $\gg$ acts on itself --- given $x\in \gg$, define
-the map $\adj_x\colon \gg \to \gg$ as $y\mapsto [x,y]$.
+For example, each Lie algebra $\frakg$ acts on itself --- given $x\in \frakg$, define
+the map $\adj_x\colon \frakg \to \frakg$ as $y\mapsto [x,y]$.
 
 \begin{lemma}
-    The map $\gg \to \gl(\gg)$ given by $x\mapsto \adj_x$ is a representation of
-    $\gg$. We call this the \emph{adjoint representation}.
+    The map $\frakg \to \End(\frakg)$ given by $x\mapsto \adj_x$ is a representation of
+    $\frakg$. We call this the \emph{adjoint representation}.
     \begin{proof}
         We must show $\adj_{[x,y]} = \adj_x\circ \adj_y - \adj_y\circ \adj_x$.
         But $\adj_{[x,y]}(z)=[[x,y],z]$, while the right-hand side sends $z$ to
@@ -282,8 +286,8 @@ the map $\adj_x\colon \gg \to \gg$ as $y\mapsto [x,y]$.
 \end{lemma}
 
 \begin{definition}
-    The \emph{center} of $\gg$ is the kernel of the adjoint action
-    $\ker(\adj\colon \gg\to \gl(\gg))$
+    The \emph{center} of $\frakg$ is the kernel of the adjoint action
+    $\ker(\adj\colon \frakg\to \gl(\frakg))$
 \end{definition}
 
 Thus a Lie algebra with trivial center acts faithfully on itself. 
@@ -330,17 +334,15 @@ Hence a representation of $\sl_2$ on $\bbk^n$ is given by a triple $E,F,H\in
 \end{example}
 
 \begin{exercise}
-    Writing $(x^iy^j)_{i+j=n}$ for the standard basis of $L(n)$, show that we
-    have 
-    \begin{gather*}
-        e\cdot x^iy^j = jx^{i+1}y^{j-1}, \quad f\cdot x^iy^j = ix^{i-1}y^{j+1},
-        \quad h\cdot x^iy^j = (i-j)x^iy^j, \\ 
-        \text{or equivalently,}\qquad
+    Writing $(x^iy^j)_{i+j=n}$ for the standard basis of $L(n)$, show that
+    $e,f,h\in \sl_2$ act on $L(n)$ as $e (x^iy^j) = jx^{i+1}y^{j-1}$, $f (x^iy^j) = ix^{i-1}y^{j+1}$,
+    $h (x^iy^j) = (i-j)x^iy^j$, or equivalently,
+    \begin{equation}
         e=x\frac{\partial\phantom{y}}{\partial y}, \quad f = y
         \frac{\partial\phantom{x}}{\partial x}, \quad h =
         x\frac{\partial\phantom{x}}{\partial x} - y
-        \frac{\partial\phantom{y}}{\partial y}.
-    \end{gather*}
+        \frac{\partial\phantom{y}}{\partial y}.\tag{$\ast$}\label{eqn:efh-diffop}
+    \end{equation}
     Assuming $\text{char}(\bbk)=0$, show that each $L(n)$ is an irreducible representation.
 \end{exercise}
 
@@ -353,19 +355,19 @@ Hence a representation of $\sl_2$ on $\bbk^n$ is given by a triple $E,F,H\in
     homogeneous spaces for other algebraic groups.
 \end{remark}
 
-\marginpar{Lecture 3, 13/10/26} 
 \begin{example}
-    Take the group $G=\bbC^\times$ with its lie algebra $\gg\simeq \bbC$. A
-    representation of $\gg$ on a vector space $V$ is an element $A\in \End(V)$,
+    \marginpar{Lecture 3, 13/10/26} 
+    Take the group $G=\bbC^\times$ with its lie algebra $\frakg\simeq \bbC$. A
+    representation of $\frakg$ on a vector space $V$ is an element $A\in \End(V)$,
     and two such elements $A,A'$ define isomorphic representations if and only
-    they are conjugate. Thus the isoclasses of $\gg$-representations are in
+    they are conjugate. Thus the isoclasses of $\frakg$-representations are in
     bijection with Jordan normal forms of matrices. Likewise a subspace
     $W\subset V$ is a subrepresentation if and only if it is preserved by $A$,
     and since any matrix always has an eigenvector, the irreducible (i.e.\ simple)
-    $\gg$-representations are all one-dimensional. In contrast, irreducible
+    $\frakg$-representations are all one-dimensional. In contrast, irreducible
     representations of $G$ are all one-dimensional, but of the form
     $\rho_n\colon z\mapsto z^n$, which have derivative $d\rho_n = n$. Thus out
-    of the $\bbC$-many irreducible representations of $\gg$, only $\bbZ$-many
+    of the $\bbC$-many irreducible representations of $\frakg$, only $\bbZ$-many
     come from the Lie group $G$.
 \end{example}
 
@@ -373,8 +375,8 @@ The situation for $\sl_2$ is drastically different.
 
 \begin{theorem}[(Lie)]
     If $G$ is a simply connected (almost) simple algebraic group over $\bbC$ (or
-    a compact Lie group), with Lie algebra $\gg$, then the natural map
-    $\textnormal{Rep}(G)\to \textnormal{Rep}(\gg)$ is an equivalence of categories.
+    a compact Lie group), with Lie algebra $\frakg$, then the natural map
+    $\textnormal{Rep}(G)\to \textnormal{Rep}(\frakg)$ is an equivalence of categories.
 \end{theorem}
 
 Here, \emph{almost simple} means that the group has no nontrivial connected
@@ -483,17 +485,107 @@ to take some average over all group elements. We don't have such tools here.
     $ef+fe+\frac{1}{2}h^2$.
 \end{definition}
 
+\begin{exercise}
+    Show that the operator $\Omega$ is central, i.e.\ it commutes with $e$, $f$
+    and $h$. Conclude that if $V$ is an irreducible $\sl_2$-module, then $\Omega$
+    acts as a scalar.
+    \marginpar{Lecture 4, 15/10/26} 
+\end{exercise}
+
 \begin{lemma}
-    The operator $\Omega$ is central, i.e.\ it commutes with $e$, $f$ and $h$.
+    The Casimir operator of $L(n)$ acts by multiplication by $\frac{1}{2}n^2+n$.
+    \begin{proof}
+        Note that $\Omega = \frac{1}{2}h^2+h+2fe$, so if $v$ is the highest
+        weight vector of $L(n)$, then $\Omega v = (\frac{1}{2}n^2+n)v$. Since
+        $f^iv$ ($i\geq 0$) span $L(n)$ and $\Omega f^i = f^i \Omega$, the
+        conclusion follows.
+    \end{proof}
 \end{lemma}
 
-\marginpar{Lecture 3, 15/10/26} 
-TODO LECTURE 3
+\begin{exercise}
+    For $\lambda,\mu\in \bbC$, show that $V=x^\lambda y^\mu \,\bbC[\frac{x}{y},
+    \frac{y}{x}]$ is a representation of $\sl_2$, where $e,f,h$ act by the
+    operators~\eqref{eqn:efh-diffop}. Describe its submodule structure. Write
+    down the Casimir operator $\Omega$ as an explicit second-order differential
+    operator.
+\end{exercise}
 
-\marginpar{Lecture 4, 17/10/26} 
+Now let $V$ be a finite-dimensional representation of $\sl_2$, and given a
+scalar $\lambda$, write $V^\lambda = \ker((\Omega-\lambda)^{\dim V})$ for the
+generalised $\lambda$-eigenspace of $\Omega$. Thus each $V^\lambda$ is an
+$\sl_2$-submodule of $V$, and we have the decomposition $V=\bigoplus_\lambda
+V^\lambda$ as $\sl_2$-modules.
+
+\begin{proposition}[(Vague)]
+    \label{prop:casimir-eigenspaces-compseries}
+    If $V^\lambda\neq 0$, then $\lambda=\frac{1}{2}n^2+n$ for some integer
+    $n\geq 0$, and in this case $V^\lambda$ is `glued together' from copies of $L(n)$. 
+\end{proposition}
+
+Now $\Omega$ acts on $L(n)$ by $\frac{1}{2}n^2+n$, which is an increasing
+function of $n$ for $n\geq 0$. In particular $\Omega$ acts on $L(n)$ and $L(m)$
+with different eigenvalues if $n\neq m$. Thus the above claim makes sense. 
+
+The proposition is vague because we haven't said what `glued together' means; we want
+$V^\lambda$ to have a `block upper-triangular form' where diagonal blocks are
+$L(n)$. One way to make this precise is to say that $V^\lambda$ has a
+\emph{composition series} of $\sl_2$-submodules $0 = W_0 \subseteq W_1 \subseteq
+\cdots \subseteq W_r = V^\lambda$ such that the subquotients $W_r/W_{r-1}$ are
+all isomorphic to $L(n)$. 
+
+With this interpretation of `glued together', we prove the proposition.
+
+\begin{proof}[Proof of \cref{prop:casimir-eigenspaces-compseries}]
+    Since $V^\lambda$ is finite dimensional, it has an irreducible submodule
+    $W_1$ isomorphic to $L(n)$ for some $n$. In particular $\Omega$ acts by
+    $\frac{1}{2}n^2+n$ on some (and hence all) vectors in $V^\lambda$ so that
+    $\lambda=\frac{1}{2}n^2+n$. Now consider $V^\lambda/W_1$. If non-zero, it
+    has an irreducible submodule isomorphic to $L(m)$. But $\Omega$
+    continues to act on $V^\lambda/W_1$ by $\lambda=\frac{1}{2}n^2+n$ so we must
+    have $m=n$. Set $W_2\subset V^\lambda$ to be the preimage of this submodule
+    under the quotient $V^\lambda\onto V^\lambda/W_1$, and continue.
+\end{proof}
+
+So each finite-dimensional $\sl_2$-module $V$ decomposes as $\bigoplus_{n\geq 0}
+V^{(\frac{1}{2}n^2+n)}$ where $V^{(\frac{1}{2}n^2+n)}$ is an iterated
+self-extension of $L(n)$s. That is, \emph{strings of different lengths don't
+interact.} We must now show that each $V^{(\frac{1}{2}n^2+n)}$ is in fact a
+direct sum of copies of $L(n)$s, that is, strings of same length don't interact
+either. 
+
+This is subtle, but in a way that we have seen already when we showed that the
+eigenvalues of $h$ are quantised.
+
+\begin{proposition}
+    The operator $h$ acts on $V^{\frac{1}{2}(n^2+n)}$  with generalised
+    eigenvalues in $\{n,n-2,\ldots,2-n, -n\}$.
+
+    \begin{proof}
+        We know $h$ acts on $L(n)$ with these eigenvalues. To conclude note that
+        the set of generalised eigenvalues of an operator behaves additively on
+        short-exact sequences, that is, if $\varphi$ is an endomorphism of a
+        vector space $W$ and $W'\subset W$ is a subspace such that
+        $\varphi(W')\subseteq W'$, then 
+        \[ 
+            \{\text{gen.\ eigenvals.\ of }\varphi \text{ on }W\} 
+            = \{\text{gen.\ eigenvals.\ of }\varphi \text{ on }W'\} 
+            \;\cup\; \{\text{gen.\ eigenvals.\ of }\varphi \text{ on }W/W'\}. 
+            \qedhere
+        \]
+    \end{proof}
+\end{proposition}
+
+Now for $\lambda=\frac{1}{2}n^2+n$, the subspace $V^\lambda\cap
+\ker(e)=\ker(e\colon V^\lambda\to V^\lambda)$ is $h$-stable, so the same
+observation shows that the only generalised eigenvalue of $h$ on $V^\lambda\cap
+\ker(e)$ is $n$. We next show that $h$ in fact acts diagonisably on $V^\lambda
+\cap \ker(e)$, so that the adjective `generalised' can be dropped.
+
+\marginpar{Lecture 5, 17/10/26} 
 \begin{proposition}\label{prop:h-acts-on-kere}
-    The operator $h$ acts as multiplication by $n$ on $\ker(e\colon V^\lambda\to
-    V^\lambda)$. In fact, $\ker(e) = \{x\in V^\lambda\;|\; hx = nx\}.$
+    The operator $h$ acts as multiplication by $n$ on $V^\lambda\cap \ker(e)$.
+    In fact, $x\in V^\lambda$ satisfies $ex=0$ if and only if $hx=nx$, that is,
+    $V^\lambda\cap \ker(e)$ is the $n$-eigenspace of $h\colon V^\lambda\to V^\lambda$.
 \end{proposition}
 
 To prove this we first recall the following. 
@@ -507,33 +599,38 @@ To prove this we first recall the following.
 \end{exercise}
 
 \begin{proof}[Proof of \cref{prop:h-acts-on-kere}]
-    If $hx = nx$, then $ex \in (V^\lambda)_{n+2} = 0$ as generalised eigenspaces
-    of $h$ on $V^\lambda$ had eigenvalues $-n, \ldots, n$. So $x$ lies in $\ker(e)$.
-    Conversely let $x\in \ker(e)$, so $(h-n)^{\dim V_\lambda} x = 0$ (since
-    $\ker(e)$ is a generalised eigenspace for $h$ with eigenvalue $n$). By
-    lemma, we have \[0 = f^k(h-n)^{\dim V_\lambda} x = (h-n+2k)^{\dim V_\lambda}
-    f^k x\]
-    so that $f^k x$ lies in the $(h-n+2k)$-generalised eigenspace of $h$.
+    If $hx = nx$, then $hex=(n+2)ex$ and hence $ex=0$ as generalised eigenspaces
+    of $h$ on $V^\lambda$ have eigenvalues $-n, \ldots, n$. So $x$ lies in
+    $V^\lambda\cap \ker(e)$.
+
+    Conversely let $x\in V^\lambda\cap \ker(e)$, so that in particular $(h-n)^{(\dim V_\lambda)} x
+    = 0$. By the above exercise, we have \[0 = f^k(h-n)^{(\dim V_\lambda)} x =
+    (h-n+2k)^{(\dim V_\lambda)} f^k x\]
+    so that $f^k x$ lies in the $(n-2k)$-generalised eigenspace of $h$.
+
     Observe that if $y$ is any non-zero element of $\ker(e)$ then $f^n y \neq
-    0$ (to see why, let $0=W_0<W_1<\cdots < W_r= V^\lambda$ be a composition
+    0$ (to see why, let $0=W_0\subseteq \cdots \subseteq  W_r= V^\lambda$ be a composition
     series; there is a unique $i$ with $y\in W_i$ but $y\notin W_{i+1}$. Let
     $\ol{y}=y+W_{i-1}\in W_i/W_{i-1}\simeq L(n)$. Then $\ol y$ is a highest
     weight vector in $L(n)$ so $f^n \ol{y}\neq 0$ in $W_i/W_{i-1}$, from whence
-    the conclusion follows.) But we have seen that $f^{n+1}x = 0$ (since $x$
+    the conclusion follows.)
+
+    But we have seen that $f^{n+1}x = 0$ (since $x$
     lies in $(-n-2)$-generalised eigenspace) so by the above exercise, 
     \[0=ef^{n+1}x = (n+1)f^n (h-n) x + f^{n+1}ex = (n+1)f^n(h-n)x.\]
     Setting $y=(h-n)x$, we see that $y\in \ker(e)$ (since $e(h-n)x=(h-n-2)ex
     =0$) and $f^ny = f^n(h-n)x = 0$ (since $n+1\neq 0$) and thus $y= 0$.
 \end{proof}
 
-\begin{exercise}
-Choose a basis $w_1,\ldots, w_a$ of $\ker(e\colon V^\lambda\to
-V^\lambda)$ and consider the strings $\langle w_i, fw_i, \ldots, f^n
-w_i\rangle$, and show that these give a decomposition of $V^\lambda$ into a
-direct sum of $L(n)$s.
-\end{exercise}
-
 Thus $h$ acts diagonally on all of $V^\lambda$.
+
+\begin{exercise}
+Choose a basis $w_1,\ldots, w_a$ of $V^\lambda \cap \ker(e)$ and consider the
+strings $\langle w_i, fw_i, \ldots, f^n w_i\rangle$, and show that these give a
+decomposition of $V^\lambda$ into a direct sum of $L(n)$s. Conclude that finite
+dimensional $\sl_2$-modules are completely reducible over $\bbC$, that is, they
+are direct sums of irreducible representations.
+\end{exercise}
 
 \begin{exercise}
     Check that all of this is false over a field of positive characteristic. In
@@ -550,10 +647,11 @@ Thus $h$ acts diagonally on all of $V^\lambda$.
     can describe them in terms of $L(n)$. Do so.
 \end{exercise}
 
-\paragraph{Consequences.}
-Let $\gg$ be a Lie algebra, and $V,W$ be $\gg$-representations. Then check that
-the map $\gg\to \End(V\otimes W)$ given by $x\mapsto x\otimes 1 + 1\otimes x$
-defines a homomorphism of Lie algebras.
+\subsection{Consequences and character theory}
+Let $\frakg$ be a Lie algebra, and $V,W$ be $\frakg$-representations. Then the
+map $\frakg\to \End(V\otimes W)$ given by $x\mapsto x\otimes 1 + 1\otimes x$
+defines a homomorphism of Lie algebras, so that $V\otimes W$ is naturally a
+$\frakg$-representation.
 
 \begin{remark}
     This is related to the fact that both group algebras and enveloping algebras
@@ -562,15 +660,16 @@ defines a homomorphism of Lie algebras.
     homomorphism $A\to (A\otimes A)$.
 \end{remark}
 
-For $\gg = \sl_2(\bbC)$, we see that $L(n)\otiems L(m)$ is thus a representation of
+For $\frakg = \sl_2(\bbC)$, we see that $L(n)\otimes L(m)$ is thus a representation of
 $\sl_2$. What is its decomposition into irreducibles? We could just find all
 highest weight vectors, indeed you should do this by hand for small examples
-such as $L(1)\otimes L(n)$ and $L(2)\otimes L(n)$. 
+such as $L(1)\otimes L(n)$ and $L(2)\otimes L(n)$. For example, it is easy to
+see that if $v_n\in L(n)$ and $v_m\in L(m)$ are highest weight vectors, then
+check that so is $v_n\otimes v_m \in L(n)\otimes L(m)$. Thus $L(n)\otimes L(m) =
+L(n+m) \oplus \text{(other factors)}$. The other factors must account for $(n+1)(m+1)-(n+m+1)$ dimensions. 
 
-Indeed it is easy to see that if $v_n\in L(n)$ and $v_m\in L(m)$ are highest
-weight vectors, then check that so is $v_n\otimes v_m \in L(n)\otimes L(m)$.
-Thus $L(n)\otimes L(m) = L(n+m) + \text{(other factors)}$. The other factors
-must account for $(n+1)(m+1)-(n+m+1)$ dimensions.
+Characters provide a convenient way to calculate what such decompositions are in
+general.
 
 \begin{definition}
     Let $V$ be a finite dimensional representation of $\sl_2$. The
@@ -581,38 +680,610 @@ must account for $(n+1)(m+1)-(n+m+1)$ dimensions.
 
 \begin{proposition}
     The character of $V$ has the following properties. 
-    \begin{enumerate}
+    \begin{enumerate}[(i)]
         \item The character is independent of choice of basis for $\sl_2$.
         \item We have $\char V|_{z=1}=\dim V$.
             \begin{proof} This is precisely the claim that $h$ acts diagonisably
             on $V$.\end{proof}
-        \item $\char L(n) = z^n + z^{n-2} + \cdots + z^{2-n} + z^{-n} =
-            \dfrac{z^{n+1}-z^{-(n+1)}}{z-z^{-1}} (= [n+1]_z).$
-        \item $\char V \simeq \char W$ if and only if $V\simeq W.$
+        \item $\char\, L(n) = z^n + z^{n-2} + \cdots + z^{2-n} + z^{-n}.$
+        \item $\char V = \char W$ if and only if $V\simeq W.$
             \begin{proof}
                 Write $V\simeq \bigoplus a_n L(n)$, $W\simeq b_n L(n)$. Then
                 $V\simeq W$ if and only if $a_n = b_n$ for all $n\geq 0$ by our
-                theorem. Now $\{\char L(n)\;|\; n\geq 0\}$ is a basis of
-                $\bbZ[z,z^{-1}]^{\text{sym}}$, so the $a_n$s are determined by
-                $\char V$.
+                classification of $\sl_2$-modules. But note that $\{\char
+                L(n)\;|\; n\geq 0\}$ is a basis of the space
+                $\bbZ[z,z^{-1}]^{\text{sym}}$ of symmetric polynomials, so the
+                $a_n$s are determined by $\char V$.
             \end{proof}
 
         \item $\char (V\otimes W) = (\char V )\cdot (\char W).$
             \begin{proof}
-                Check that $V_a\otimes W_b \subseteq (V\otimes W)_{a+b}$, so
+                Note that $V_a\otimes W_b \subseteq (V\otimes W)_{a+b}$, so
                 that $(V\otimes W)_r = \sum_{a+b = r}V_a\otimes V_b$. But this
-                is how we multiply polynomials.
+                is precisely how we multiply polynomials.
             \end{proof}
     \end{enumerate}
 \end{proposition}
 
+The character of $L(n)$, i.e.\ the polynomial $[n+1]_z\coloneqq z^n + z^{n-2} +
+\cdots + z^{2-n} + z^{-n}$ is also sometimes called the $(n+1)$th \emph{quantum
+integer}.
+
 \begin{example}
-    What is $L(1)\otimes L(3)$? By explicitly multiplying polynomials, we
+    What is $L(1)\otimes L(3)$? Explicitly multiplying polynomials, we
     compute that $[2]_z \cdot [4]_z = [3]_z + [5]_z$, and hence $L(1)\otimes
     L(3)\simeq L(2)\oplus L(4)$. More generally, we have the
-\emph{Clebsch--Gordon rule} \[L(n)\otimes L(m)\simeq \bigoplus_{|n-m|\leq k \leq
-        n+m\\ k\equiv n-m \mod 2} L(k).\]
-    Pictorially it is easier: draw an $n\times m$ integer grid, and draw
-    L-shaped strings starting from the ends. These pictures are called
-    \emph{crystals}.
+    \emph{Clebsch--Gordon rule}, which says that $L(n)\otimes L(m)\simeq
+    \bigoplus_{k\in \text{CG}(n,m)}L(k)$ where $\text{CG}(n,m)=\{k\;|\; |n-m|\leq k
+    \leq n+m, \quad k\equiv n-m \mod 2 \}$.
+
+    Pictorially the computation is easier: draw an $n\times m$ integer grid, draw
+    L-shaped strings starting from the ends, and count lengths of these strings.
+    These pictures are called \emph{crystals}. For example, below is the crystal
+    for $L(4)\otimes L(6)\simeq L(10)\oplus L(8) \oplus L(6) \oplus L(4)\oplus
+    L(2)$.
+
+    \usetikzlibrary{fit, shapes.misc}
+    \tikzcdset{
+        compact/.style={
+        row sep=0em,       
+        column sep=0em,    
+        matrix options = {nodes={font=\tiny}}}
+    }
+    \begin{center}
+    \begin{tikzcd}[compact,
+        nodes={minimum width=3em},
+        execute at end picture={
+            \draw[draw=black, rounded corners=0pt]
+                (\tikzcdmatrixname-2-2.north west) -- 
+                (\tikzcdmatrixname-2-8.north east) -- 
+                (\tikzcdmatrixname-6-8.south east) --
+                (\tikzcdmatrixname-6-8.south west) -- 
+                (\tikzcdmatrixname-2-8.south west) -- 
+                (\tikzcdmatrixname-2-2.south west) -- cycle;
+            \draw[draw=black, rounded corners=0pt]
+                (\tikzcdmatrixname-3-2.north west) -- 
+                (\tikzcdmatrixname-3-7.north east) -- 
+                (\tikzcdmatrixname-6-7.south east) --
+                (\tikzcdmatrixname-6-7.south west) -- 
+                (\tikzcdmatrixname-3-7.south west) -- 
+                (\tikzcdmatrixname-3-2.south west) -- cycle;
+            \draw[draw=black, rounded corners=0pt]
+                (\tikzcdmatrixname-4-2.north west) -- 
+                (\tikzcdmatrixname-4-6.north east) -- 
+                (\tikzcdmatrixname-6-6.south east) --
+                (\tikzcdmatrixname-6-6.south west) -- 
+                (\tikzcdmatrixname-4-6.south west) -- 
+                (\tikzcdmatrixname-4-2.south west) -- cycle;
+            \draw[draw=black, rounded corners=0pt]
+                (\tikzcdmatrixname-5-2.north west) -- 
+                (\tikzcdmatrixname-5-5.north east) -- 
+                (\tikzcdmatrixname-6-5.south east) --
+                (\tikzcdmatrixname-6-5.south west) -- 
+                (\tikzcdmatrixname-5-5.south west) -- 
+                (\tikzcdmatrixname-5-2.south west) -- cycle;
+            \draw[draw=black, rounded corners=0pt]
+                (\tikzcdmatrixname-6-2.north west) -- 
+                (\tikzcdmatrixname-6-4.north east) -- 
+                (\tikzcdmatrixname-6-4.south east) -- 
+                (\tikzcdmatrixname-6-2.south west) -- cycle;
+            }]
+                & z^6    & z^4 & z^2    & 1      & z^{-2} & z^{-4} & z^{-6} \\     
+        z^4     & z^{10} & z^8 & z^6    & z^4    & z^{2}  & 1      & z^{-2} \\     
+        z^2     & z^8    & z^6 & z^4    & z^2    & 1      & z^{-2} & z^{-4} \\     
+        1       & z^6    & z^4 & z^2    & 1      & z^{-2} & z^{-4} & z^{-6} \\     
+        z^{-2}  & z^4    & z^2 & 1      & z^{-2} & z^{-4} & z^{-6} & z^{-8} \\     
+        z^{-4}  & z^2    & 1   & z^{-2} & z^{-4} & z^{-6} & z^{-8} & z^{-10}
+    \end{tikzcd}
+    \end{center}
 \end{example}
+
+\section{Structure of complex semisimple Lie algebras}
+\marginpar{Lecture 6, 20/10/26} 
+\begin{definition}
+    A Lie algebra $\frakg$ is \emph{simple} if it is not Abelian and its only
+    ideals are $0$ and $\frakg$. A Lie algebra $\frakg$ is \emph{semisimple} if it is
+    a direct sum of simple ones.
+\end{definition}
+
+We would like to describe how Lie algebras are built out of simple and
+semisimple ones. For this, more definitions are in order.
+
+\begin{definition}
+    Given a Lie algebra $\frakg$, its \emph{derived subalgebra}
+    $[\frakg,\frakg]$ (also denoted $\frakg^1$ or $\frakg^{(1)}$) is the span of
+    all elements $[x,y]$ where $x,y\in \frakg$. More generally, the \emph{central series} of $\frakg$ is the sequence of ideals
+    $\frakg^n\subseteq \frakg$ ($n\geq 0$) defined recursively as
+    \[\frakg^0=\frakg, \qquad \frakg^n = [\frakg^{n-1}, \frakg] =
+    \text{span}\{\,[x,y]\;|\; x\in \frakg^{n-1}, y\in\frakg\}.\] 
+    On the other hand, the \emph{derived} (or \emph{lower central}) series of
+    $\frakg$ is the sequence of ideals $\frakg^{(n)}\subseteq \frakg$ ($n\geq
+    0$) defined recursively as
+    \[
+        \frakg^{(0)}=\frakg, \qquad \frakg^{(n)} = [\frakg^{(n-1)},
+        \frakg^{(n-1)}] = \text{span}\{\,[x,y]\;|\; x\in \frakg^{(n-1)}, y\in
+        \frakg^{(n-1)}\}.
+    \] 
+    We say $\frakg$ is \emph{nilpotent} if $\frakg^n=0$ for $n\gg 0$ (i.e.\ the
+    ``central series terminates''), and $\frakg$ is \emph{solvable} if $\frakg^{(n)}=0$
+    for $n\gg 0$ (i.e.\ the ``derived series terminates'').
+\end{definition}
+
+It is clear that $\frakg^{(n)}\subseteq \frakg^n$ for all $n$, and hence every
+nilpotent Lie algebra is solvable. 
+
+\begin{example}
+    The two dimensional Lie algebra with basis $x,y$ such that $[x,y]=y$ is
+    solvable but not nilpotent. Note this is a subalgebra of $\bb_2=\{\mat{\ast
+    & \ast \\ 0 &\ast}\}$, the Lie
+    algebra of $2\times 2$ upper triangular matrices. More generally, the Lie
+    algebra $\bb_n\subset \gl_n$ of $n\times n$ upper triangular matrices is
+    solvable but not nilpotent. The algebra $\nn_n$ of \emph{strictly} upper
+    triangular matrices is on the other hand nilpotent.
+\end{example}
+
+\begin{exercise}
+    Compute the central and derived series of $\bb_n$ and $\nn_n$ to check the
+    above claims. Compute the centres of these algebras.
+\end{exercise}
+
+\begin{example}
+    Let $(W, \langle -, -\rangle)$ be a symplectic vector space. The
+    \emph{Heisenberg Lie algebra} $\mathcal{H}_W$ has underlying vector space
+    $W\oplus \bbk \, c$, with the Lie bracket given by \([c,w]=0\) and
+    $[w,w']=\langle w, w'\rangle c$ for all $w,w'\in W$. This is a nilpotent Lie
+    algebra.
+\end{example}
+
+\begin{exercise}
+    Let $W$ be the standard two-dimensional symplectic space, and
+    $L\subset W$ a Lagrangian subspace. Then $W$ is isomorphic to $L\oplus
+    L\dual$ with symplectic form $\langle L, L\rangle = \langle L\dual,
+    L\dual\rangle = 0$, and for $\lambda \in L\dual$, $\ell \in
+    L$ we have $\langle \lambda , \ell\rangle = \lambda(\ell)$. Choose a basis
+    $p,q$ of $W$ corresponding to dual bases of $L,L\dual$, so that $p,q,c$ is a
+    basis of the Heisenberg Lie algebra $\mathcal{H}_W$. Show this has a
+    representation on $\bbC[x]$ where $q$ acts by multiplication by $x$, $p$
+    acts by $\frac{\partial\phantom{x}}{\partial x}$, and $c$ acts as the identity.
+\end{exercise}
+
+We mention equivalent characterisations of solvability and nilpotency, which are
+straightforward to prove.
+
+\begin{proposition}
+    Subalgebras and quotient algebras of solvable Lie algebras are
+    solvable. In fact, if $\frakg$ is a Lie algebra and
+    $\frakh\subset \frakg$ is an ideal, then $\frakg$ is solvable if and
+    only if $\frakh$ and $\frakg/\frakh$ are both solvable. 
+
+    Consequently, $\frakg$ is solvable if and only if there is a sequence of
+    subalgebras $0=\frakh_1\subseteq \cdots\subseteq \frakh_n=\frakg$ such that
+    each $\frakh_i$ is an ideal of $\frakh_{i+1}$, and $\frakh_{i+1}/\frakh_i$
+    is Abelian.
+\end{proposition}
+
+\begin{proposition}
+Subalgebras and quotient algebras of nilpotent Lie algebras are nilpotent. In
+fact a Lie algebra $\frakg$ is nilpotent if and only if its center $Z(\frakg)$
+is non-zero, and the quotient $\frakg/Z(\frakg)$ is nilpotent.
+\end{proposition}
+
+\subsection{Three theorems} The theorems of Lie, Engel, and Cartan
+form the cornerstones of the study of nilpotency and solvability in Lie algebras.
+
+\begin{theorem}[(Lie's theorem)]
+    Let $\bbk$ be an algebraically closed field of characteristic zero, and
+    $\frakg$ a solvable Lie algebra over $\bbk$. If $V$ is a finite-dimensional
+    $\frakg$-module, then there is a basis $v_1,\ldots, v_n$ of $V$
+    with respect to which all elements of $\frakg$ are upper triangular.
+    That is, there is a chain of $\frakg$-modules $0=V_0\subseteq V_1\subseteq
+    \cdots \subseteq V_n = V$ with each $V_i$ being $i$-dimensional (such a
+    chain is called a \emph{complete flag}).
+\end{theorem}
+
+\begin{exercise}
+    Show that Lie's theorem is equivalent to the statement that given any solvable
+    Lie algebra $\frakg$ over an algebraically closed field of characteristic
+    zero, every $\frakg$-module has a one-dimensional submodule. 
+\end{exercise}
+
+\begin{exercise}
+    Show that Lie's theorem can fail over fields that aren't algebraically
+    closed or of positive characteristic (\emph{hint: for the latter, consider
+    the three-dimensional Heisenberg algebra over a field $\bbk$ of
+    characteristic $p$, and consider the representation $\bbk[x]/(x^p)$.})
+\end{exercise}
+
+\begin{corollary}\label{cor:derived-of-solvable-is-nilp}
+    Over a field of characteristic zero, the derived subalgebra of a solvable
+    Lie algebra is nilpotent.
+\end{corollary}
+
+\begin{exercise}
+    Show that for a Lie algebra $\frakg$ over $\bbk$, the base extension to the
+    algebraic closure $\frakg\otimes_\bbk \ol{k}$ is solvable if and only if
+    $\frakg$ is.
+\end{exercise}
+
+\begin{proof}[Proof of \cref{cor:derived-of-solvable-is-nilp}]
+        Given the exercise above, we can assume $\bbk$ is algebraically closed,
+        and apply Lie's theorem to the adjoint representation
+        $\adj(\frakg)\subseteq \End(\frakg)$. Since $\frakg$ is solvable, so is
+        $\adj(\frakg)$ and hence $\adj(\frakg)$ lies in the Borel subalgebra
+        $\bb\subseteq \End(\frakg)$ by Lie's theorem. But a direct computation
+        shows that $[\bb, \bb]$ is nilpotent, so that $[\adj(\frakg),
+        \adj(\frakg)]$ is so too. Since $[\adj(\frakg), \adj(\frakg)] =
+        \adj[\frakg, \frakg]$, we conclude that $[\frakg, \frakg]$ is itself
+        nilpotent by the criterion above.
+\end{proof}
+
+\begin{exercise}
+    Show that~\cref{cor:derived-of-solvable-is-nilp} fails in positive characteristic.
+\end{exercise}
+
+\begin{theorem}[(Engel's theorem)] 
+    \marginpar{Lecture 7, 22/10/26} Over an arbitrary field $\bbk$, a Lie
+    algebra $\frakg$ is nilpotent if and only if every finite-dimensional
+    $\frakg$-module $V$, on which every $x\in \frakg$ acts nilpotently, has a
+    basis $v_1,\ldots, v_n$ with respect to which $\frakg$ acts by strictly
+    upper triangular matrices (that is, all operators in $\frakg$ are
+    simultaneously strictly-upper-triangularisable on $V$).
+\end{theorem}
+
+Engel's theorem says that a non-nilpotent Lie algebra cannot act exclusively by
+nilpotent operators. The converse is false! Indeed, the Lie algebra of diagonal
+$n\times n$ matrices is Abelian and hence nilpotent, but it doesn't act by
+nilpotent matrices on $\bbk^n$. The `correct' converse is that if $\frakg$ is a
+nilpotent Lie algebra, then $\frakg/Z(\frakg)$ always acts by nilpotent matrices.
+
+\begin{exercise}
+    Show that Engel's theorem is equivalent to the statement that given a
+    nilpotent Lie algebra $\frakg$, every finite-dimensional $\frakg$-module $V$
+    has a one-dimensional trivial submodule (i.e.\ a subspace $\bbk v\subset V$
+    such that $xv=0$ for each $x\in \frakg$).
+\end{exercise}
+
+\begin{corollary}
+    A Lie algebra $\frakg$ is nilpotent if and only if each operator
+    $\adj_x\colon \frakg\to \frakg$ ($x\in \frakg$) is nilpotent.
+    \begin{proof}
+        Given $x,y\in \frakg$, note that $\adj_x^i(y)$ lies in $\frakg^i$ and
+        hence if $\frakg$ is nilpotent then $\adj_x$ is a nilpotent operator.
+        Conversely if each $\adj_x$ is a nilpotent operator, then by Engel's
+        theorem, $\frakg$ embeds as a subalgebra in the Lie algebra $\nn_n$
+        of strictly upper triangular $n\times n$ matrices. It follows that
+        $\frakg^{n}\subseteq (\nn_n)^{n}=0$.
+    \end{proof}
+\end{corollary}
+
+To prove Engel's theorem we make a few definitions. A symmetric bilinear form
+$(-,-)\colon \frakg\times\frakg\to \bbk$ is \emph{invariant} if
+$([x,y],z)=(x,[y,z])$. For example, each finite dimensional representation $V$
+of $\frakg$ defines a symmetric bilinear form $(x,y)\mapsto \text{trace}(xy\colon V\to V)$, and this is invariant.
+
+\begin{exercise}
+    Suppose $\frakg$ is the Lie algebra of a Lie group $G$. Check that a
+    $G$-invariant symmetric bilinear form $(-,-)\colon \frakg\times \frakg\to
+    \frakg$ is $\frakg$-invariant, by differentiating the relation $(gx,
+    gy)=(x,y)$ over $g\in G$.
+\end{exercise}
+
+\begin{exercise}
+    If $(-,-)$ is an invariant form on $\frakg$ and $\fraka\subseteq \frakg$ is
+    an ideal, then so is $\fraka\orth$.
+\end{exercise}
+
+\begin{definition}
+    The \emph{Killing form} of a finite dimensional Lie algebra
+    $\frakg$ is the trace form of its adjoint representation, given by
+    $(x,y)_\adj = \text{trace}(\adj_x\circ \adj_y\colon\frakg \to \frakg)$.
+\end{definition}
+
+\begin{theorem}[(Cartan's criterion)]
+    Let $\frakg$ be a finite dimensional Lie algebra over a field of
+    characteristic $0$, and $V$ a faithful finite-dimensional representation.
+    Then $\frakg$ is solvable if and only if the derived subalgebra
+    $\frakg^{(1)}$ lies in the kernel of the associated trace form, i.e.\
+    $\textnormal{trace}(xyz-xzy\colon V\to V)=0$ for all $x,y,z\in
+    \frakg$.
+%    \begin{proof}
+%        If $\frakg$ is solvable, then by Lie's theorem $V$ has a basis with
+%        respect to which elements of $\frakg$ act by upper triangular matrices
+%        so that the vanishing of $\textnormal{trace}(xyz-xzy\colon V\to V)$ can
+%        be checked explicitly.
+%    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    Over a field of characteristic zero, a Lie algebra $\frakg$ is solvable if
+    and only $(\frakg, [\frakg, \frakg])_\adj=0$.
+    \begin{proof}
+        Note that $\frakg$ is solvable if and only if its quotient
+        $\adj(\frakg)=\frakg/Z(\frakg)$ is (since the center $Z(\frakg)$ is Abelian and
+        hence solvable). But the adjoint representation $\frakg\circlearrowright
+        \frakg$ induces a faithful representation $\adj(\frakg)\circlearrowright
+        \frakg$, so we can conclude by Cartan's criterion.
+    \end{proof}
+\end{corollary}
+
+\begin{exercise}
+    Let $\wt{\mathcal{H}}$ be a four-dimensional Lie algebra with basis $p,q,c,d$, and
+    Lie bracket given by $[p,q]=c$, $[d,p]=p$, $[d,q]=-q$, $[-,c]=0$. Show that
+    $\wt{\mathcal{H}}$ is solvable. Show that $\wt{\mathcal{H}}$ admits a
+    non-degenerate invariant form, and conclude that it cannot be the trace form
+    of any representation. 
+
+    Extend the action of the Heisenberg algebra
+    $\mathcal{H}$ on $\bbC[x]$ to that of $\wt{\mathcal{H}}$, by finding
+    appropriate differential operators corresponding to the bases.
+\end{exercise}
+
+\subsection{Criteria for semisimplicity} As an application of the above
+theorems, we prove a powerful criterion for checking that a Lie algebra is
+semisimple. The proof is largely bookkeeping.
+
+\begin{exercise}
+    Show that if $\fraka_1, \fraka_2\subseteq \frakg$ are solvable ideals, then
+    so is $\fraka_1+\fraka_2$. Conclude that every finite-dimensional Lie
+    algebra has a maximal solvable ideal $R(\frakg)$, which we call its \emph{radical}.
+    Check that $R(\frakg/R(\frakg))=0$.
+\end{exercise}
+
+\begin{theorem}
+    If $\frakg$ is a finite dimensional Lie algebra over a field of
+    characteristic zero, the following are equivalent.
+    \begin{enumerate}[(i)]
+        \item\label{item:killing1} The algebra $\frakg$ is semisimple.
+        \item\label{item:killing2} The radical $R(\frakg)$ is zero. 
+        \item\label{item:killing3} The algebra $\frakg$ has no non-zero Abelian ideals.
+        \item\label{item:killing4} \emph{(Killing criterion)} The Killing form
+            $(-,-)_\adj\colon \frakg\times \frakg\to \frakg$ is non-degenerate.
+    \end{enumerate}
+
+    \begin{proof}
+        If $\fraka\subset\frakg$ is an Abelian ideal, then $\fraka$ lies in
+        $\frakg\orth=\{x\in \frakg\;|\; (x,y)_\adj = 0 \text{ for all }y\in
+        \frakg\}$. Indeed, we can extend a basis $v_1,\ldots, v_m$ of $\fraka$
+        to a basis $v_1,\ldots, v_n$ of $\frakg$, and note that with respect to
+        this basis any element $x\in \frakg$ act by a matrix of the block-form
+        $\mat{\ast & \ast \\ 0 & \ast}$ while any $a\in \fraka$ act by
+        a matrix of the form $\mat{0 & \ast \\ 0 & 0}$, from which it follows that
+        $\adj_x\circ \adj_a$ is traceless. Thus~\ref{item:killing4} implies~\ref{item:killing3}.
+
+        The implication~\ref{item:killing3}$\Rightarrow$\ref{item:killing2}
+        follows by noting that the final non-zero term in the derived series of
+        $R(\frakg)$ is necessarily Abelian, and an ideal of $\frakg$ (to see
+        this, note that the Jacobi identity shows if $\frakh_1,\frakh_2\subseteq
+        \frakg$ are ideals then so is $[\frakh_1,\frakh_2]$).
+
+        To show~\ref{item:killing2}$\Rightarrow$\ref{item:killing4}, consider
+        the ideal $\frakg\orth\subseteq \frakg$. If $R(\frakg)=0$, then in
+        particular $\frakg$ has trivial centre and hence we have embeddings
+        $\frakg \orth\subseteq \frakg\subseteq \End(\frakg)$. In particular,
+        $\frakg \orth$ acts faithfully on $\frakg$ and the associated trace form
+        (the restriction of the Killing form) is trivial by definition of
+        $\frakg\orth$. Thus Cartan's criterion shows $\frakg\orth$ is solvable,
+        hence lies in $R(\frakg)=0$. That is, $\frakg\orth=0$ as required. 
+
+        Now suppose the equivalent conditions~\ref{item:killing2}--\ref{item:killing4} hold, so that the Killing form is
+        non-degenerate and $\frakg$ has no non-zero solvable ideals. For any
+        minimal non-zero ideal $\frakh\subset \frakg$, we then see that
+        the restricted Killing form $(-,-)_\adj|_{\frakh}$ is non-degenerate ---
+        indeed, the kernel of this restricted form is the ideal $\frakh \orth
+        \cap \frakh$ of $\frakg$
+        contained in $\frakh$, so is zero or $\frakh$ by minimality, but if we had
+        $\frakh\orth\cap \frakh = \frakh$ then that would imply solvability of
+        $\frakh$ by Cartan's criterion. Thus $\frakh\orth$ and $\frakh$ are
+        ideals of $\frakg$ that intersect trivially, giving the decomposition
+        $\frakg=\frakh\orth \oplus \frakh$ as Lie algebras. It follows that
+        ideals of $\frakh$ (and $\frakh\orth$) are also ideals of $\frakg$, so
+        that $\frakh$ is simple and $\frakh\orth$ has trivial radical allowing
+        us to continue and inductively decompose $\frakg$ into a direct-sum of
+        its minimal ideals showing~\ref{item:killing1}. The converse implication~\ref{item:killing1}$\Rightarrow$\ref{item:killing3} is obvious.
+    \end{proof}
+\end{theorem}
+
+\begin{exercise}
+    Show that the chain of containments $[R(\frakg),R(\frakg)]\subseteq
+    \frakg\orth\subseteq R(\frakg)\subseteq \frakg$ holds in general.
+\end{exercise}
+
+\begin{exercise}
+    Show that a semisimple Lie algebra uniquely decomposes into a direct-sum of its
+    minimal non-zero ideals. That is, if $\frakg_1,\ldots,\frakg_n$ are simple
+    Lie algebras and $\frakh$ is a minimal non-zero ideal of
+    $\frakg=\frakg_1\oplus\cdots \oplus\frakg_n$, then $\frakh\cap \frakg_i=0$
+    for all $i$ but one (say $i=1$) and $\frakh=\frakg_1$.
+\end{exercise}
+
+\begin{exercise}
+    Show that any simple Lie algebra admits a unique non-degenerate
+    invariant form up to scaling. We will soon show that $\sl_n(\bbC)$ is
+    simple; what is the scaling factor relating the Killing form and
+    the trace form of the standard representation (i.e.\ the form
+    $(A,B)\mapsto \text{trace}(AB)$)?
+\end{exercise}
+
+We note that the above theorem shows every finite dimensional Lie algebra $\frakg$ in
+characteristic zero is the extension of a semisimple Lie algebra
+(namely $\frakg/R(\frakg)$) by a solvable one (namely $R(\frakg)$).
+
+\begin{exercise}
+    Let $\frakg\subset \gl_n$ be the Lie subalgebra of matrices $X$ for which
+    the lower right $m\times (n-m)$ block $[X_{ij}\;|\; m+1 \leq i\leq n,\,1\leq
+    j\leq m]$ vanishes. Write the associated sequence $0\to R(\frakg)\to \frakg \to
+    \frakg/R(\frakg)\to 0$, and shoe explicitly that it splits (i.e.\ that
+    $\frakg$ has a subalgebra $\mathfrak{s}$ isomorphic to $\frakg/R(\frakg)$,
+    so that $\frakg \simeq \mathfrak{s}\ltimes R(\frakg)$). Check that this
+    splitting is non-unique.
+\end{exercise}
+
+The above phenomenon is more general.
+
+\begin{theorem}[(Levi's theorem)]
+    If $\frakg$ is a finite dimensional Lie algebra over a field of
+    characteristic zero, then the radical sequence $0\to R(\frakg)\to \frakg \to
+    \frakg/R(\frakg)\to 0$ splits.
+\end{theorem}
+
+Levi's theorem is, of course, false over a field of positive characteristic.
+
+\begin{exercise}
+    Show that the radical of $\sl_p(\bbF_p)$ is $\bbk\cdot \id$, and that
+    $\sl_p(\bbF_p)/\bbk\cdot \id$ does not embed into $\sl_p(\bbF_p)$. 
+\end{exercise}
+
+\subsection{Derivations} A \emph{derivation} of a Lie algebra $\frakg$ is a
+linear map $D\colon\frakg\to \frakg$ such that $D[x,y]=[Dx,y]+[x,Dy]$ for all
+$x,y\in \frakg$. For
+example, each $x\in \frakg$ induces a derivation $\adj_x\colon \frakg\to
+\frakg$; such derivations are called \emph{inner derivations}. The vector space
+of all derivations up to inner derivations is denoted $\HH^1(\frakg, \frakg)$,
+the first cohomology of $\frakg$ with coefficients in $\frakg$. 
+
+We will learn more about Lie algebra cohomology in due time.
+
+\marginpar{Lecture 8, 24/10/26} 
+
+\begin{exercise}
+    If $D\colon \frakg\to \frakg$ is a derivation and $x\in \frakg$, then show
+    that $\adj_{Dx}=[D,\adj_x]\in \End(\frakg)$.
+\end{exercise}
+
+\begin{proposition}
+    If $\frakg$ is a semisimple Lie algebra, then $\HH^1(\frakg,\frakg)=0$
+    (i.e.\ all derivations of $\frakg$ are inner).
+
+    \begin{proof}
+        Given a derivation $D\colon \frakg\to \frakg$ of a semisimple Lie
+        algebra, consider the linear function $\frakg\to \bbk$ given by
+        $x\mapsto \text{trace}(D\circ \adj_x\colon \frakg\to \frakg)$. Since the
+        Killing form is non-degenerate, this element of $\frakg\dual$ is equal to
+        $(y,-)_\adj$ for a unique $y\in \frakg$. Claim $D=\adj_y$.
+
+        To show this, we show $E=D-\adj_y$ is zero, or equivalently $Ex=0$ for
+        all $x\in \frakg$. By non-degeneracy of the Killing form, it suffices to
+        show $(Ex,z)_\adj$ vanishes for
+        all $x,z\in \frakg$. But this is immediate, since
+        \begin{align*}
+            (Ex,z)_\adj 
+            &= \textnormal{trace}(\adj_{Ex}\circ \adj_z) \\
+            &=\textnormal{trace}([E,\adj_x]\circ \adj_z) \\
+            &= \textnormal{trace}(E\circ [\adj_x, \adj_z]) \\ 
+            &= \underbrace{\textnormal{trace}(D\circ [\adj_x,
+            \adj_z])}_{(y,[x,z])_\adj} -
+            \underbrace{\textnormal{trace}(\adj_y \circ
+            [\adj_x,\adj_z])}_{(y,[x,z])_{\adj}} \qquad = 0. \qedhere
+        \end{align*}
+    \end{proof}
+\end{proposition}
+
+\begin{exercise}
+    Show that the two-dimensional Lie algebra $\frakg$ with basis $a,b$ and
+    bracket $[a,b]=b$ has only inner derivations, so the vanishing of
+    $\HH^1(\frakg,\frakg)$ is \emph{not} a criterion for semisimplicity.
+\end{exercise}
+
+\begin{exercise}
+    Show that any nilpotent Lie algebra has non-inner derivations.
+\end{exercise}
+
+\section{Structure of complex simple Lie algebras}
+The punchline of this section is a precise description of how algebras such as
+$\sl_n(\bbC)$ are built out of $\sl_2(\bbC)$. 
+
+\begin{definition}
+    A \emph{torus} $\tt\subset\frakg$ is an Abelian Lie subalgebra such that for
+    all $t\in \tt$, the operator $\adj_t\colon \frakg\to \frakg$ is
+    diagonalisable. A \emph{maximal torus} is a torus not contained in a bigger
+    torus (duh).
+\end{definition}
+
+\begin{exercise}
+    Show that the space of (traceless) diagonal matrices is a maximal torus in
+    $\gl_n$ (resp.\ $\sl_n$).
+\end{exercise}
+
+\begin{exercise}
+    Check that the Abelian Lie subalgebra $\mat{0&\ast \\ 0&0}\subseteq \sl_2$
+    is not a torus.
+\end{exercise}
+
+If $V$ is a $\bbC$-vector space and $t_1,\ldots,t_n\colon V\to V$ are diagonalisable
+and pairwise commuting linear maps, then the \emph{simultaneous eigenspace}
+associated to a tuple $\lambda=(\lambda_1,\ldots,\lambda_n)\in \bbC^n$ is the
+subspace 
+\[V_{\lambda}=\{v\in V\;|\; t_i v = \lambda_i v \text{ for all }i\}.\]
+Since commuting diagonalisable operators are simultaneously diagonalisable, we
+have $V=\bigoplus_{\lambda\in \bbC^n}V_{\lambda}$.
+
+The above calculation can be rephrased by saying that irreducible
+$\bbC$-representations of an Abelian Lie algebra $\tt$ are all one-dimensional,
+and are parametrised over the dual space $\tt\dual$. Elements of $\tt\dual$ are
+called \emph{weights}. If $V$ is a $\tt$-module on which every $t\in \tt$ acts
+diagonalisably, the decomposition $V=\bigoplus_{\lambda\in\tt\dual}V_\lambda$ of
+a $\tt$-module $V$ into simultaneous eigenspaces for elements of $\tt$ is called
+a \emph{weight-space decomposition}. If $V_\lambda\neq 0$ in this decomposition, we say that $\lambda$
+is a \emph{weight of $V$}.
+
+Applying the above to a maximal torus $\tt$ in a Lie algebra $\frakg$, we obtain
+a weight space decomposition $\frakg=\bigoplus_{\lambda\in \tt\dual}
+\frakg_\lambda$. Evidently $\tt\subseteq \frakg_0$, so $0$ is a weight of
+$\frakg$. The non-zero weights of $\frakg$ are called the \emph{roots} of
+$\frakg$.
+
+\begin{example}
+    Suppose $\frakg=\sl_n(\bbC)$, and $\tt$ is the torus of diagonal matrices. Note
+    $\frakg = \tt \,\oplus\, \bigoplus_{i\neq j}\bbk E_{ij}$, where $E_{ij}$ is the
+    matrix whose $(i,j)$th entry is $1$, and the remaining entries are $0$. If
+    $t\in \tt$ is the matrix $\text{diag}(t_1,\ldots,t_n)$, then we compute
+    $[t,E_{ij}]=(t_i-t_j)E_{ij}$. Thus if $\varepsilon_i\in \tt\dual$ is the
+    weight $\text{diag}(t_1,\ldots, t_n)\mapsto t_i$, then we have shown that 
+    \begin{enumerate}
+        \item[] the roots of $\frakg$ are $\varepsilon_i-\varepsilon_j$ for
+            $i\neq j$,
+        \item[] the weight space $\frakg_{(\varepsilon_i-\varepsilon_j)}$ is
+            one-dimensional and spanned by $E_{ij}$, and
+        \item[] the weight space $\frakg_0$ is the torus $\tt$ itself (which is
+            therefore, in particular, maximal).
+    \end{enumerate}
+    Note that the weights $\varepsilon_1,\ldots, \varepsilon_n$ are not linearly
+    independent, but satisfy the relation $\varepsilon_1+\cdots +
+    \varepsilon_n=0$.
+\end{example}
+
+\begin{exercise}
+    Compute the root space decompositions of $\so_{2n}(\bbC)$,
+    $\so_{2n+1}(\bbC)$, and $\sp_{2n}(\bbC)$. For this you need to choose
+    convenient maximal torii; check that $\so_{n}(\bbC)$ can be equivalently
+    described as the space
+    \[
+        \left\{
+            X\in \Mat{n}(\bbC) \;\middle\vert\; \mat{&&1\\&\iddots&\\1&&} X +
+            X^\mathsf{T} \mat{&&1\\&\iddots& \\ 1&&} =  0
+        \right\}
+    \]
+    (likewise for $\sp_{2n}(\bbC)$) and with these descriptions the subspaces of
+    diagonal matrices are maximal torii.
+\end{exercise}
+
+\begin{proposition}
+    Let $\frakg$ be a complex semisimple Lie algebra. Then $\frakg$ has a
+    non-zero maximal torus $\tt$. Moreover, the weight space $\frakg_0$ with respect
+    to this torus is equal to $\tt$.
+
+    \begin{proof}
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    The Lie algebra $\sl_n(\bbC)$ is simple.
+    \begin{proof}
+        \marginpar{Lecture 9, 27/10/26} TODO
+    \end{proof}
+\end{proposition}
+
+\marginpar{Lecture 10, 29/10/26} 
+
+
+

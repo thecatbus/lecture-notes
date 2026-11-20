@@ -4,6 +4,7 @@
 \maketitle
 
 \newcommand{\mat}[1]{\left(\begin{smallmatrix} #1 \end{smallmatrix}\right)}
+\newcommand{\nomat}[1]{\begin{smallmatrix} #1 \end{smallmatrix}}
 \newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
 \newcommand{\adj}{\textnormal{ad}}
 \renewcommand{\gg}{\mathfrak{g}}
@@ -423,3 +424,366 @@ are all $(3,1)$-tableaux, i.e.\ the set $\Delta^{(3,1)}$.
     \ytableaushort{243,1} \qquad 
     \ytableaushort{432,1} 
 \end{gather*}
+
+\marginpar{Lecture 4, 21/10/26} 
+TODO 
+
+\marginpar{Lecture 5, 26/10/26} 
+\begin{example}
+    Recall that $M^{(4)}$ is the trivial representation $\text{triv}$, hence so
+    is $L^{(4)}$. On the other hand, $M^{(3,1)}=\text{triv}\oplus\text{std}$, so
+    we must have that $L^{(3,1)}=\text{std}$ is the standard representation. We
+    have also seen that $M^{(2,2)}=\text{triv}\oplus \text{std}\oplus V$, so
+    that $L^{(2,2)}=V$. Likewise, $M^{(2,1,1)}=\text{triv}\oplus
+    \text{std}^{\oplus 2} \oplus V \oplus (\text{std}\otimes \text{sgn})$ whence
+    the last factor is $L^{(2,1,1)}$. Lastly, recall that $M^{(1,1,1,1)}$ is
+    simply the group algebra $\bbC \sym{4}$ itself so that $L^{(1,1,1,1)}$ is
+    the only irreducible representation we haven't encountered yet,
+    $\text{sgn}$.
+\end{example}
+
+\begin{definition}
+    Let $\lambda$ be a partition of $n$. The \emph{Specht module} $S^\lambda$ is
+    the submodule \(\langle e_t\;|\; t\in \Delta^\lambda \rangle \subset
+    M^\lambda\) spanned by polytabloids corresponding to tableaux of shape
+    $\lambda$.
+\end{definition}
+
+It is easy to check that $S^\lambda$ is indeed a module for $\sym{n}$. We have
+the following properties.
+
+\begin{lemma}
+    Let $\lambda$ be a partition of $n$, and $t\in \Delta^\lambda$. Then we have
+    the following. 
+    \begin{enumerate}[(i)]
+        \item\label{item:specht1} $e_t\neq 0$.
+        \item\label{item:specht2} $\forall \sigma\in\sym{n}$, $\sigma\cdot e_t = e_{\sigma t}$.
+        \item\label{item:specht3} $\forall \sigma\in C_t$, $\sigma\cdot e_t =
+            \textnormal{sgn}(\sigma)e_t$.
+        \item\label{item:specht4} $S^\lambda$ is a \emph{cyclic} submodule of
+            $M^\lambda$, i.e.\ $S^\lambda=\bbk \sym{n}\cdot e_t$ for some
+            (equivalently any) $t\in \Delta^\lambda$.
+    \end{enumerate}
+
+    \begin{proof}
+        To prove~\ref{item:specht1}, note that $R_t\cap C_t=\{1\}$ and hence if
+        $\sigma\in C_t$, then $\sigma\{t\} = \{t\}$ implies $\sigma=1$. The
+        coefficient of the tabloid $\{t\}$ in $e_t$ is
+        $\textnormal{sgn}(1)=1\neq 0$, so $e_t$ is non-zero.
+        
+        Now it is clear that $C_{\sigma t} = \sigma C_t \sigma^{-1}$. Thus
+        \[
+            \sigma e_t = \sigma \sum_{\tau\in C_t} (\textnormal{sgn}\tau)\cdot
+            \tau\{t\} = \sum_{\tau\in C_t}(\textnormal{sgn}\tau)\cdot
+            \sigma\tau\{t\} = \sum_{\tau \in
+            C_t}(\textnormal{sgn}(\sigma\tau\sigma^{-1}))\cdot
+            (\sigma\tau\sigma^{-1})\{\sigma t\} = \sum_{\omega\in C_{\sigma
+            t}}(\textnormal{sgn}\omega)\cot \omega\{\sigma t\} = e_{\sigma t}
+        \] 
+        thus proving~\ref{item:specht2}.
+
+        To prove~\ref{item:specht3}, note that if $\sigma\in C_t$ then 
+        \[
+            \sigma\cdot e_t = \sum_{\tau\in
+            C_t}(\textnormal{sgn}\tau)\{\sigma\tau\cdot t\} = \sum_{\omega\in C_t}
+            (\textnormal{sgn}(\sigma^{-1}\omega))\{\omega t\} =
+            (\textnormal{sgn}\sigma) e_t.
+        \]
+
+        Lastly, to show that $S^\lambda$ is cyclic we note
+        that $\sym{n}$ acts transitively on $\Delta^\lambda$, so
+        that~\ref{item:specht2} allows the conclusion.
+    \end{proof}
+\end{lemma}
+
+\begin{exercise}
+    Use the fact that $R_t\cap C_t= \{1\}$ to show that $e_t$ is a signed sum of
+    $|C_t|$ distinct $\lambda$-tabloids.
+\end{exercise}
+
+\begin{example}
+    If $\lambda=(n)$, note that $M^(n)$ is the trivial module $\bbOne_{\sym{n}}$
+    and hence the non-zero submodule $S^{(n)}\subseteq M^{(n)}$ must also be
+    $\bbOne_{\sym{n}}$. On the other hand if $\lambda=(1^n)$ then $C_t=\sym{n}$,
+    so the above lemma shows $\sigma e_t = \textnormal{sgn}(\sigma)e_t$ for all
+    $\sigma\in \sym{n}$ and all $t\in \Delta^\lambda$. Thus $\dim S^{(1^n)}=1$
+    and $S^{(1^\lambda)} = \bbk \sym{n}\cdot e_t$ is the sign representation of
+    $\sym{n}$.
+\end{example}
+
+\begin{example}
+    Consider the partition $(2,1)\vdash 3$, defining the Specht module $S^{2,1}$
+    of dimension $2$. To see this, note that $S^\lambda$ is spanned by
+    $\alpha=e_{\nomat{2&1 \\ 3&}}$, $\beta=e_{\nomat{1&2\\3&}}$, and
+    $\gamma = e_{\nomat{1&3 \\ 2&}}$, using the fact that other tabloids can be
+    realised as $e_{\nomat{3&2 \\ 1&}}=-\alpha$ and such. Now $\alpha =
+    \ytableausetup{boxsize=normal,tabloids}\ytableaushort{12, 3} -
+    \ytableaushort{21,3}$, so
+    that $\alpha=\beta+\gamma$. Since $\beta$ and $\gamma$ are linearly
+    independent, $S^{2,1}$ is two-dimensional over all fields $\bbk$.
+\end{example}
+
+\begin{exercise}
+    Generalise the above example to show that $S^{(n-1,1)}$ is the standard
+    representation of $\sym{n}$.
+\end{exercise}
+
+We now prove that over the field $\bbC$, the Specht modules
+$\{S^\lambda\;|\;\lambda\vdash n\}$ form a complete set of irreducible
+$\bbC\sym{n}$-modules.
+
+\begin{definition}
+    For a partition $\lambda\vdash n$, the module $M^\lambda$ has a
+    $\sym{n}$-invariant symmetric bilinear inner product $\langle\cdot, \cdot
+    \rangle$ defined by $\langle\, \{t\}, \{t'\}\,\rangle = \delta_{\{t\}\{t'\}}$
+    for $t,t'\in \Delta^\lambda$, and extended linearly. The \emph{orthogonal
+    complement} $N\orth$ of a subspace $N\subset M^\lambda$ is the subspace
+    $\{m\in M^\lambda\;|\; \langle m,n\rangle = 0 \text{ for all }n\in N\}$.
+\end{definition}
+
+Note that if $N$ is a $\sym{n}$-submodule of $M^\lambda$ then so is $N\orth$,
+since the inner product is $\sym{n}$-invariant. 
+
+\begin{theorem}[(James' submodule theorem)]
+    If $\lambda \vdash n$ and $V\leq M^\lambda$ is a
+    $\sym{n}$-subrepresentation, then either $S^\lambda\subseteq V$ or
+    $V\subseteq (S^{\lambda})\orth$. In particular, quotients of $S^\lambda$ are
+    simple.
+\end{theorem}
+
+This will imply that $S^\lambda$ is irreducible over a field of characteristic
+zero. To show the $S^\lambda$s are pairwise non-isomorphic is a bit harder.
+
+A first step to proving James' theorem is the following.
+
+\begin{proposition}
+    \marginpar{Lecture 6, 28/10/26} 
+    Let $\lambda=(\lambda_1,\ldots, \lambda_r)$ be a partition of $n$, and
+    $t,u\in \Delta^\lambda$ such that $\kappa_t\{u\}\neq 0$.
+    \begin{enumerate}[(i)]
+        \item\label{item:tech1} $\exists h\in C_t$ such that $h\{t\}=\{u\}$,
+        \item\label{item:tech2} $\kappa_t\{u\}=\pm e_t$,
+        \item\label{item:tech3} $\kappa_t M^\lambda = \bbk e_t$.
+    \end{enumerate}
+
+    \begin{proof}
+        To show~\ref{item:tech1}, we construct $h\in C_t$ such that
+        $R_i(ht)=R_i(u)$ for all $i$. 
+
+        Claim that if $\kappa_t(u)\neq 0$, then any
+        numbers $x\neq y$ appearing in the same row of $u$ must appear in
+        different columns of $t$. If not, then the transposition $(x\,y)$ lies
+        in $C_t$. Let $\mathcal{T}$ be a set of (left) coset representatives of
+        $\langle (x\,y)\rangle$ in $C_t$. That is, $C_t=\mathcal{T}\cdot \id
+        \;\cup\; \mathcal{T}\cdot (x\,y)$. Then 
+        \[\kappa_t = \sum_{\sigma\in C_t}(\sgn\sigma)\sigma = \sum_{t\in
+        \mathcal{T}}(\sgn\,t)t(1-(x\,y))\]
+        and hence
+        $\kappa_t\{u\}=\sum_{t\in\mathcal{T}}(\sgn\,t)t(\{u\}-(x\,y)\{u\})$
+        which vanishes since $(x\,y)\in R_u$ (since $x,y$ lie in the same row in
+        $u$). This proves the claim.
+
+        Now suppose $R_1(u)=\{x_1,\ldots,x_{\lambda_1}\}$ and that $x_s$ belongs
+        to column $j_s$ of $t$, for each $s\in [\lambda_1]$. The $j_s$s are
+        pairwise distinct by the above claim. Let $y_s=t((1,j_s))$, and define $h_1=\prod_{\substack{s\in[\lambda_1]\\x_s\neq y_s}} (x_s\,y_s)$. 
+
+        Note $R_1(h_1 t)=\{h_1y_1, \ldots, h_1y_{\lambda_1}\} =
+        \{x_1,\ldots,x_{\lambda_1}\}=R_1(u)$. Since $h_1\in C_t$, we see that
+        $C_{h_1t}=h_1C_th_1^{-1}=C_t$, and hence $\kappa_t=\kappa_{h_1t}$ does
+        not vanish on $\{u\}$.
+
+        Continuing, suppose $R_2(u)=\{x_1',\ldots, x_{\lambda_2}'\}$ with $x_s'$
+        belonging to column $j_s'$ of $t'=h_1t$. By the claim, the $j_s$s are pairwise
+        distinct. Again, let $y_s'=t((2,j_s'))$ and define
+        $h_2=\prod_{\substack{s\in[\lambda_2]\\ x_s'\neq y_s'}}(x_s'\,y_s')$.
+
+        This lies in $C_{t'}=C_t$, and $R_2(h_2\,t')=R_2(u)$ and
+        $R_1(h_2t')=R_1(t')=R_1(u)$. In conclusion, $R_i(h_2h_1t)=R_i(u)$ for
+        both $i=1,2$. Iterating, we construct for each $m\in \{3,4,\ldots, r\}$
+        an element $h_m\in C_t$ such that $R_i(h_mh_{m-1}\ldots h_1 t)=R_i(u)$
+        for all $i\in [m]$. Declaring $h=h_r\cdots h_1$, we have $h\{t\}=\{u\}$
+        as required.
+
+        To show~\ref{item:tech2}, take $h$ as above and note that
+        $\kappa_t\{u\}=\kappa_t h\{t\}=(\sgn\,h)\kappa_t\{t\} = (\sgn\,h)e_t$,
+        which is $\pm e_t$ as required. Then~\ref{item:tech3} follows, since
+        for each basis element $\{u\}\in M^\lambda$ we either have
+        $\kappa_t\{u\}=0$ or $\kappa_t\{u\}=\pm e_t$. Thus $\kappa_t
+        M^\lambda\subseteq\bbk e_t$, and equality holds since
+        $\kappa_t\{t\}=e_t$.
+    \end{proof}
+\end{proposition}
+
+\begin{proof}[Proof of James' submodule theorem]
+    Let $\lambda\vdash n$ and $V\leq M^\lambda$ be as given, and assume
+    $V\not\leq (S^\lambda)\orth$. Then there is a $v\in V$ and $t\in
+    \Delta^\lambda$ such that $\langle v, e^t\rangle\neq 0$. Thus $\langle v,
+    e_t\rangle = \sum_{\sigma\in C_t} (\sgn \sigma)\langle \sigma^{-1}v,
+    \{t\}\rangle = \langle \kappa_t v, \{t\}\rangle$ is non-zero.
+
+    In particular, $\kappa_t v\neq 0$, so $\kappa_t v = \beta e_t$ for some
+    $\beta\in \bbk^\times$. Since $\kappa_t v\in V$, it follows that $e_t\in V$
+    and thus $S^\lambda = \bbk \sym{n} \cdot e_t \leq V$ as required.
+\end{proof}
+
+\begin{corollary}
+    If $\lambda \vdash n$ then $S^\lambda/(S^\lambda \cap (S^\lambda) \orth)$ is
+    either zero or irreducible.
+
+    \begin{proof}
+        If $S^\lambda\leq (S^\lambda)\orth$ then the quotient is zero.
+        Otherwise, take any submodule $V\leq S^\lambda$. By James' submodule theorem,
+        $V=S^\lambda$ or $V\leq S^\lambda \cap (S^\lambda)\orth$. That is,
+        $S^\lambda\cap (S^\lambda)\orth$ is a maximal submodule of $S^\lambda$,
+        so the quotient is irreducible.
+    \end{proof}
+\end{corollary}
+
+\begin{definition}
+    Given $\lambda \vdash n$, the \emph{Young module} $Y^\lambda$ is the unique
+    indecomposable summand of $M^\lambda$ containing the Specht module $S^\lambda$.
+\end{definition}
+
+\begin{definition}
+    A representation $\rho\colon G\to \mathsf{GL}_n(\bbk)$ is \emph{absolutely
+    irreducible} if, for any field extension $\bbk\subseteq \bbK$, the
+    corresponding representation $\ol\rho\colon G\to \mathsf{GL}_n(\bbK)$ is
+    irreducible.
+\end{definition}
+
+\begin{example} 
+    Consider the cyclic group $C_4=\langle \alpha \rangle$, which has a two-dimensional
+    $\bbQ$-representation given by $\alpha \mapsto \mat{0&1 \\ -1 &
+    0}$. This representation is irreducible. However, upon extension to
+    $\bbQ(\sqrt{-1})$, the generator $\ol\rho(\alpha)$ has eigenvalues $\pm
+    \sqrt{-1}$ and hence the representation splits. 
+\end{example}
+
+\begin{proposition}
+    \marginpar{Lecture 7, 2/11/26} 
+    If $\lambda \vdash n$ then $S^\lambda/(S^\lambda \cap (S^\lambda) \orth)$ is
+    either zero or \emph{absolutely} irreducible.
+
+    \begin{proof}
+        Choose a basis $e_1,\ldots,e_r$ of polytabloids in $S^\lambda$. Note that
+        $\dim(S^\lambda/S^\lambda\cap (S^\lambda)\orth)$ is the rank of the Gram
+        matrix $A$ taken with respect to this basis. But the entries
+        $A_{ij}=\langle e_i, e_j\rangle$ all lie in the prime subfield of $\bbk$
+        (i.e.\ $\bbF_p$ or $\bbQ$) so the rank doesn't change upon
+        extending $\bbk$. Since we have already shown $S^\lambda/(S^\lambda\cap
+        (S^\lambda)\orth)$ is zero or irreducible, the result follows.
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    If $\textnormal{char}(\bbk)=0$ then $S_\bbk^\lambda$ is irreducible for all
+    $\lambda$.
+
+    \begin{proof}
+        Over $\bbQ$, the bilinear form $\langle \cdot, \cdot \rangle$ is
+        positive definite on $M^\lambda$. So $S^\lambda_\bbQ\cap
+        (S^\lambda_\bbQ)\orth = 0$. Thus $S^\lambda_\bbQ$ is absolutely
+        irreducible, whence $S^\lambda_\bbk$ is irreducible since any field
+        $\bbk$ of characteristic zero extends $\bbQ$.
+    \end{proof}
+\end{corollary}
+
+Is $\{S^\lambda\;|\; \lambda\vdash n\}$ a complete set of irreducible
+representations?
+
+\begin{proposition}
+    Suppose $\lambda=(\lambda_1,\ldots,\lambda_r)$ and
+    $\mu=(\mu_1,\ldots,\mu_s)$ are partitions of $n$. Take $t\in
+    \Delta^\lambda$. Choose $u\in \Delta^\mu$ such that $\kappa_t\{u\}\neq 0$. Then 
+    \begin{enumerate}[(i)]
+        \item\label{item:3.10.1}
+            there is an $h\in C_t$ such that for all $\ell\in
+            \{1,2,\ldots,\min(r,s)\}$ we have $\bigsqcup_{i=1}^\ell
+            R_i(u)\subseteq \bigsqcup_{i=1}^\ell R_i(ht)$, and
+        \item\label{item:3.10.2}
+            we have $\lambda \trianglerighteq \mu$ in the dominance order.
+    \end{enumerate}
+
+    \begin{proof}
+        Claim that if $x\neq y$ appear in the same row of $u$ then
+        they are in different columns of $t$; this is proved similarly as
+        before. Given this, suppose $R_1(u)=\{x_1,\ldots, x_r\}$ and that $x_q$
+        lies in column $j_q$ of $t$. By the claim, $j_q$s are pairwise distinct.
+        Let $y_q=t((1,j_q))$ and define
+        \[
+            h_1=\prod_{\substack{q\in[\mu_1]\\ x_q\neq y_q}} (x_q\quad y_q)\qquad\in C_t. 
+        \]
+        We have
+        $R_1(u)=\{x_1,\ldots,x_{\mu_1}\}=\{h_1(y_1),\ldots,h_1(y_{\mu_1})\}\subseteq
+        R_1(h_1t)$. Since $C_{h_1t}=h_1C_th_1^{-1}=C_t$, we see that
+        $\kappa_{h_1t=\kappa_t}$ and hence $\kappa_{h_1t}\{u\}\neq 0$. 
+
+        Then let $R_2(u)=\{x_1',\ldots,x_{\mu_2}'\}$ and let $t'=h_1t$. Suppose
+        $t'((i_q',j_q'))=x_q'$. If $i_q'\geq 2$ then let $y_q'=t'((2,j_q'))$
+        Define $h_2$ similarly as above, i.e.\ 
+        \[
+            h_2=\prod_{\substack{q\in[\mu_2]\\ i_q'\geq 2 \\ x_q'\neq y_q'}}
+            (x_q'\quad y_q')\qquad\in C_{t'}=C_t. 
+        \]
+        This is so that $R_2(u)=\{x_1',\ldots,x_{\mu_2}'\}=\{x_q'\;|\; i_q'\geq
+        2\}\sqcup \{x_q'\;|\; i_q'=1\}=\{h_2(y_q')\}\sqcup \{x_q'\;|\;
+        i_q'=1\}$, which lies in $R_2(h_2t')\sqcup R_1(h_1t')$. But
+        $R_1(u)\subseteq R_1(t')=R_1(h_2t')$ and hence
+        $\bigsqcup_{i=1}^\ell R_i(u)\subseteq \bigsqcup_{i=1}^\ell
+        R_i(h_2h_1t)$ for $\ell=1,2$. 
+
+        Continuing inductively, the statement~\ref{item:3.10.1} follows.
+
+        Now we have 
+        \[
+            \sum_{i=1}^\ell \mu_i = \sum_{i=1}^\ell |R_i(u)|
+            \qquad \underset{\ref{item:3.10.1}}{\leq}\qquad  \sum_{i=1}^\ell |R_i(ht)| =
+            \sum_{i=1}^\ell \lambda_i 
+        \]
+        for all $\ell\in \{1,\ldots, \min(r,s)\}$, thereby
+        proving~\ref{item:3.10.2}.
+    \end{proof}
+\end{proposition}
+
+\begin{theorem}
+    For $\lambda,\mu\vdash n$, suppose $0\neq \varphi\in
+    \Hom_{\sym{n}}(S^\lambda, M^\mu)$. If there exists a $\wt\varphi\in
+    \Hom_{\sym{n}}(M^\lambda, M^\mu)$ extending $\varphi$, then $\lambda
+    \trianglerighteq \mu$.
+
+    \begin{proof}
+        We know $S^\lambda$ is cyclic, generated by $e_t$ for any $t\in
+        \Delta^\lambda$. Thus $\varphi(e_t)\neq 0$, since $\varphi$ is non-zero. Fix $t\in \Delta^\lambda$.
+        If $\wt\varphi$ is as given, then \[0\neq \varphi(e_t)=\wt\varphi(e_t) =
+        \wt\varphi(\kappa_t\{t\}) = \kappa_t\wt\varphi(\{t\}).\]
+        Write $\varphi(\{t\})$ as a sum of $\mu$-tabloids to see that there
+        exists a $u\in \Delta^\mu$ such that $\kappa_t\{u\}\neq 0$. We can then
+        conclude by the previous proposition.
+    \end{proof}
+\end{theorem}
+
+\begin{example}
+    If $f\colon M^\lambda\to M^\mu$ is such that $S^\lambda\not\subseteq
+    \ker(f)$ then $\lambda\trianglerighteq \mu$. If $\lambda=\mu$, then $f$ is a
+    scalar. 
+
+    Indeed, take $t\in \Delta^\lambda$; if $e_t\notin \ker(f)$ then
+    $0\neq f(e_t)=f(\kappa_t(t))=\kappa_t(f(\{t\}))$. But $f(\{t\})$ is a linear
+    combination of $\mu$-tabloids so $\lambda\triangleright\mu$ by the
+    proposition. If $\lambda=\mu$ then $\kappa_t f(\{t\})$ lies in $\bbC e_t$.
+    So $f(e_t)$ is a scalar multiple of $e_t$ for any $t$. Since $\sym{n}$ acts
+    transitively on $e_t$s, it must be the same scalar for all $e_t$s.
+\end{example}
+
+\begin{example}
+    Suppose $\text{char}(\bbk)=2$, $n=2$, and the partitions $\lambda=(1^2)$ and
+    $\mu=(2)$. Now $S^{(1^2)}=\sgn$ is the sign representation, which over a
+    field of characteristic two coincides with $\bbOne_{\sym{2}} = M^{(2)}$.
+    Thus $\Hom_{\sym{2}}(S^\lambda, M^\mu)\neq 0$. On the other hand $M^\lambda$
+    is generated by the tabloids $|1|2|$ and $|2|1|$ (horizontally), so if
+    $\varphi\colon M^\lambda\to M^\mu$ is $\sym{2}$-linear then
+    $\varphi(|1|2|)=(1\quad 2)\varphi(|2|1|)=\varphi(|2|1|)$. In particular,
+    $\varphi(e_{\ytableaushort{1, 2}})=\varphi(|1|2|)-\varphi(|2|1|)=0$. That
+    is, for all $\varphi\in \Hom(M^\lambda, M^\mu)$, the restriction
+    $\varphi|_{S^\lambda}=0$. Thus not all hom
+\end{example}
