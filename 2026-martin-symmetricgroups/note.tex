@@ -7,7 +7,6 @@
 \newcommand{\nomat}[1]{\begin{smallmatrix} #1 \end{smallmatrix}}
 \newcommand{\Mat}[1]{\textnormal{Mat}_{#1 \times #1}}
 \newcommand{\adj}{\textnormal{ad}}
-\renewcommand{\gg}{\mathfrak{g}}
 \newcommand{\bb}{\mathfrak{b}}
 \newcommand{\nn}{\mathfrak{n}}
 \renewcommand{\gl}{\mathfrak{gl}}
@@ -23,6 +22,33 @@
 \newcommand{\sym}[1]{\mathfrak{S}_{#1}}
 \newcommand{\sgn}{\textnormal{sgn}}
 
+\newcommand{\tableau}[1]{
+    \ytableausetup{boxsize=1em, notabloids, nosmalltableaux, nobaseline, textmode}
+    \ytableaushort{#1}
+    \ytableausetup{boxsize=normal, notabloids, nosmalltableaux, baseline,
+    mathmode}
+}
+\newcommand{\tabloid}[1]{
+    \ytableausetup{boxsize=1em, tabloids, nosmalltableaux, nobaseline, textmode}
+    \ytableaushort{#1}
+    \ytableausetup{boxsize=normal, notabloids, nosmalltableaux, baseline,
+    mathmode}
+}
+\newcommand{\smalltableau}[1]{
+    \ytableausetup{boxsize=0.5em, notabloids, nosmalltableaux, nobaseline, textmode}
+    \ytableaushort[\scriptsize]{#1}
+    \ytableausetup{boxsize=normal, notabloids, nosmalltableaux, baseline,
+    mathmode}
+}
+\newcommand{\smalltabloid}[1]{
+    \ytableausetup{boxsize=0.5em, tabloids, nosmalltableaux, nobaseline, textmode}
+    \ytableaushort[\scriptsize]{#1}
+    \ytableausetup{boxsize=normal, notabloids, nosmalltableaux, baseline,
+    mathmode}
+}
+
+
+
 This is a fairly gentle introduction to the representation theory of the
 symmetric group. The flavour will be both algebraic and combinatorial, in
 particular a first course on representation theory is prerequisite.
@@ -34,11 +60,11 @@ irreducible representations of $\sym{n}$ over $\bbC$ are parametrised by
 groups, much unlike the case of general finite groups where multiple ad hoc
 constructions are needed for each case. 
 
-Another reason is that the theory of symmetric groups serves as fodder for the
-theory for other algebras that are diagrammatic in flavour, such as (pure) braid
-groups. 
+\emph{Introduction to diagram algebras}. Another reason is that the theory of
+symmetric groups serves as fodder for the theory for other algebras that are
+diagrammatic in flavour, such as (pure) braid groups.
 
-\paragraph{Schur--Weyl duality.} Here is a third reason the representation theory
+\emph{Schur--Weyl duality}. Here is a third reason the representation theory
 of the symmetric group is nice. For $V$ a $\bbC$-vector space, the tensor power
 $V^{\otimes 2}$ is a representation of $\mathsf{GL}(V)\times \sym{2}$ where
 $\mathsf{GL}(V)$ acts on each factor, and $\sym{2}$ acts by permuting factors
@@ -57,28 +83,31 @@ and some representations of $\sym{r}$.
 
 Alas this correspondence is not usually bijective --- one issue is that $\GL{V}$
 has infinitely many irreducible representations while $\sym{r}$ has a finite
-number has a finite number. Another problem is taking inverse powers of
-determinants. 
+number. Another problem is taking inverse powers of determinants. 
 
-But the correspondence is \emph{almost} bijective if we stabilise ---  if we let
-$\dim(V)$ be large then we recover all representations of $\sym{r}$, while if we
-let $r$ be large then we recover all representations of $\GL{V}$ up to powers of
-the determinant. We won't look at this.
+But the correspondence is \emph{almost} bijective if we stabilise. If we let $\dim(V)$
+be large then we recover all representations of $\sym{r}$, while if we let $r$
+be large then we recover all representations of $\GL{V}$ up to powers of the
+determinant. The details are beyond the scope of this course. 
 
-\paragraph{Topology.} A fourth reason comes by taking any topological space $X$
+\emph{Topology}. A fourth reason comes by taking any topological space $X$
 and considering its \emph{configuration space} $\sf{C}^nX$ (i.e.\ the moduli of
 $n$ distinct unordered points in $X$). The group $\sym{n}$ naturally acts on
 $\sf{C}^n X$, giving a representation of $\sym{n}$ on $\HH^i(\sf{C}^nX, \bbC)$.
 
-\paragraph{In positive characteristic.} Representations over fields of
+\emph{Behaviour in positive characteristic.} Representations over fields of
 prime characteristic can be constructed in a `similar' manner to the
 characteristic zero theory, which is again unlike the general case for finite
 groups (modular representation theory tends to be much, much harder in
 prime characteristic than over $\bbC$; even constructing characters is hard).
 
-\subsection{About} This course on symmetric groups is a part of Part III of the
-Mathematics tripos at the University of Cambridge. The lectures were delivered in-person, and were transcribed live. The notes can be found
-online at \url{https://pas201.user.srcf.net/documents/2026-symmetric-group.pdf}. 
+\subsection{About} This graduate course on symmetric groups is a part of Part III of the
+Mathematics tripos at the University of Cambridge. The lectures were delivered
+in-person, and were transcribed (live or from recordings) by Parth Shimpi. The
+notes have undergone several amendments and are not a verbatim recall of the
+lectures, therefore discretion is advised when using this material. The notes
+are available online at
+\url{https://pas201.user.srcf.net/documents/2026-symmetric-group.pdf}.
 
 Errors and corrections should be communicated to by email to
 \url{pas201@srcf.net}.
@@ -86,8 +115,8 @@ Errors and corrections should be communicated to by email to
 \section{Representations and modules}
 \marginpar{Lecture 1, 12/10/26} 
 We go over some standard results in the representation theory of a finite group
-$G$ over a field $\bbk$. By \emph{module}, we will always mean finite
-dimensional left modules.
+$G$ over a field $\bbk$. By \emph{module}, we will always mean a finite
+dimensional left module.
 
 \begin{definition} 
     A \emph{representation} of $G$ on a finite dimensional $\bbk$-vector space
@@ -104,7 +133,7 @@ dimensional left modules.
 \end{definition}
 
 \begin{example}
-    The one-dimensional trivial representation of $G$, denoted $\mathbf{1}_G$, is
+    The one-dimensional trivial representation of $G$, denoted $\bbOne_G$, is
     given by $V=\bbk$ with $g(v)=v$ for all $g\in G$, $v\in V$.
 \end{example}
 
@@ -126,43 +155,44 @@ say it is \emph{decomposable} otherwise.
 A \emph{$G$-homomorphism} between two $\bbk G$-modules $V,W$ is a $\bbk G$-linear
 map $\alpha\colon V\to W$.
 
-Suppose $\{L_i\}$ is a collection of pairwise non-isomorphic irreducible
-representations of $G$. Suppose $V$ is semisimple. Then there is an isomorphism
-$f\colon \bigoplus L_i ^{\oplus n_i}\to V$ for some non-negative integers $n_i$. The
-isomorphism is not canonical; but the embedding $f(L_i^{\oplus n_i})\into V$
-\emph{is canonical} --- it is the sum of the images of all maps $L_i\to V$,
-called the \emph{$L_i$-isotypic piece}. Thus each $\bbk G$-module $V$ is
-\emph{canonically} isomorphic to the direct sum of its isotypic components, and
-each $L_i$-isotypic component admits a non-canonical decomposition into a direct sum
-of $L_i$s.
-
 \begin{theorem}[(Schur's lemma)]
     Suppose $V,W$ are irreducible representations of $G$. Any $G$-homomorphism
     $V\to W$ is either zero or is an isomorphism. In particular, $\End_GV$ is
-    a division algebra over $\bbk$ (if $\bbk$ is algebraically closed then
-    $\End_GV\simeq \bbk$).
+    a division algebra over $\bbk$ (if $\bbk=\ol\bbk$ then $\End_GV\simeq \bbk$).
 \end{theorem}
+
+Suppose $\{L_i\}$ is a collection of pairwise non-isomorphic irreducible
+representations of $G$, and $V$ is semisimple. Then there is an isomorphism
+$f\colon \bigoplus L_i ^{\oplus n_i}\to V$ for some non-negative integers $n_i$. The
+isomorphism is not canonical, but the embedding $f(L_i^{\oplus n_i})\into V$
+\emph{is} --- the image $f(L_i^{\oplus n_i})$, called the \emph{$L_i$-isotypic
+piece}, is the sum of the images of all maps $L_i\to V$. Thus each semisimple $\bbk
+G$-module $V$ is \emph{canonically} isomorphic to the direct sum of its isotypic
+components, and each $L_i$-isotypic component admits a non-canonical
+decomposition into a direct sum of $L_i$s.
 
 \marginpar{Lecture 2, 14/10/26} 
 \begin{definition}
-    For $G$-representations $L_i, V$ such that $L_i$ is irreducible, the \emph{$L_i$-multiplicity space} in $V$ is $\Hom_G(L_i, V)=M_i$.
+    For $G$-representations $L_i, V$ as above, the \emph{$L_i$-multiplicity space} in $V$ is $\Hom_G(L_i, V)=M_i$.
 \end{definition}
 
-Suppose $\bbk=\ol\bbk$ is algebraically closed, and $V$ is a finite dimensional
+Suppose $\bbk$ is algebraically closed, and $V$ is a finite dimensional
 isotypic representation of $G$ (that is, $V\simeq L_i^{\oplus n_i}$ for some
 irreducible representation $L_i$). In this case, the canonical map $\Hom_G(L_i,
 V)\otimes L_i\to V$ is an isomorphism. If $V$ is semisimple and $\{M_i\}$ are the
 multiplicity spaces of irreducible representations $\{L_i\}$, then the
-analogously defined map $\bigoplus M_i\otimes L_i \to V$ is an isomorphism. If
-$V$ is not semisimple, then this map is only injective (and the image of the map
-is called the \emph{socle} of $V$).
+analogously defined map $\bigoplus M_i\otimes L_i \to V$ is an isomorphism. 
+
+If $V$ is not semisimple, then the map $\bigoplus \Hom_G(L_i,V)\otimes L_i\to V$
+is only injective, and its image is called the \emph{socle} of $V$.
 
 \begin{proposition}
     The left regular representation of $G$, given by $V=\bbk G$ where $G$ acts by left
     multiplication, is semisimple and has a $(\dim L_i)$-dimensional
     multiplicity space for each irreducible representation $L_i$. In other words
-    it decomposes as \[V=\bigoplus_{L_i\in \textnormal{Irr}(G)} L_i^{\oplus \dim L_i}\]
-    with corollary that $|G|=\sum (\dim L_i)^2$.
+    it decomposes as \[V=\bigoplus_{L_i\in \textnormal{Irr}(G)} L_i^{\oplus \dim
+    L_i}.\]
+    It follows that $|G|=\sum (\dim L_i)^2$.
 \end{proposition}
 
 \paragraph{Maschke's theorem again.} Call a $\bbk G$-module $P$
@@ -219,9 +249,7 @@ Suppose $V$ is equipped with a symmetric bilinear form $\langle \cdot, \cdot
 \rangle$. This induces a natural map $V\to V\dual$ given by $v\mapsto \langle
 \cdot, v\rangle$. Even if $\langle \cdot,\cdot \rangle$ is non-singular (i.e.\
 $V\orth = 0$)  we could still have a subspace $W\subset V$ with $W\orth \cap W
-\neq 0 $. 
-
-So we will be interested in how big such intersections can get. 
+\neq 0 $. We will be interested in how big such intersections can get. 
 
 Let $e_1,\ldots, e_n$ be a basis of the subspace $W$. The \emph{Gram matrix} of
 $W$ with respect to this basis is the $n\times n$ matrix $A$ with $(i,j)$th
@@ -258,7 +286,8 @@ Character theory is most useful because of the following result.
     irreducible representations.
 \end{proposition}
 
-In positive characteristic we need to use \emph{Brauer characters}.
+In positive characteristic we need to use \emph{Brauer characters}, which we
+won't dive into.
 
 \section{Representations of the symmetric groups}
 \marginpar{Lecture 3, 19/10/26} 
@@ -269,7 +298,7 @@ of $X$}. In particular, the standard symmetric groups $\sym{n}$ are the same as
 $\Sym([n])$ where $[n]$ denotes the set $\{1,\ldots, n\}$. Note also that
 $\sym{0}$ is the trivial group.
 
-While we are establishing conventions, we also note that composition goes from
+While we are establishing conventions, also note that composition goes from
 right to left: $(1\,2\,3)(1\,2)=(1\,3)$.
 
 \paragraph{Representations we have already met.}
@@ -334,6 +363,7 @@ We draw Young diagrams with boxes (instead of lattice points), with rows and
 columns numbered as in a matrix. For example, here are all the partitions of
 $4$ and their Young diagrams.
 \[
+    \ytableausetup{boxsize=1em}
     {
     \setlength{\arraycolsep}{2em}
     \begin{array}{ccccc}
@@ -357,6 +387,7 @@ diagonal. For example, $(4,3,1)$ and
 $(3,2^2,1)$ are conjugate partitions of $8$. 
 \[
     \ydiagram{4,3,1} \qquad \ydiagram{3,2,2,1}
+    \ytableausetup{boxsize=normal}
 \]
 
 
@@ -399,71 +430,213 @@ A $\lambda$-tableau can be naturally denoted by `filling in' the Young diagram
 with numbers $1,\ldots, n$ such that each number appears once. For example, here
 are all $(3,1)$-tableaux, i.e.\ the set $\Delta^{(3,1)}$.
 \begin{gather*}
-    \ytableaushort{123,4} \qquad 
-    \ytableaushort{231,4} \qquad 
-    \ytableaushort{312,4} \qquad 
-    \ytableaushort{321,4} \qquad 
-    \ytableaushort{213,4} \qquad 
-    \ytableaushort{132,4} \\
-    \ytableaushort{124,3} \qquad 
-    \ytableaushort{241,3} \qquad 
-    \ytableaushort{412,3} \qquad 
-    \ytableaushort{421,3} \qquad 
-    \ytableaushort{214,3} \qquad 
-    \ytableaushort{142,3} \\
-    \ytableaushort{143,2} \qquad 
-    \ytableaushort{431,2} \qquad 
-    \ytableaushort{314,2} \qquad 
-    \ytableaushort{341,2} \qquad 
-    \ytableaushort{413,2} \qquad 
-    \ytableaushort{134,2} \\
-    \ytableaushort{423,1} \qquad 
-    \ytableaushort{234,1} \qquad 
-    \ytableaushort{342,1} \qquad 
-    \ytableaushort{324,1} \qquad 
-    \ytableaushort{243,1} \qquad 
-    \ytableaushort{432,1} 
+    \tableau{123,4} \qquad 
+    \tableau{231,4} \qquad 
+    \tableau{312,4} \qquad 
+    \tableau{321,4} \qquad 
+    \tableau{213,4} \qquad 
+    \tableau{132,4} \\
+    \tableau{124,3} \qquad 
+    \tableau{241,3} \qquad 
+    \tableau{412,3} \qquad 
+    \tableau{421,3} \qquad 
+    \tableau{214,3} \qquad 
+    \tableau{142,3} \\
+    \tableau{143,2} \qquad 
+    \tableau{431,2} \qquad 
+    \tableau{314,2} \qquad 
+    \tableau{341,2} \qquad 
+    \tableau{413,2} \qquad 
+    \tableau{134,2} \\
+    \tableau{423,1} \qquad 
+    \tableau{234,1} \qquad 
+    \tableau{342,1} \qquad 
+    \tableau{324,1} \qquad 
+    \tableau{243,1} \qquad 
+    \tableau{432,1} 
 \end{gather*}
 
 \marginpar{Lecture 4, 21/10/26} 
-TODO 
-
-\marginpar{Lecture 5, 26/10/26} 
-\begin{example}
-    Recall that $M^{(4)}$ is the trivial representation $\text{triv}$, hence so
-    is $L^{(4)}$. On the other hand, $M^{(3,1)}=\text{triv}\oplus\text{std}$, so
-    we must have that $L^{(3,1)}=\text{std}$ is the standard representation. We
-    have also seen that $M^{(2,2)}=\text{triv}\oplus \text{std}\oplus V$, so
-    that $L^{(2,2)}=V$. Likewise, $M^{(2,1,1)}=\text{triv}\oplus
-    \text{std}^{\oplus 2} \oplus V \oplus (\text{std}\otimes \text{sgn})$ whence
-    the last factor is $L^{(2,1,1)}$. Lastly, recall that $M^{(1,1,1,1)}$ is
-    simply the group algebra $\bbC \sym{4}$ itself so that $L^{(1,1,1,1)}$ is
-    the only irreducible representation we haven't encountered yet,
-    $\text{sgn}$.
-\end{example}
+The action of $\sym{n}$ on $[n]$ extends to a permutation action on
+$\Delta^\lambda$, namely $\sigma\in \sym{n}$ sends a bijection $t\in
+\Delta^\lambda$ to $\sigma\circ t$. Pictorially this applies $\sigma$ to the
+entry in each box, as shown below.
+\[
+    (1\,2\,3)\cdot \tableau{234,1} = \tableau{314,2}
+\]
 
 \begin{definition}
-    Let $\lambda$ be a partition of $n$. The \emph{Specht module} $S^\lambda$ is
+    Given a partition $\lambda=(\lambda_1,\ldots,\lambda_r)$ and $t\in
+    \Delta^\lambda$, for each $1\leq i \leq r$ (resp.\ $1\leq j\leq\lambda_1$) we write
+    \[
+        \mathsf{R}_i(t)=\{t(i,j)\;|\; 1\leq j\leq \lambda_i\} \qquad
+        \left(\text{resp.}\quad \mathsf{C}_j(t)=\{t(i,j)\;|\; 1\leq i\leq
+        (\lambda')_j\}\;\right)
+    \]
+    for the set of entries in the $i$th row (resp.\ $j$th column) of the tableau $t$.
+\end{definition}
+
+\begin{definition}
+    For $\lambda\vdash n$, we say two $\lambda$-tableau $t,s\in \Delta^\lambda$
+    are \emph{row-equivalent} (written $t\sim_R s$) if
+    $\mathsf{R}_i(t)=\mathsf{R}_i(s)$ for all $i$. This is an equivalence
+    relation on $\Delta^\lambda$, and its equivalence classes are called
+    \emph{$\lambda$-tabloids}. We write $\{t\}$ for the tabloid corresponding to
+    $t\in \Delta^\lambda$, and denote the set of $\lambda$-tabloids by
+    $\Omega^\lambda=\Delta^\lambda/\sim_R$. 
+\end{definition}
+
+Pictorially we will denote these using horizontal lines as below.
+\[
+    \left\{\tableau{123,4}\right\}=\tabloid{123,4}=\tabloid{213,4}=\tabloid{321,4}
+    \qquad \left(\neq \tabloid{412,3} \right).
+\]
+
+\paragraph{Representations from tabloids.} Given $\lambda\vdash n$ there is a natural action of $\sym{n}$ on
+$\Omega^\lambda$, induced by that on $\Delta^\lambda$. Both produce permutation
+representations; it is easy to see that $\bbC [\Delta^\lambda]$ is the regular
+representation $\bbC\sym{n}$. We denote the permutation representation on
+$\Omega^\lambda$ by \[M^\lambda = \bbC[\Omega^\lambda].\]
+
+What is this representation?
+
+\begin{lemma}
+    Take $\lambda = (\lambda_1,\ldots,\lambda_r)\vdash n$. Then
+    $M_\lambda=(\bbOne_{\sym{\lambda}})\uparrow^{\sym{n}}_{\sym{\lambda}}$, where
+    $\sym{\lambda}= \sym{\lambda_1}\times \cdots \times \sym{\lambda_r}$. 
+    \begin{proof}
+        The action of $\sym{n}$ on $\Delta^\lambda$ (and hence $\Omega^\lambda$) is evidently transitive, and
+        for any $t\in \Delta^\lambda$, the stabiliser of $\{t\}$ is the subgroup
+        $\text{Sym}(\mathsf{R}_1(t))\times \cdots \times
+        \text{Sym}(\mathsf{R}_r(t))\simeq \sym{\lambda}$.
+    \end{proof}
+\end{lemma}
+
+We will show that, over $\bbk = \bbC$, all but one irreducible summand of
+$M^\lambda$ appear in $M^\mu$ for some $\mu \rhd
+\lambda$; thus each $M^\lambda$ determines a unique irreducible representation
+$L^\lambda$.
+
+\begin{remark}
+    We say any subgroup of $\sym{n}$ isomorphic to $\sym{\lambda}$ is a 
+    \emph{Young subgroup} of type $\lambda$. Note all Young subgroups of a given
+    type are conjugate to each other in $\sym n$.
+
+    A $\lambda$-partition of $[n]$, i.e.\ a set-partition of type
+    $\lambda=(\lambda_1,\ldots,\lambda_r)$, is
+    a decomposition $n=\bigsqcup_{1}^r A_i$ with each $\# A_i=\lambda_i$. 
+    The set of $\lambda$-partitions has a natural $\sym{n}$ action. There is a Young subgroup of type $\lambda$ for each such set partition; if
+    \[P=\bigsqcup_{i=1}^r\left\{\sum_{j=1}^i\lambda_j + 1,\;\ldots\;, \sum_{j=1}^i
+    \lambda_j + \lambda_{i+1}\right\}\]  then the stabiliser
+    of $P$ is a Young subgroup of type $\lambda$. Hence
+    $\bbC[\sym{n}/\sym{\lambda}]=\bbC[\text{set of }\lambda\text{-partitions}]$.
+    This is sometimes called the \emph{generalised orbit-stabiliser theorem};
+    this perspective becomes fundamental when working with other diagram
+    algebras that aren't the symmetric group.
+\end{remark}
+
+\begin{example}
+    Take $n=9$, $\lambda=(4,3,2)$. Then there are
+    $\binom{9}{4}\binom{5}{3}\binom{2}{2}=1260$ Young subgroups of type
+    $\lambda$ in $\sym n$.
+\end{example}
+
+\begin{example}
+    The sets of tabloids for small partitions can be computed explicitly, for
+    example we have
+    \[
+        \Omega^{(n)}=\left\{\tabloid{1\ldots n}\right\}, \qquad
+        \Omega^{(n-1,1)}=\left\{\tabloid{1\ldots\quad {$i-$1}\quad{$i+$1}\quad \ldots n,
+        {$i$}}\;\middle\vert\; 1\leq i\leq n\right\}.
+    \]
+    Thus $\sym {(n)}= \sym n$ and $\sym{(n-1,1)}=\sym {n-1}\times \sym{1}\simeq
+    \sym{n-1}$. It follows that $M^{(n)}=\bbOne_{\sym n}$ is trivial, while
+    $M^{(n-1,1)}=(\bbOne_{\sym {n-1}})\uparrow^{\sym n}_{\sym {n-1}}$ is the
+    natural permutation representation $V_n$. 
+
+    Likewise, noting that
+    $\Omega^{(1,\ldots,1)}=\Delta^{(1,\ldots,1)}$, we see that
+    $M^{(1,\ldots,1)}$ is the regular representation.
+\end{example}
+
+\begin{exercise}
+    Compute $M^\lambda$ for all partitions $\lambda\vdash 4$ (or see the next
+    lecture for the answer).
+\end{exercise}
+
+\paragraph{Representations from polytabloids, or Specht modules.} We now
+introduce a construction central to the representation theory of symmetric
+groups; these will be certain submodules of the representations
+$M^\lambda$ we have already met. The goal is to (eventually) index simple $\bbC \sym n$-modules by partitions $\lambda\vdash n$, by showing
+that for any simple $S$ the set $\{\mu\vdash n \;|\; S \subseteq M^\mu\}$ has a
+unique minimal element $\lambda$ in the dominance order, and that this
+correspondence is bijective so that the simple module can be denoted
+$S^\lambda$. This dream will be realised in the next section, but an explicit
+calculation is instructive.
+
+\begin{example}
+    Recall that $M^{(4)}$ is the trivial representation $\text{triv}$, hence so
+    is $S^{(4)}$. On the other hand $M^{(3,1)}$ is the natural representation
+    $V_4=\text{triv}\oplus\text{std}$, so we must have that
+    $S^{(3,1)}=\text{std}$ is the standard representation. The representation $M^{(2,2)}$ decomposes as $\text{triv}\oplus \text{std}\oplus V$, so
+    that $S^{(2,2)}=V$. Likewise, $M^{(2,1,1)}=\text{triv}\oplus
+    \text{std}^{\oplus 2} \oplus V \oplus (\text{std}\otimes \text{sgn})$ whence
+    the last factor is $S^{(2,1,1)}$. Lastly, recall that $M^{(1,1,1,1)}$ is
+    simply the group algebra $\bbC \sym{4}$ itself so that $S^{(1,1,1,1)}$ is
+    the only irreducible representation we haven't encountered yet (namely,
+    $\text{sgn}$).
+\end{example}
+
+The submodules $S^\lambda\subseteq M^\lambda$ will in fact be described explicitly
+as spans of \emph{polytabloids}.
+
+\begin{definition}
+    Given $\lambda\vdash n$, the \emph{row stabiliser} of $t\in \Delta^\lambda$
+    is $R_t=\{\sigma\in \sym n\;|\; \sigma \cdot
+    \mathsf{R}_i(t)=\mathsf{R}_i(t)\text{ for all }i\}$. The \emph{column stabiliser} 
+    $C_t$ is defined likewise as the subgroup of $\sym n$ fixing each $\mathsf{C}_i(t)$.
+    The \emph{column symmetriser} of $t$ is the element of the group algebra \[\kappa_t = \sum_{\sigma\in
+    C_t}\text{sgn}(\sigma)\cdot \sigma \qquad \in \bbk \sym n.\] 
+    The \emph{polytabloid} corresponding to $t$ is the element
+    \[e_t=\kappa_t\{t\}\qquad \in M^\lambda.\] We will sometimes denote it by $e(t)$,
+    noting dependence on the tableau $t$ (and not just the tabloid
+    $\{t\}$).
+
+\end{definition}
+
+
+\begin{example} For $n=5$ and $t=\smalltableau{241,35}\in \Delta^{(3,2)}$, the above correspond to 
+    \begin{gather*}
+        R_t = \langle (2\,4),(4\,1), (3\,5)\rangle \subseteq \sym 5, \qquad C_t=\langle (2\,3),(4\,5)\rangle \subseteq
+        \sym 5, \\[0.7em]
+        \kappa_t = 1-(2\,3)-(4\,5)+(2\,3)(4\,5), \\[0.7em]
+        e_t =
+        \tabloid{241,35}-\tabloid{341,25}-\tabloid{251,34}+\tabloid{351,24}.
+    \end{gather*}
+\end{example}
+\medskip
+\marginpar{Lecture 5, 26/10/26} 
+
+\begin{definition}
+    Given $\lambda\vdash n$, the \emph{Specht module} $S^\lambda$ is
     the submodule \(\langle e_t\;|\; t\in \Delta^\lambda \rangle \subset
     M^\lambda\) spanned by polytabloids corresponding to tableaux of shape
     $\lambda$.
 \end{definition}
 
-It is easy to check that $S^\lambda$ is indeed a module for $\sym{n}$. We have
-the following properties.
-
 \begin{lemma}
-    Let $\lambda$ be a partition of $n$, and $t\in \Delta^\lambda$. Then we have
-    the following. 
+    \label{lem:polytabloidaction}
+    For $\lambda \vdash n$ and $t\in \Delta^\lambda$, we have
     \begin{enumerate}[(i)]
-        \item\label{item:specht1} $e_t\neq 0$.
-        \item\label{item:specht2} $\forall \sigma\in\sym{n}$, $\sigma\cdot e_t = e_{\sigma t}$.
-        \item\label{item:specht3} $\forall \sigma\in C_t$, $\sigma\cdot e_t =
-            \textnormal{sgn}(\sigma)e_t$.
-        \item\label{item:specht4} $S^\lambda$ is a \emph{cyclic} submodule of
-            $M^\lambda$, i.e.\ $S^\lambda=\bbk \sym{n}\cdot e_t$ for some
-            (equivalently any) $t\in \Delta^\lambda$.
+        \item\label{item:specht1} $e_t\neq 0$, 
+        \item\label{item:specht2} for all $\sigma\in\sym{n}$, $\sigma\cdot e_t =
+            e_{\sigma t}$, and 
+        \item\label{item:specht3} for all $\sigma\in C_t$, $\sigma\cdot e_t =
+            \textnormal{sgn}(\sigma)\cdot e_t$. 
     \end{enumerate}
+    In particular, $S^\lambda$ is a \emph{cyclic} submodule of $M^\lambda$,
+    i.e.\ $S^\lambda=\bbk \sym{n}\cdot e_t$ for some (equivalently any) $t\in
+    \Delta^\lambda$.
 
     \begin{proof}
         To prove~\ref{item:specht1}, note that $R_t\cap C_t=\{1\}$ and hence if
@@ -471,25 +644,25 @@ the following properties.
         coefficient of the tabloid $\{t\}$ in $e_t$ is
         $\textnormal{sgn}(1)=1\neq 0$, so $e_t$ is non-zero.
         
-        Now it is clear that $C_{\sigma t} = \sigma C_t \sigma^{-1}$. Thus
+        Now it is clear that $C_{\sigma t} = \sigma C_t \sigma^{-1}$,
+        so~\ref{item:specht2} follows from the calculation below ---
+        \begin{align*}
+            \sigma \cdot e_t 
+            = \sum_{\tau\in C_t} \textnormal{sgn}(\tau)\cdot \sigma \tau\{t\} 
+            = \sum_{\tau \in C_t}\textnormal{sgn}(\sigma\tau\sigma^{-1})\cdot
+            (\sigma\tau\sigma^{-1})\{\sigma t\} 
+            = \sum_{\omega\in C_{\sigma
+            t}}\textnormal{sgn}(\omega)\cdot \omega\{\sigma t\} = e_{\sigma t}.
+        \end{align*}
+        To prove~\ref{item:specht3}, note that if $\sigma\in C_t$ then we have
+        $\tau\in C_t\iff \sigma\tau\in C_t$, whence
         \[
-            \sigma e_t = \sigma \sum_{\tau\in C_t} (\textnormal{sgn}\tau)\cdot
-            \tau\{t\} = \sum_{\tau\in C_t}(\textnormal{sgn}\tau)\cdot
-            \sigma\tau\{t\} = \sum_{\tau \in
-            C_t}(\textnormal{sgn}(\sigma\tau\sigma^{-1}))\cdot
-            (\sigma\tau\sigma^{-1})\{\sigma t\} = \sum_{\omega\in C_{\sigma
-            t}}(\textnormal{sgn}\omega)\cot \omega\{\sigma t\} = e_{\sigma t}
-        \] 
-        thus proving~\ref{item:specht2}.
-
-        To prove~\ref{item:specht3}, note that if $\sigma\in C_t$ then 
-        \[
-            \sigma\cdot e_t = \sum_{\tau\in
-            C_t}(\textnormal{sgn}\tau)\{\sigma\tau\cdot t\} = \sum_{\omega\in C_t}
-            (\textnormal{sgn}(\sigma^{-1}\omega))\{\omega t\} =
-            (\textnormal{sgn}\sigma) e_t.
+            \sigma\cdot e_t = \sum_{\tau\in C_t}
+            \textnormal{sgn}(\sigma\tau\sigma^{-1})\cdot \sigma\tau\{t\} =
+            \sum_{\sigma\tau\in C_t} \textnormal{sgn}(\sigma\tau)\cdot
+            \textnormal{sgn}(\sigma)\cdot \sigma\tau\{t\} =
+            \textnormal{sgn}(\sigma)\cdot  e_t.
         \]
-
         Lastly, to show that $S^\lambda$ is cyclic we note
         that $\sym{n}$ acts transitively on $\Delta^\lambda$, so
         that~\ref{item:specht2} allows the conclusion.
@@ -502,25 +675,29 @@ the following properties.
 \end{exercise}
 
 \begin{example}
-    If $\lambda=(n)$, note that $M^(n)$ is the trivial module $\bbOne_{\sym{n}}$
+    If $\lambda=(n)$, note that $M^{(n)}$ is the trivial module $\bbOne_{\sym{n}}$
     and hence the non-zero submodule $S^{(n)}\subseteq M^{(n)}$ must also be
     $\bbOne_{\sym{n}}$. On the other hand if $\lambda=(1^n)$ then $C_t=\sym{n}$,
-    so the above lemma shows $\sigma e_t = \textnormal{sgn}(\sigma)e_t$ for all
-    $\sigma\in \sym{n}$ and all $t\in \Delta^\lambda$. Thus $\dim S^{(1^n)}=1$
+    so the above lemma shows $\sigma e_t = \textnormal{sgn}(\sigma)\cdot e_t$ for all
+    $\sigma\in \sym{n}$ and all $t\in \Delta^\lambda$. Thus $\dim (S^{(1^n)})=1$,
     and $S^{(1^\lambda)} = \bbk \sym{n}\cdot e_t$ is the sign representation of
     $\sym{n}$.
 \end{example}
 
 \begin{example}
-    Consider the partition $(2,1)\vdash 3$, defining the Specht module $S^{2,1}$
-    of dimension $2$. To see this, note that $S^\lambda$ is spanned by
-    $\alpha=e_{\nomat{2&1 \\ 3&}}$, $\beta=e_{\nomat{1&2\\3&}}$, and
-    $\gamma = e_{\nomat{1&3 \\ 2&}}$, using the fact that other tabloids can be
-    realised as $e_{\nomat{3&2 \\ 1&}}=-\alpha$ and such. Now $\alpha =
-    \ytableausetup{boxsize=normal,tabloids}\ytableaushort{12, 3} -
-    \ytableaushort{21,3}$, so
-    that $\alpha=\beta+\gamma$. Since $\beta$ and $\gamma$ are linearly
-    independent, $S^{2,1}$ is two-dimensional over all fields $\bbk$.
+    Consider the partition $(2,1)\vdash 3$, defining the Specht module
+    $S^{(2,1)}$. This module has dimension $2$; to see this note that
+    $S^{(2,1)}$ is spanned by the polytabloids    
+    \[
+        e\left(\tableau{31,2}\right)=
+        \tabloid{31,2}-\tabloid{21,3}, \qquad 
+        e\left(\tableau{12,3}\right)=\tabloid{12,3}-\tabloid{32,1},\qquad
+        e\left(\tableau{23,1}\right)=\tabloid{23,1}-\tabloid{13,2},
+    \] 
+    where we observe that other tabloids can be realised as
+    $e(\smalltableau{32,1})=-e(\smalltableau{12,3})$ and such. Note the above
+    polytabloids sum to zero, but any two of them are linearly independent. Thus
+    $S^{(2,1)}$ is two-dimensional. 
 \end{example}
 
 \begin{exercise}
@@ -528,89 +705,97 @@ the following properties.
     representation of $\sym{n}$.
 \end{exercise}
 
-We now prove that over the field $\bbC$, the Specht modules
+\section{Classifying irreducible representations}
+
+We now prove that the Specht modules
 $\{S^\lambda\;|\;\lambda\vdash n\}$ form a complete set of irreducible
-$\bbC\sym{n}$-modules.
+$\bbC\sym{n}$-modules. 
 
-\begin{definition}
-    For a partition $\lambda\vdash n$, the module $M^\lambda$ has a
-    $\sym{n}$-invariant symmetric bilinear inner product $\langle\cdot, \cdot
-    \rangle$ defined by $\langle\, \{t\}, \{t'\}\,\rangle = \delta_{\{t\}\{t'\}}$
-    for $t,t'\in \Delta^\lambda$, and extended linearly. The \emph{orthogonal
-    complement} $N\orth$ of a subspace $N\subset M^\lambda$ is the subspace
-    $\{m\in M^\lambda\;|\; \langle m,n\rangle = 0 \text{ for all }n\in N\}$.
-\end{definition}
+\paragraph{James' submodule theorem.} Note that (over any field $\bbk$) the
+vector space underlying $M^\lambda$ is canonically equipped with a basis given
+by tabloids. The standard inner product $\langle \cdot,\cdot \rangle \colon
+M^\lambda\times M^\lambda\to \bbC$ with respect to this basis, given by linearly
+extending the assignment $\langle \{t\},\{t'\}\rangle=\delta_{\{t\}\{t'\}}$ for
+$t,t'\in \Delta^\lambda$, is evidently $\sym n$-invariant.
 
-Note that if $N$ is a $\sym{n}$-submodule of $M^\lambda$ then so is $N\orth$,
-since the inner product is $\sym{n}$-invariant. 
+The \emph{orthogonal complement} $N\orth$ of a subspace $N\subset M^\lambda$ is
+denoted $N\orth = \{m\in M^\lambda\;|\; \langle m,n\rangle = 0 \text{ for all }n\in N\}$. Note that if $N$ is a $\sym{n}$-submodule of $M^\lambda$ then so is $N\orth$,
+by $\sym n$-invariance of the inner product. 
 
 \begin{theorem}[(James' submodule theorem)]
-    If $\lambda \vdash n$ and $V\leq M^\lambda$ is a
-    $\sym{n}$-subrepresentation, then either $S^\lambda\subseteq V$ or
-    $V\subseteq (S^{\lambda})\orth$. In particular, quotients of $S^\lambda$ are
-    simple.
+    Given $\lambda \vdash n$ and a $\sym n$-subrepresentation $V\subseteq M^\lambda$,
+    we have either $S^\lambda\subseteq V$ or $V\subseteq (S^{\lambda})\orth$ (or
+    both).
 \end{theorem}
 
-This will imply that $S^\lambda$ is irreducible over a field of characteristic
-zero. To show the $S^\lambda$s are pairwise non-isomorphic is a bit harder.
+James' theorem will follow from the following calculation.
 
-A first step to proving James' theorem is the following.
-
-\begin{proposition}
+\begin{lemma}
+    \label{lem:technical1}
     \marginpar{Lecture 6, 28/10/26} 
     Let $\lambda=(\lambda_1,\ldots, \lambda_r)$ be a partition of $n$, and
-    $t,u\in \Delta^\lambda$ such that $\kappa_t\{u\}\neq 0$.
-    \begin{enumerate}[(i)]
-        \item\label{item:tech1} $\exists h\in C_t$ such that $h\{t\}=\{u\}$,
-        \item\label{item:tech2} $\kappa_t\{u\}=\pm e_t$,
-        \item\label{item:tech3} $\kappa_t M^\lambda = \bbk e_t$.
-    \end{enumerate}
+    $t,u\in \Delta^\lambda$ such that $\kappa_t\{u\}\neq 0$. Then there is an
+    $h\in C_t$ such that $h\{t\}=\{u\}$.
 
     \begin{proof}
-        To show~\ref{item:tech1}, we construct $h\in C_t$ such that
-        $R_i(ht)=R_i(u)$ for all $i$. 
+        We must construct $h\in C_t$ such that
+        $\mathsf{R}_i(ht)=\mathsf{R}_i(u)$ for all $i$. 
 
-        Claim that if $\kappa_t(u)\neq 0$, then any
+        Claim that if $\kappa_t\{u\}\neq 0$, then any
         numbers $x\neq y$ appearing in the same row of $u$ must appear in
         different columns of $t$. If not, then the transposition $(x\,y)$ lies
         in $C_t$. Let $\mathcal{T}$ be a set of (left) coset representatives of
-        $\langle (x\,y)\rangle$ in $C_t$. That is, $C_t=\mathcal{T}\cdot \id
+        $\langle (x\,y)\rangle$ in $C_t$, so that $C_t=\mathcal{T}\cdot \id
         \;\cup\; \mathcal{T}\cdot (x\,y)$. Then 
-        \[\kappa_t = \sum_{\sigma\in C_t}(\sgn\sigma)\sigma = \sum_{t\in
-        \mathcal{T}}(\sgn\,t)t(1-(x\,y))\]
+        \[\kappa_t = \sum_{\sigma\in C_t}\sgn(\sigma)\cdot\sigma = \sum_{\tau\in
+        \mathcal{T}}\sgn(\tau)\cdot \tau(1-(x\,y))\]
         and hence
-        $\kappa_t\{u\}=\sum_{t\in\mathcal{T}}(\sgn\,t)t(\{u\}-(x\,y)\{u\})$
+        \[\kappa_t\{u\}=\sum_{\tau\in\mathcal{T}}\sgn(\tau)\cdot
+        \tau(\{u\}-(x\,y)\{u\})\]
         which vanishes since $(x\,y)\in R_u$ (since $x,y$ lie in the same row in
         $u$). This proves the claim.
 
-        Now suppose $R_1(u)=\{x_1,\ldots,x_{\lambda_1}\}$ and that $x_s$ belongs
+        Now suppose $\mathsf{R}_1(u)=\{x_1,\ldots,x_{\lambda_1}\}$ and that $x_s$ belongs
         to column $j_s$ of $t$, for each $s\in [\lambda_1]$. The $j_s$s are
-        pairwise distinct by the above claim. Let $y_s=t((1,j_s))$, and define $h_1=\prod_{\substack{s\in[\lambda_1]\\x_s\neq y_s}} (x_s\,y_s)$. 
-
-        Note $R_1(h_1 t)=\{h_1y_1, \ldots, h_1y_{\lambda_1}\} =
-        \{x_1,\ldots,x_{\lambda_1}\}=R_1(u)$. Since $h_1\in C_t$, we see that
+        pairwise distinct by the above claim. Let $y_s=t((1,j_s))$, and define
+        \[h_1=(x_1\,y_1)(x_2\,y_2)\cdots(x_{\lambda_1}\,y_{\lambda_1}) \qquad
+        \in C_t\] 
+        where $(x_i\,y_i)=\text{id}$ if $x_i=y_i$.
+        Note $\mathsf{R}_1(h_1 t)=\{h_1y_1, \ldots, h_1y_{\lambda_1}\} =
+        \{x_1,\ldots,x_{\lambda_1}\}=\mathsf{R}_1(u)$. Since $h_1\in C_t$, we see that
         $C_{h_1t}=h_1C_th_1^{-1}=C_t$, and hence $\kappa_t=\kappa_{h_1t}$ does
         not vanish on $\{u\}$.
 
-        Continuing, suppose $R_2(u)=\{x_1',\ldots, x_{\lambda_2}'\}$ with $x_s'$
-        belonging to column $j_s'$ of $t'=h_1t$. By the claim, the $j_s$s are pairwise
+        Continuing, suppose $\mathsf{R}_2(u)=\{x_1',\ldots, x_{\lambda_2}'\}$
+        with $x_s'$ belonging to column $j_s'$ of $t'=h_1t$. By the claim, the
+        $j_s'$s are pairwise
         distinct. Again, let $y_s'=t((2,j_s'))$ and define
-        $h_2=\prod_{\substack{s\in[\lambda_2]\\ x_s'\neq y_s'}}(x_s'\,y_s')$.
-
-        This lies in $C_{t'}=C_t$, and $R_2(h_2\,t')=R_2(u)$ and
-        $R_1(h_2t')=R_1(t')=R_1(u)$. In conclusion, $R_i(h_2h_1t)=R_i(u)$ for
+        \[h_2=(x_1'\,y_1')(x_2'\,y_2')\cdots(x_{\lambda_2}'\,y_{\lambda_2}') \qquad\in C_{t'}=C_t.\]
+        Again, $\mathsf{R}_2(h_2\,t')=\mathsf{R}_2(u)$ and
+        $\mathsf{R}_1(h_2t')=\mathsf{R}_1(t')=\mathsf{R}_1(u)$. In conclusion,
+        $\mathsf{R}_i(h_2h_1t)=\mathsf{R}_i(u)$ for
         both $i=1,2$. Iterating, we construct for each $m\in \{3,4,\ldots, r\}$
-        an element $h_m\in C_t$ such that $R_i(h_mh_{m-1}\ldots h_1 t)=R_i(u)$
-        for all $i\in [m]$. Declaring $h=h_r\cdots h_1$, we have $h\{t\}=\{u\}$
-        as required.
+        an element $h_m\in C_t$ such that $\mathsf{R}_i(h_mh_{m-1}\ldots h_1
+        t)=\mathsf{R}_i(u)$ for all $i\in [m]$. Declaring $h=h_r\cdots h_1$, we
+        have $h\{t\}=\{u\}$ as required.
+    \end{proof}
+\end{lemma}
 
-        To show~\ref{item:tech2}, take $h$ as above and note that
-        $\kappa_t\{u\}=\kappa_t h\{t\}=(\sgn\,h)\kappa_t\{t\} = (\sgn\,h)e_t$,
-        which is $\pm e_t$ as required. Then~\ref{item:tech3} follows, since
-        for each basis element $\{u\}\in M^\lambda$ we either have
-        $\kappa_t\{u\}=0$ or $\kappa_t\{u\}=\pm e_t$. Thus $\kappa_t
-        M^\lambda\subseteq\bbk e_t$, and equality holds since
-        $\kappa_t\{t\}=e_t$.
+\begin{proposition}
+    \label{prop:kappaaction}
+    For any $\lambda\vdash n$ and tabloids $t,u\in \Delta^\lambda$, we have
+    $\kappa_t\{u\}\in \{0,\pm e_t\}$. In particular, the image of $\kappa_t\colon
+    M^\lambda\to M^\lambda$ is $\bbk e_t$.
+
+    \begin{proof}
+        If $\kappa_t\{u\}\neq 0$, then the above lemma shows there is a $h\in
+        C_t$ with $h\{t\}=u$, and hence
+        \[\kappa_t\{u\}=\kappa_t \{ht\}=\sgn(h)\cdot \kappa_t\{t\} =
+        \sgn(h)\cdot e_t,\]
+        which is $\pm e_t$ as required. It follows that the image of $\kappa_t$
+        is contained in $\bbk e_t$, since tabloids span $M^\lambda$.
+        Since $\kappa_t\{t\}=e_t$ by definition, the image is equal to $\bbk
+        e_t$.
     \end{proof}
 \end{proposition}
 
@@ -618,13 +803,17 @@ A first step to proving James' theorem is the following.
     Let $\lambda\vdash n$ and $V\leq M^\lambda$ be as given, and assume
     $V\not\leq (S^\lambda)\orth$. Then there is a $v\in V$ and $t\in
     \Delta^\lambda$ such that $\langle v, e^t\rangle\neq 0$. Thus $\langle v,
-    e_t\rangle = \sum_{\sigma\in C_t} (\sgn \sigma)\langle \sigma^{-1}v,
+    e_t\rangle = \sum_{\sigma\in C_t} \sgn (\sigma)\cdot \langle \sigma^{-1}v,
     \{t\}\rangle = \langle \kappa_t v, \{t\}\rangle$ is non-zero.
 
     In particular, $\kappa_t v\neq 0$, so $\kappa_t v = \beta e_t$ for some
     $\beta\in \bbk^\times$. Since $\kappa_t v\in V$, it follows that $e_t\in V$
     and thus $S^\lambda = \bbk \sym{n} \cdot e_t \leq V$ as required.
 \end{proof}
+
+\paragraph{Irreducibility of Specht modules.} James' theorem
+immediately gives a construction of irreducible $\bbk\sym n$-modules from the
+Specht modules, over any field $\bbk$.
 
 \begin{corollary}
     If $\lambda \vdash n$ then $S^\lambda/(S^\lambda \cap (S^\lambda) \orth)$ is
@@ -635,28 +824,18 @@ A first step to proving James' theorem is the following.
         Otherwise, take any submodule $V\leq S^\lambda$. By James' submodule theorem,
         $V=S^\lambda$ or $V\leq S^\lambda \cap (S^\lambda)\orth$. That is,
         $S^\lambda\cap (S^\lambda)\orth$ is a maximal submodule of $S^\lambda$,
-        so the quotient is irreducible.
+        so the quotient is irreducible as required.
     \end{proof}
 \end{corollary}
 
-\begin{definition}
-    Given $\lambda \vdash n$, the \emph{Young module} $Y^\lambda$ is the unique
-    indecomposable summand of $M^\lambda$ containing the Specht module $S^\lambda$.
-\end{definition}
-
-\begin{definition}
-    A representation $\rho\colon G\to \mathsf{GL}_n(\bbk)$ is \emph{absolutely
-    irreducible} if, for any field extension $\bbk\subseteq \bbK$, the
-    corresponding representation $\ol\rho\colon G\to \mathsf{GL}_n(\bbK)$ is
-    irreducible.
-\end{definition}
+Recall that a representation $\rho\colon G\to \mathsf{GL}_n(\bbk)$ is \emph{absolutely irreducible} if, for any field extension $\bbk\subseteq \bbK$, the corresponding representation $\ol\rho\colon G\to \mathsf{GL}_n(\bbK)$ is irreducible.
 
 \begin{example} 
     Consider the cyclic group $C_4=\langle \alpha \rangle$, which has a two-dimensional
     $\bbQ$-representation given by $\alpha \mapsto \mat{0&1 \\ -1 &
-    0}$. This representation is irreducible. However, upon extension to
-    $\bbQ(\sqrt{-1})$, the generator $\ol\rho(\alpha)$ has eigenvalues $\pm
-    \sqrt{-1}$ and hence the representation splits. 
+    0}$. This representation is irreducible, but not absolutely irreducible ---
+    indeed, upon extension to $\bbQ(\sqrt{-1})$, the generator $\ol\rho(\alpha)$
+    has eigenvalues $\pm \sqrt{-1}$ and hence the representation splits.
 \end{example}
 
 \begin{proposition}
@@ -671,119 +850,884 @@ A first step to proving James' theorem is the following.
         $A_{ij}=\langle e_i, e_j\rangle$ all lie in the prime subfield of $\bbk$
         (i.e.\ $\bbF_p$ or $\bbQ$) so the rank doesn't change upon
         extending $\bbk$. Since we have already shown $S^\lambda/(S^\lambda\cap
-        (S^\lambda)\orth)$ is zero or irreducible, the result follows.
+        (S^\lambda)\orth)$ is zero or irreducible over these fields, the result follows.
     \end{proof}
 \end{proposition}
 
 \begin{corollary}
-    If $\textnormal{char}(\bbk)=0$ then $S_\bbk^\lambda$ is irreducible for all
+    If $\textnormal{char}(\bbk)=0$ then $S^\lambda$ is irreducible for all
     $\lambda$.
 
     \begin{proof}
-        Over $\bbQ$, the bilinear form $\langle \cdot, \cdot \rangle$ is
-        positive definite on $M^\lambda$. So $S^\lambda_\bbQ\cap
-        (S^\lambda_\bbQ)\orth = 0$. Thus $S^\lambda_\bbQ$ is absolutely
-        irreducible, whence $S^\lambda_\bbk$ is irreducible since any field
-        $\bbk$ of characteristic zero extends $\bbQ$.
+        It suffices to show that $S^\lambda$ is absolutely irreducible over
+        $\bbQ$, since any field of characteristic zero extends the field of
+        rationals. But over $\bbQ$ the bilinear form $\langle \cdot, \cdot
+        \rangle$ on $M^\lambda$ is positive definite, so $S^\lambda\cap
+        (S^\lambda)\orth = 0$. The result follows.
     \end{proof}
 \end{corollary}
 
-Is $\{S^\lambda\;|\; \lambda\vdash n\}$ a complete set of irreducible
-representations?
+\begin{remark}
+    Over a general field where $S^\lambda$ may not be irreducible, it is still
+    true that $M^\lambda$ has a unique indecomposable summand $Y^\lambda$ which
+    contains $S^\lambda$. This summand is called the \emph{Young module} for
+    $\lambda$. These correspond to projective modules for the general linear
+    group.
+\end{remark}
+
+\paragraph{Partitions and Specht modules.} We now turn to showing $\{S^\lambda\;|\; \lambda\vdash n\}$ is a
+complete set of irreducible representations over a field of characteristic zero,
+by first showing that the assignment $\lambda\mapsto S^\lambda$ is bijective.
+For this, we begin by group-theoretically characterising the dominance order on partitions.
 
 \begin{proposition}
+    \label{prop:dominancecharacterisation}
+    Suppose $\lambda,\mu\vdash n$ are such that there exist tabloids $t\in
+    \Delta^\lambda$, $u\in \Delta^\mu$ with $\kappa_t\{u\}\neq 0$. Then
+    $\lambda \unrhd \mu$ in the dominance order.
+\end{proposition}
+
+We will in fact prove the following strengthening of this, which is akin
+to~\cref{lem:technical1}. 
+
+\begin{lemma}
     Suppose $\lambda=(\lambda_1,\ldots,\lambda_r)$ and
-    $\mu=(\mu_1,\ldots,\mu_s)$ are partitions of $n$. Take $t\in
-    \Delta^\lambda$. Choose $u\in \Delta^\mu$ such that $\kappa_t\{u\}\neq 0$. Then 
-    \begin{enumerate}[(i)]
-        \item\label{item:3.10.1}
-            there is an $h\in C_t$ such that for all $\ell\in
-            \{1,2,\ldots,\min(r,s)\}$ we have $\bigsqcup_{i=1}^\ell
-            R_i(u)\subseteq \bigsqcup_{i=1}^\ell R_i(ht)$, and
-        \item\label{item:3.10.2}
-            we have $\lambda \trianglerighteq \mu$ in the dominance order.
-    \end{enumerate}
+    $\mu=(\mu_1,\ldots,\mu_s)$ are partitions of $n$. Let $t\in
+    \Delta^\lambda$, $u\in \Delta^\mu$ be such that $\kappa_t\{u\}\neq
+    0$. Then      there is an $h\in C_t$ such that for all $\ell\in
+    \{1,2,\ldots,\min(r,s)\}$ we have \[\bigsqcup_{i=1}^\ell
+    \mathsf{R}_i(u)\subseteq \bigsqcup_{i=1}^\ell \mathsf{R}_i(ht).\]
 
     \begin{proof}
-        Claim that if $x\neq y$ appear in the same row of $u$ then
-        they are in different columns of $t$; this is proved similarly as
-        before. Given this, suppose $R_1(u)=\{x_1,\ldots, x_r\}$ and that $x_q$
+        Claim that if distinct entries $x,y$ appear in the same row of $u$ then
+        they appear in different columns of $t$; this is proved similarly as
+        in~\cref{lem:technical1}. 
+
+        Given this, suppose $\mathsf{R}_1(u)=\{x_1,\ldots, x_r\}$ and that $x_q$
         lies in column $j_q$ of $t$. By the claim, $j_q$s are pairwise distinct.
         Let $y_q=t((1,j_q))$ and define
         \[
-            h_1=\prod_{\substack{q\in[\mu_1]\\ x_q\neq y_q}} (x_q\quad y_q)\qquad\in C_t. 
+            h_1= (x_1\,y_1)(x_2\,y_2)\cdots (x_{\mu_1}\,y_{\mu_1})\qquad\in C_t
         \]
+        where $(x_i\,y_i)=\text{id}$ if $x_i=y_i$.
         We have
-        $R_1(u)=\{x_1,\ldots,x_{\mu_1}\}=\{h_1(y_1),\ldots,h_1(y_{\mu_1})\}\subseteq
-        R_1(h_1t)$. Since $C_{h_1t}=h_1C_th_1^{-1}=C_t$, we see that
-        $\kappa_{h_1t=\kappa_t}$ and hence $\kappa_{h_1t}\{u\}\neq 0$. 
+        \[\mathsf{R}_1(u)=\{x_1,\ldots,x_{\mu_1}\}=\{h_1y_1,\ldots,h_1y_{\mu_1}\}\subseteq
+        \mathsf{R}_1(h_1t).\] Since $C_{h_1t}=h_1C_th_1^{-1}=C_t$, we see that
+        $\kappa_{h_1t}=\kappa_t$ and hence $\kappa_{h_1t}\{u\}\neq 0$. 
 
-        Then let $R_2(u)=\{x_1',\ldots,x_{\mu_2}'\}$ and let $t'=h_1t$. Suppose
-        $t'((i_q',j_q'))=x_q'$. If $i_q'\geq 2$ then let $y_q'=t'((2,j_q'))$
+        Continuing, let $\mathsf{R}_2(u)=\{x_1',\ldots,x_{\mu_2}'\}$ and let $t'=h_1t$. Suppose
+        $t'((i_q',j_q'))=x_q'$. If $i_q'\geq 2$ then let $y_q'=t'((2,j_q'))$,
+        otherwise set $y_q'=x_q'$.
         Define $h_2$ similarly as above, i.e.\ 
         \[
-            h_2=\prod_{\substack{q\in[\mu_2]\\ i_q'\geq 2 \\ x_q'\neq y_q'}}
-            (x_q'\quad y_q')\qquad\in C_{t'}=C_t. 
-        \]
-        This is so that $R_2(u)=\{x_1',\ldots,x_{\mu_2}'\}=\{x_q'\;|\; i_q'\geq
-        2\}\sqcup \{x_q'\;|\; i_q'=1\}=\{h_2(y_q')\}\sqcup \{x_q'\;|\;
-        i_q'=1\}$, which lies in $R_2(h_2t')\sqcup R_1(h_1t')$. But
-        $R_1(u)\subseteq R_1(t')=R_1(h_2t')$ and hence
-        $\bigsqcup_{i=1}^\ell R_i(u)\subseteq \bigsqcup_{i=1}^\ell
-        R_i(h_2h_1t)$ for $\ell=1,2$. 
-
-        Continuing inductively, the statement~\ref{item:3.10.1} follows.
-
-        Now we have 
-        \[
-            \sum_{i=1}^\ell \mu_i = \sum_{i=1}^\ell |R_i(u)|
-            \qquad \underset{\ref{item:3.10.1}}{\leq}\qquad  \sum_{i=1}^\ell |R_i(ht)| =
-            \sum_{i=1}^\ell \lambda_i 
-        \]
-        for all $\ell\in \{1,\ldots, \min(r,s)\}$, thereby
-        proving~\ref{item:3.10.2}.
+            h_2= (x_1'\,y_1')(x_2'\,y_2')\cdots (x_{\mu_2}'\,y_{\mu_2}')\qquad\in C_{t'}=C_t
+        \] 
+        where $(x_i'\,y_i')=\text{id}$ if $x_i'=y_i'$. Again, we have 
+        \begin{align*}
+            \mathsf{R}_2(u)=\{x_1',\ldots,x_{\mu_2}'\} = \{h_2y_q'\;|\;
+                           i_q'=1\}\sqcup \{h_2y_q'\;|\; i_q'\geq 2\}  \subseteq
+                   \mathsf{R}_1(h_2t')\sqcup\mathsf{R}_2(h_2t').
+        \end{align*}
+        Hence
+        $\bigsqcup_{i=1}^\ell \mathsf{R}_i(u)\subseteq \bigsqcup_{i=1}^\ell
+        \mathsf{R}_i(h_2h_1t)$ for $\ell=1,2$. Continuing inductively, the
+        statement follows. 
     \end{proof}
-\end{proposition}
+\end{lemma}
+
+
+\Cref{prop:dominancecharacterisation} then follows, since for any $t\in
+\Delta^\lambda$ and any $i \in \{1,\ldots, (\lambda')_1\}$, we have
+$\lambda_i=|\mathsf{R}_i(t)|$ by definition. This hard-earned result translates
+to the following test.
 
 \begin{theorem}
-    For $\lambda,\mu\vdash n$, suppose $0\neq \varphi\in
-    \Hom_{\sym{n}}(S^\lambda, M^\mu)$. If there exists a $\wt\varphi\in
+    \label{thm:dominancebyhomextension}
+    For $\lambda,\mu\vdash n$, suppose $\varphi\in
+    \Hom_{\sym{n}}(S^\lambda, M^\mu)$ is non-zero. If there exists a $\wt\varphi\in
     \Hom_{\sym{n}}(M^\lambda, M^\mu)$ extending $\varphi$, then $\lambda
-    \trianglerighteq \mu$.
+    \unrhd \mu$. If furthermore $\lambda=\mu$, then $\varphi$ is a scalar
+    multiple of the natural inclusion $S^\lambda\into M^\lambda$. 
 
     \begin{proof}
         We know $S^\lambda$ is cyclic, generated by $e_t$ for any $t\in
-        \Delta^\lambda$. Thus $\varphi(e_t)\neq 0$, since $\varphi$ is non-zero. Fix $t\in \Delta^\lambda$.
-        If $\wt\varphi$ is as given, then \[0\neq \varphi(e_t)=\wt\varphi(e_t) =
+        \Delta^\lambda$. Thus $\varphi(e_t)\neq 0$, since $\varphi$ is non-zero.
+        For any such $t\in \Delta^\lambda$, if $\wt\varphi$ is as given, then \[0\neq \varphi(e_t)=\wt\varphi(e_t) =
         \wt\varphi(\kappa_t\{t\}) = \kappa_t\wt\varphi(\{t\}).\]
-        Write $\varphi(\{t\})$ as a sum of $\mu$-tabloids to see that there
+        Write $\wt\varphi(\{t\})$ as a sum of $\mu$-tabloids to see that there
         exists a $u\in \Delta^\mu$ such that $\kappa_t\{u\}\neq 0$. We can then
         conclude by the previous proposition.
+
+        Lastly if $\lambda=\mu$ then $\kappa_t (\wt \varphi\{t\})$ lies in $\bbC
+        e_t$ by~\cref{prop:kappaaction}. So $\wt\varphi(e_t)=\varphi(e_t)$ is a scalar multiple of $e_t$ for any $t$.
+        Since $\sym{n}$ acts transitively on $e_t$s, it must be the same scalar
+        for all $e_t$s.
     \end{proof}
 \end{theorem}
 
 \begin{example}
-    If $f\colon M^\lambda\to M^\mu$ is such that $S^\lambda\not\subseteq
-    \ker(f)$ then $\lambda\trianglerighteq \mu$. If $\lambda=\mu$, then $f$ is a
-    scalar. 
+    Not all maps $S^\lambda\to M^\mu$ can be
+    extended to $M^\lambda$. Indeed, suppose $\text{char}(\bbk)=2$, and consider the partitions $\lambda=(1^2)$ and
+    $\mu=(2)$ of $n=2$. We show that $\Hom_{\sym{2}}(S^\lambda, M^\mu)\neq 0$,
+    but for any $\varphi\in \Hom(M^\lambda, M^\mu)$, the restriction
+    $\varphi|_{s^\lambda}$ vanishes.  To see the first claim, note that $S^{\lambda}$ is the sign representation, which over a
+    field of characteristic two coincides with $\bbOne_{\sym{2}} = M^{\mu}$.
+    To see the second, note we have
+    $M^\lambda=\left\langle \smalltabloid{1,2}, \smalltabloid{2,1}\right\rangle$, so if
+    $\varphi\colon M^\lambda\to M^\mu$ is $\sym{2}$-linear then
+    $\varphi(\smalltabloid{1,2})=\varphi((1\,2)\cdot \smalltabloid{2,1})=(1\,
+    2)\cdot \varphi(\smalltabloid{2,1})=\varphi(\smalltabloid{2,1})$, and hence
+    $\varphi(e_{\smalltableau{1,
+    2}})=\varphi(\smalltabloid{1,2})-\varphi(\smalltabloid{2,1})=0$ as required.
+\end{example}
 
-    Indeed, take $t\in \Delta^\lambda$; if $e_t\notin \ker(f)$ then
-    $0\neq f(e_t)=f(\kappa_t(t))=\kappa_t(f(\{t\}))$. But $f(\{t\})$ is a linear
-    combination of $\mu$-tabloids so $\lambda\triangleright\mu$ by the
-    proposition. If $\lambda=\mu$ then $\kappa_t f(\{t\})$ lies in $\bbC e_t$.
-    So $f(e_t)$ is a scalar multiple of $e_t$ for any $t$. Since $\sym{n}$ acts
-    transitively on $e_t$s, it must be the same scalar for all $e_t$s.
+\marginpar{Lecture 8, 4/11/26} 
+\begin{corollary}
+    If $\textnormal{char}(\bbk)=0$ and $\lambda,\mu\vdash n$, then
+    $S^\lambda\simeq S^\mu$ if and only if $\lambda = \mu$.
+    \begin{proof}
+        If there is an isomorphism $S^\lambda\to S^\mu$, then
+        composing it with the inclusion of $S^\mu$ into $M^\mu$ gives a non-zero
+        $\sym n$-linear map $\varphi\colon S^\lambda\to M^\mu$. By Maschke's
+        theorem there is a decomposition $M^\lambda=S^\lambda\oplus V$, so
+        $\varphi$ can be extended to a map $\wt\varphi\colon M^\lambda\to M^\mu$
+        by setting $\wt\varphi(V)=0$. Thus $\lambda\unrhd \mu$, and by symmetry
+        $\mu\unrhd \lambda$.
+    \end{proof}
+\end{corollary}
+
+We have thus shown that, over a field of characteristic zero, the Specht modules
+are irreducible and pairwise non-isomorphic. If in addition $\bbk = \bbC$, then the
+number of irreducible representations coincides with the number of conjugacy
+classes, which is the number of partitions of $n$ (by disjoint-cycle decomposition). 
+
+We deduce the following.
+
+\begin{corollary}
+    The Specht modules $\{S^\lambda\;|\; \lambda\vdash n\}$ form the complete set of irreducible representations
+    of $\sym n$ over $\bbC$.
+\end{corollary}
+
+\begin{remark}
+    In fact for $\textnormal{char}(\bbk)=0$ (i.e.\ in \emph{ordinary}
+    representation theory), and even in characteristic $p>n$, the Specht modules
+    continue to form a complete set of irreducible $\sym{n}$-representations.
+    This is however harder, and requires a discussion on \emph{splitting
+    fields}.
+\end{remark}
+
+\begin{corollary}
+    For each $\lambda\vdash n$, the $\bbC \sym n$-module $M^\lambda$ has an
+    irreducible decomposition of the form
+    \[
+        M^\lambda\simeq S^\lambda \oplus \;\bigoplus_{\mu\underset{\neq}{\rhd}
+        \lambda}m_{\lambda\mu}\cdot S^\mu.
+    \] 
+    \begin{proof}
+        If $S^\mu$ is a summand of $M^\lambda$, then we can
+        extend the injection $S^\mu\into M^\lambda$ to a non-zero homomorphism
+        $M^\mu \to M^\lambda$ by choosing (using Maschke's theorem) an $\sym
+        n$-invariant complement $V$ of $S^\mu$ in $M^\mu$ and setting the
+        homomorphism to zero on $V$. Thus $\mu \unrhd \lambda$
+        by~\cref{thm:dominancebyhomextension}. Furthermore if $\lambda=\mu$,
+        then the same theorem shows any map $S^\lambda\to M^\lambda$ is a scalar
+        multiple of the natural inclusion, so $\dim(\Hom_{\sym
+        n}(S^\lambda,M^\lambda))=1$. It follows, by Schur's lemma, that
+        $S^\lambda$ occurs in $M^\lambda$ with multiplicity $1$.
+    \end{proof}
+\end{corollary}
+
+\begin{remark}
+    Computing the coefficients $m_{\lambda\mu}$ in the above decomposition is a
+    question of moderate difficulty, and is answered by \emph{Young's rule}. A
+    discussion is beyond the scope of this course.
+\end{remark}
+
+\paragraph{A teaser for modular representation theory.} In \emph{modular}
+representation theory, i.e.\ when working over characteristic $p$ dividing $|\sym{n}|$, it is
+possible that the Specht modules are not irreducible, and we can have
+$S^\lambda\simeq S^\mu$ for $\lambda\neq\mu$  --- for example, $S^{(n)}$
+and $S^{(1^n)}$ are both the trivial representation in characteristic $2$.
+
+\begin{example}
+    Work over $\bbk = \bbF_2$, and take $\lambda=(n-1,1)$ for $n>2$ even. Then
+    the standard representation $S^{(n-1,1)}$ is reducible. Indeed,
+    $S^{(n-1,1)}$ (over any field) is spanned by polytabloids of the form 
+    \[
+        e_{ij}=e\left(\tableau{{$i$}{...},{$j$}}\right) = \tabloid{1\ldots
+        {$j$-1}{}{$j$+1}\ldots {$n$}, {$j$}}- \tabloid{1\ldots
+        {$i$-1}{}{$i$+1}\ldots {$n$}, {$i$}}
+    \]
+    but over $\bbF_2$ the element $\sum_{i<j}e_{ij}$ is simply $(n-1)$ times the
+    sum of all $(n-1,1)$-tabloids and is therefore non-zero and $\sym
+    n$-invariant. 
+\end{example}
+
+\begin{exercise} 
+    Generalise the above argument to show that $S^{(n-1,1)}$ is an irreducible
+    $\bbk \sym{n}$-module if and only if $\textnormal{char}(\bbk)$ does not
+    divide $n$.
+\end{exercise}
+
+It is however true that the
+irreducible representations all have the form $S^\lambda/(S^\lambda\cap
+(S^\lambda)\orth)$ for \emph{$p$-regular} partitions $\lambda\vdash n$ in the
+below sense. 
+
+\begin{definition}
+    Given a prime $p>0$, a partition $\lambda=(\lambda_1,\ldots,\lambda_r)$ is
+    \emph{$p$-singular} if it has $p$ or more equal parts, i.e.\ if
+    $\lambda_{j+1}=\lambda_{j+2}=\cdots = \lambda_{j+p}$ for some
+    $j\in\{0,\ldots, r-p\}$. We say $\lambda$ is \emph{$p$-regular} if it is not
+    $p$-singular.
+\end{definition}
+
+More generally, an element $g$ in a finite group $G$ is said to be $p$-regular
+if $p$ does not divide the order of $g$. Thus $g\in \sym n$ is $p$-regular if
+and only if its disjoint-cycle decomposition has no cycles of length divisible
+by $p$. A straightforward combinatorial argument shows that the number of such cycle types
+is equal to the number of $p$-regular partitions of $n$.
+
+Then the classification of irreducible representations follows from Brauer's
+theorem which we now state.
+
+\begin{theorem}[(Brauer)]
+    Over a field $\bbk$ of characteristic $p>0$, and for a finite group $G$, the
+    number of absolutely irreducible $\bbk G$-modules is at most the number of
+    $p$-regular conjugacy classes in $G$. If furthermore $\bbk$ is a
+    \emph{splitting field} for $G$ (i.e.\ if every irreducible $\bbk G$-module
+    is absolutely irreducible), then equality holds.
+\end{theorem}
+
+\begin{example}
+    The field $\bbF_p$ is a splitting field for every $p$-group $G$. On the other
+    hand, the only $p$-regular conjugacy class in such a group is trivial. Thus
+    the only irreducible $\bbF_pG$-module is $\bbOne_G$.
+\end{example}
+
+\section{Standard bases of Specht modules}
+\marginpar{Lecture 9, 9/11/26}
+We will now find particularly a nice basis for each Specht module $S^\lambda$.
+We know, of course, that $S^\lambda$ is spanned by polytabloids $e_t$ for $t\in
+\Delta^\lambda$. We will narrow down the tableaux $t$ required, and this will be
+uniform over all fields $\bbk$. In particular, the dimension of $S^\lambda$ will
+turn out to be independent of the field we work over!
+
+\begin{definition}
+    Given $\lambda=(\lambda_1,\ldots,\lambda_r)\vdash n$ and $t\in
+    \Delta^\lambda$, we say $t$ is \emph{row-standard} if the entries of $t$
+    increase along rows (i.e.\ $t((i,j))<t((i,j+1))$ for all $i,j$). Likewise, we say
+    $t$ is \emph{column-standard} if the entries of $t$ increase along columns
+    (i.e.\ $t((i,j))<t((i+1,j))$ for all $i,j$). We say $t$, is \emph{standard}
+    if it is both row- and column-standard, and write $\text{Std}(\lambda)$ for
+    the set of all standard $\lambda$-tableaux.
+\end{definition}
+
+Call a polytabloid $e_t$ standard if $t$ is standard. We wish to show that the
+set $\{e_t\;|\; t\in \text{Std}(\lambda)\}$ of standard polytabloids is a
+$\bbk$-basis of $S^\lambda$.
+
+\begin{example}
+    We have $\text{Std}((n))=\{\smalltableau{123{...}}\}$, this is consistent
+    with the fact that $S^{(n)}=\bbOne$ is one-dimensional. Likewise there is
+    only one standard $(1^n)$-tableau, corresponding to a basis of
+    $S^{(1^n)}=\textnormal{sgn}$.
+
+    There are only two standard $(2,1)$-tableaux, namely $\smalltableau{12,3}$
+    and $\smalltableau{13,2}$. More generally there are only $n-1$ standard
+    $(n-1,1)$-tableaux, since we have
+    \[\textnormal{Std}((n-1,1))=\left\{\tableau{12{...}{$\hat{\imath}$}{...}{$n$},{$i$}}\;\middle\vert\;
+    2\leq i\leq n\right\}.\]
+    This is consistent with the fact that $M^{(n-1,1)}$ is the $n$-dimensional
+    permutation representation, and $S^{(n-1,1)}$ is the subspace spanned by
+    pairwise differences of basis elements.
+\end{example}
+
+
+\paragraph{Linear independence.} Before we do anything, it is helpful to order all tabloids.
+
+\begin{definition}
+    For $\lambda\vdash n$ and $t,u\in \Delta^\lambda$, consider the set
+    $\mathcal{N}=[n]\setminus\bigcup_i \left(\mathsf{R}_i(t)\cap
+    \mathsf{R}_i(u)\right)$ of entries not appearing in the same row of $t$ and
+    $u$. If $\mathcal{N}\neq \varnothing$ (equivalently, $\{t\}\neq \{u\}$), we
+    consider $i,j$ such that $\max(\mathcal{N})\in \mathsf{R}_i(t)\cap
+    \mathsf{R}_j(u)$, and say $\{t\}>\{u\}$ if $i>j$. 
+\end{definition}
+
+This is a total order on the set $\Omega^\lambda$ of $\lambda$-tabloids,
+equivalently, on the set of all row-standard $\lambda$-tableaux. For example,
+here is the total order on $\Omega^{(3,2)}$.
+\[
+\tabloid{345,12} < \tabloid{245,13} < \tabloid{235,14}< \tabloid{234,15}
+<\tabloid{145,23}< \tabloid{135,24} <\cdots < \tabloid{123,45}
+\]
+
+\begin{exercise}
+    What is the maximum element in $\Omega^\lambda$ under this order?
+\end{exercise}
+
+\begin{lemma}
+    For $\lambda\vdash n$, let $t\in \Delta^\lambda$ be column-standard, and
+    $h\in C_t\setminus\{\textnormal{id}\}$. Then $\{ht\}<\{t\}$.
+
+    \begin{proof}
+        Since $h$ is nontrivial and $R_t\cap C_t=\{\text{id}\}$, we see that
+        $\{ht\}\neq \{t\}$ and thus there is a maximal $y\in\{1,\ldots,n\}$ that
+        lies in distinct rows of $t$ and $ht$. Suppose $y=t((i,j))$, in
+        particular $y\notin \mathsf{R}_i(ht)$. Now
+        $\mathsf{C}_j(t)=\mathsf{C}_j(ht)$, so by maximality of $y$ and
+        column-standardness of $t$, we have $t((i',j))=(ht)((i',j))$ for all
+        $i'>i$. Thus $y$ must occur before the $i$th row in $ht$, showing
+        $\{t\}>\{ht\}$ as required.
+    \end{proof}
+\end{lemma}
+
+\begin{proposition}
+    For $\lambda\vdash n$, the collection $\{e_t\;|\; t\in
+    \textnormal{Std}(\lambda)\}$ is a linearly independent subset of
+    $S^\lambda$.
+    \begin{proof}
+        Suppose not, so that there is a dependence relation $\sum_{t\in
+        \text{Std}(\lambda)} \alpha_te_t=0$ with some $\alpha_t\neq 0$. Write
+        $\delta\subseteq\text{Std}(\lambda)$ for the set of $t$ for which
+        $\alpha_t\neq 0$. Since
+        the standard tableau inherit the total order of the row-standard ones,
+        there is a unique maximal $u\in \delta$. Then writing
+        $\alpha_{ht}=\sgn(h)\cdot \alpha_t$, we have 
+        \[
+            0 = \sum_{t\in \delta}\alpha_t e_t = \alpha_u \cdot \{u\} +
+            \left(\sum_{h\in C_u\setminus \{\textnormal{id}\}} \alpha_{hu}\cdot
+            \{hu\} + \sum_{t\in\delta}\sum_{h\in C_t} \alpha_{ht}\cdot \{ht\}
+            \right). 
+        \]
+        But note that the above lemma (and maximality of $u$) shows each tabloid
+        appearing in the second summand is strictly less than $\{u\}$. This
+        yields a contradiction, since tabloids form a basis of $M^\lambda$.
+    \end{proof}
+\end{proposition}
+
+\paragraph{Spanning the Specht module.} To show standard polytabloids span
+$S^\lambda$, we examine elements of $\bbk \sym n$ that annihilate a given $e_t$.
+
+\begin{definition}
+    \label{defn:Garnir}
+    For $\lambda\vdash n$ and $t\in \Delta^\lambda$, and two subsets $X\subseteq
+    \mathsf{C}_j(t)$ and $Y\subseteq \mathsf{C}_{j+1}(t)$ for $j\in
+    \{1,2,\ldots,\lambda_1-1\}$, let $\mathcal{T}$
+    denote a set of left coset representatives for $\text{Sym}(X)\times
+    \text{Sym}(Y)$ in $\text{Sym}(X\sqcup Y)$. The \emph{Garnir element} defined
+    by $X$, $Y$, and $\mathcal{T}$ is \[G_{X,Y}=\sum_{\sigma\in
+    \mathcal{T}}\sgn(\sigma)\cdot \sigma \qquad \in \bbk\sym n.\]
+\end{definition}
+
+Pictorially, we denote $X$ and $Y$ by shading the Young diagram of $t$:
+\[\tableau{3{*(Aquamarine) 4}6,{*(Salmon) 2} {*(Aquamarine) 5},{*(Salmon)
+1}}\qquad\text{denotes}\qquad t=\tableau{346,25,1}\,,\; j=1,\; X=\{2,1\},\;
+Y=\{4,5\}.\]
+
+\begin{example}
+    Let the $(2,1)$-tableau $t$ with its subsets $X,Y$ be given as
+    $\smalltableau{{*(Salmon) 1}{*(Aquamarine) 2},{*(Salmon) 3}}$, and choose $\mathcal{T}=\{\text{id}, (1\,2), (2\,3)\}$. Then we have
+    $G_{X,Y}=1-(1\,2)-(2,3)$. Observe that this annihilates $e_t$ --- 
+    \[
+        G_{X,Y}\cdot e_t = \left(1-(1\,2)-(2\,3)\right)\cdot \left(\smalltabloid{12,3}-\smalltabloid{32,1}\right)
+        = \left(\smalltabloid{12,3}-\smalltabloid{32,1}\right) -
+        \left(\smalltabloid{21,3}-\smalltabloid{31,2}\right) -
+        \left(\smalltabloid{13,2}-\smalltabloid{23,1}\right) = 0
+    \]
+\end{example}
+
+\marginpar{Lecture 10, 11/11/26} 
+Amazingly, the behaviour in the above example is typical.
+
+\begin{proposition}[(Peel, '75)]
+    Let $\lambda,t,j,X,Y$, and $\mathcal{T}$ be as in~\cref{defn:Garnir}, and
+    suppose $|X|+|Y| > \lambda'_j$ (i.e.\ $X\cup Y$ contains more
+    elements than the $j$th column of $t$). Then $G_{XY}\cdot e_t=0$.
+
+    \begin{proof}
+        Define the element \[G_{X\cup Y}=\smashoperator[r]{\sum_{\rho\in
+            \text{Sym}(X\cup Y)}}\;\; \sgn(\rho)\cdot
+        \rho\qquad \in \bbk \sym n\]
+        and note that since any $\rho\in \text{Sym}(X\cup Y)$ can be uniquely
+        written as a product $\tau\sigma_1\sigma_2$ for $\tau\in\mathcal{T}$,
+        $\sigma_1\in \text{Sym}(X)$, $\sigma_2\in \text{Sym}(Y)$, we can rewrite
+        the above as 
+        \[
+            G_{X\cup Y}= 
+            \Bigg( \underbrace{\sum_{\tau\in
+            \mathcal{T}}\sgn(\tau)\cdot \tau}_{G_{X,Y}} \Bigg) \cdot
+            \Bigg(\smashoperator[r]{\sum_{\sigma_1\in
+            \text{Sym}(X)}}\;\;\sgn(\sigma_1)\cdot \sigma_1\Bigg) \cdot
+            \Bigg(\smashoperator[r]{\sum_{\sigma_2\in
+            \text{Sym}(Y)}}\;\;\sgn(\sigma_2)\cdot \sigma_2\Bigg). 
+        \]
+        By~\cref{lem:polytabloidaction}, for all $\sigma\in C_t$ (in particular
+        for $\sigma\in \text{Sym}(X)\times \text{Sym}(Y)$) we have $\sigma\cdot
+        e_t = \sgn(\sigma)\cdot e_t$, and hence $G_{X\cup Y}\cdot e_t =
+        |\text{Sym}(X)|\cdot |\text{Sym}(Y)|\cdot G_{X,Y}\cdot e_t$. 
+        
+        In
+        particular it suffices to show that $G_{X\cup Y}\cdot e_t=0$ --- over a
+        field of characteristic $0$ it immediately implies $G_{X, Y}\cdot
+        e_t=0$; and since $G_{X,Y}\cdot e_t$ is a $\bbZ$-linear combination of
+        tabloids, we can reduce modulo $p$ to see that the $\bbF_p$-linear
+        combination $(G_{X,Y}\cdot e_t \mod{p})$ also vanishes and hence
+        $G_{X,Y}\cdot e_t=0$ over all fields.
+
+        To show $G_{X\cup Y}\cdot e_t=0$, note that since $|X|+|Y|>\lambda'_j$,
+        for any $\sigma\in C_t$ there exist entries $a\in X$ and $b\in Y$ that
+        lie in the same row of $\sigma t$. Pick a left transversal $\mathcal{Z}$
+        of the subgroup $\langle (a\,b)\rangle\subset \text{Sym}(X\cup Y)$, so
+        that 
+        \[
+            G_{X\cup Y}\cdot \{\sigma t\} =
+            \sum_{\zeta\in\mathcal{Z}}\sgn(\zeta)\cdot 
+            \zeta \cdot \underbrace{(1-(a\,b))\cdot \{\sigma t\}}_{0} = 0.
+        \]
+        Since $e_t$ is simply a signed sum of elements of the form $\{\sigma t\}$ for
+        $\sigma \in C_t$, the conclusion follows.
+    \end{proof}
+\end{proposition}
+
+In practice, we choose the set of coset representatives 
+$\mathcal{T}=\{\sigma_1,\ldots,\sigma_r\}$ in a way that each $t_i\coloneqq \sigma_i t$
+agrees with $t$ away from the positions occupied by $X\cup Y$, and has entries
+increasing vertically downwards in the positions occupied by $X\cup Y$. For
+example, for $(t,X,Y)$ given by
+$\smalltableau{1{*(Aquamarine)2},{*(Salmon)4}{*(Aquamarine)3},{*(Salmon)5}}$, we choose
+$\mathcal{T}$ in a way that ascertains 
+\[
+    t_1=\tableau{12,43,5}, \quad t_2=\tableau{12,34,5},\quad
+    t_3=\tableau{12,35,4}, \quad t_4=\tableau{13,24,5},\quad
+    t_5=\tableau{13,25,4}, \quad t_6=\tableau{14,25,3}.
+\]
+That is, we choose $\mathcal{T}=\{\text{id}, (3\,4),(3\,5\,4),
+(2\,3\,4),(2\,3\,5\,4),(2\,4)(3\,5)\}$, to obtain the Garnir element
+\[G_{X,Y}=1-(3\,4)+(3\,5\,4)+(2\,3\,4)+(2\,3\,5\,4)+(2\,4)(3\,5).\]
+Thus $G_{X,Y}\cdot e_t=e_{t_1}-e_{t_2}+e_{t_3}+e_{t_4}-e_{t_5}+e_{t_6}=0$, and
+in particular, $e_t = e_{t_2}-e_{t_3}+e_{t_4}+e_{t_5}-e_{t_6}.$
+Note we started with a non-standard polytabloid, and expressed it as a linear
+combination of standard ones! This process is called \emph{straightening} of the
+polytabloid.
+
+\medskip
+
+We now show that all polytabloids can be straightened.
+
+Given $\lambda\vdash n$ and two column-standard tableaux $t,u\in
+\Delta^\lambda$, write $\mathcal{B}=[n]\setminus \bigcup_{i}(\mathsf{C}_i(t)\cap
+\mathsf{C}_j(t))$ for the set of entries not in the same
+column of $u$ and $t$. Since $t,u$ are both column-standard, we have $\sigma
+\cdot t\neq u$ for all $\sigma\in C_t$, and thus 
+$\mathcal{B}$ is non-empty and (analogously to how the order on tabloids
+was defined) we can consider $i,j$ such that $\max(\mathcal{B})\in
+\mathsf{C}_i(t)\cap \mathsf{C}_j(u)$, and say $t \gg u$ if $i>j$. This is again
+a total order on column-standard tableaux.
+
+\begin{proposition}
+    For $\lambda\vdash n$, let $v\in \Delta^\lambda$ be column-standard. Then $e_v$ lies in the $\bbk$-span of standard
+    polytabloids.
+    \begin{proof}
+        Write $W$ for the $\bbk$-span of standard polytabloids. Let the
+        column-standard $\lambda$-tableaux be enumerated as $t_1\gg t_2\gg
+        \cdots$; we first prove by induction on $r$ that each $e_{t_r}$ lies
+        in $W$. The statement for $r=1$ is verified since the $(\gg)$-maximal
+        tableau is evidently standard (\emph{exercise}: write it down explicitly).  
+
+        \marginpar{Lecture 11, 16/11/26} 
+        To address the case $t=t_r$, suppose we know $e_u\in W$ for all
+        column-standard $u\gg t$. If $t$ is also row-standard then there is
+        nothing to prove. Otherwise, there exist $i,j$ such that
+        $t((i,j))>t((i,j+1))$. Define $X=\{t((\ell,j))\;|\; i\leq \ell\leq
+        \lambda'_j\}$, and $Y=\{t((\ell,j+1))\;|\; 1\leq \ell\leq i\}$.
+        \[
+            \tableau{{}{}{*(Aquamarine) }{}{}, 
+                     {}{}{*(Aquamarine) \raisebox{1em}{$\wedge$}}{}, 
+                     {}{*(Salmon)}{*(Aquamarine) \raisebox{1em}{$\wedge$}}{\hspace{-3.3em}{$>$}}, 
+                     {}{*(Salmon) \raisebox{1em}{$\wedge$}}{},{}{*(Salmon) \raisebox{1em}{$\wedge$}}{},
+                     {}}
+        \]
+
+        Choose a transversal $\mathcal{T}$ of
+        $\text{Sym}(X)\times\text{Sym}(Y)\subseteq \text{Sym}(X\cup Y)$ such that
+        $\text{id}\in \mathcal{T}$. Then we have \[0=G_{X,Y}\cdot e_t = e_t +
+            \smashoperator[r]{\sum_{\sigma\in\mathcal{T}\setminus
+            \{\text{id}\}}}\sgn(\sigma)\cdot
+        \underbrace{\sigma\cdot e_t}_{e_{\sigma t}} \]
+        whence it suffices to prove $e_{\sigma t}\in W$ for all $\sigma\in \mathcal{T}\setminus \{\text{id}\}$. For such $\sigma$, note that
+        $\sigma\notin \text{Sym}(X)\times\text{Sym}(Y)$ and thus the sets $X\cap
+        \sigma(Y)$ and $Y\cap \sigma(X)$ are non-empty.
+
+        Let $u$ be the unique column-standard $\lambda$-tableau satisfying
+        $\mathsf{C}_\ell(u)=\mathsf{C}_\ell(\sigma t)$ for all $\ell$, and
+        consider
+        \[
+            \mathcal{B}=[n]\setminus \bigcup_\ell (\mathsf{C}_\ell(t)\cap
+            \mathsf{C}_\ell(u)).
+        \] 
+        This is equal to $(X\cap \sigma(Y))\sqcup (Y\cap \sigma(X))$. In
+        particular $\mathcal{B}$ is non-empty, and 
+        its maximal element $\max(\mathcal{B})$ evidently lies in
+        $X\cap \sigma(Y)\subseteq \mathsf{C}_j(t)\cap \mathsf{C}_{j+1}(u)$. Thus
+        $u\gg t$, and by induction hypothesis, $e_u\in W$. But $u = \sigma'^{-1} \sigma t$ for some $\sigma'\in C_{\sigma t}$, so that $e_{\sigma
+        t}=e_{\sigma'u} = \text{sgn}(\sigma')\cdot e_u$ also lies in $W$ as required.
+    \end{proof}
+\end{proposition}
+
+\begin{theorem}[(Standard basis theorem)]
+    For $\lambda\vdash n$, the set of standard polytabloids $\{e_t\;|\; t\in
+    \textnormal{Std}(\lambda)\}$ forms a basis for the Specht
+    module $S^\lambda$ over any field $\bbk$.
+
+    \begin{proof}
+        We have checked that the standard polytabloids are linearly independent.
+        To show they span $S^\lambda$, note that for any $t\in \Delta^\lambda$
+        there exists a $\sigma\in C_t$ such that $u=\sigma^{-1} t$ is column
+        standard, and $e_u$ lies in the span of standard polytabloids by the the
+        above proposition. But then so does $e_t = e_{\sigma u} =
+        \sgn(\sigma)\cdot e_u$.
+    \end{proof}
+\end{theorem}
+
+\begin{remark}
+    The standard basis is \emph{not} a permutation basis in general. Indeed we
+    know $\sigma\cdot e_t = e_{\sigma t}$ for all $\sigma\in \sym n$ and all
+    $t\in \Delta^\lambda$, but there are many $\sigma, t$ for which $t$ is
+    standard and $\sigma$ is not.
+\end{remark}
+
+\begin{remark}
+    It can be deduced from the above proofs that over a field of characteristic
+    zero, any polytabloid can be written as a $\bbZ$-linear combination of
+    standard polytabloids. Furthermore, the matrices representing any $\sigma\in
+    \sym n$ with respect to the standard basis all have integer entries.
+\end{remark}
+
+\begin{corollary}
+    The $\bbk \sym n$-modules $S^\lambda$ have the same dimension over any
+    field $\bbk$, and this is given by the number of standard
+    $\lambda$-tableaux.
+\end{corollary}
+
+\begin{example}
+    There are $\binom{4}{2}=6$ standard $(3,1,1)$-tableaux. To see this, note that
+    the top right entry must be $1$, and the remaining two entries of the first
+    row (taken out of $\{2,3,4,5\}$) determine the rest of the tableau. Thus $S^{(3,1,1)}$ is always $6$-dimensional.
+\end{example}
+
+\paragraph{Hooks.} Work over $\bbC$, and for $\lambda\vdash n$ write
+$\chi^\lambda$ for the character of the Specht module $S^\lambda$. We will
+provide a closed formula for computing $\chi^\lambda(1)=\dim S^\lambda$, by
+breaking $\lambda$ into $\Gamma$-shaped subtableaux (i.e.\ subtableaux of shape
+$(m,1,1,\ldots, 1)$) called \emph{hook}.
+
+\begin{definition}
+    Given $\lambda=(\lambda_1,\ldots,\lambda_r)\vdash n$ and $1\leq i\leq
+    \lambda'_1$, $1\leq j\leq \lambda_i$, the
+    \emph{$(i,j)$-hook} of $\lambda$ is 
+    \[
+        h_{i,j}^\lambda = \{(i,j)\}\; \sqcup\; \{(i,y)\;|\; j<y\leq \lambda_i\} \;
+        \sqcup \; \{(x,j)\;|\; i<x\leq \lambda'_j\}.
+    \]
+    The three pieces in the above decomposition are called the \emph{corner},
+    the \emph{arm}, and the \emph{leg} of the hook respectively. We say the
+    extremal boxes $(i,\lambda_i)$ and $(\lambda'_j,j)$ are the \emph{hand} and
+    the \emph{foot} of the hook respectively.
+\end{definition}
+
+\begin{example}
+    Take the partition $(8,6,5,4,2,1)\vdash 26$, and consider the $(2,3)$-hook
+    shown below.
+    The corner is shaded black ($\smalltableau{{*(Black)}}$), the arm is shaded
+    green ($\smalltableau{{*(Aquamarine)}}$), and the leg is shaded pink
+    ($\smalltableau{{*(Salmon)}}$). The hand and foot are labelled `h' and `f' respectively.
+    \[
+        \tableau{
+            {}{}{}{}{}{}{}{},
+            {}{}{*(Black)}{*(Aquamarine)}{*(Aquamarine)}{*(Aquamarine)h},
+            {}{}{*(Salmon)}{}{},
+            {}{}{*(Salmon)f}{},
+            {}{},
+            {}
+        }
+    \]
+\end{example}
+
+We write $\ell_{ij}^\lambda = \lambda_i+\lambda_{j}'-i-j+1$ for the
+\emph{length} (i.e.\ size) of the $(i,j)$-hook of $\lambda$. We also write
+$\mathcal{H}(\lambda)=\{\ell^\lambda_{ij}\}$ for the \emph{multi}set of all
+hook-lengths of $\lambda$ (this includes counts of repetitions of the same hook
+length). This can be conveniently encoded as the \emph{hook graph}, which
+replaces the $(i,j)$th box in the Young diagram with $\ell^{\lambda}_{ij}$. 
+\[
+    \tableau{
+            {13}{11}{9}{8}{6}{4}{2}{1},
+            {10}{8}{6}{5}{3}{1},
+            {8}{6}{4}{3}{1},
+            {6}{4}{2}{1},
+            {3}{1},
+            {1}
+    }
+\]
+
+\begin{theorem}[(Hook length formula (Frame, Robinson, Thrall, '53))]  
+    For $\lambda\vdash n$, we have \[\chi^\lambda(1)=\frac{n!}{\prod_{\ell\in
+    \mathcal{H}(\lambda)}\ell}.\]
+\end{theorem}
+
+This is surprising, there is a priori no reason to expect even the fact that the
+product of all hook lengths divides $n!$ ! There are multiple proofs of
+different flavours (probabilistic, combinatorial, etc.) but we won't look at
+them.
+
+\marginpar{Lecture 12, 18/11/26} 
+\begin{example}
+    If $\lambda=(n)$, then the hook lengths are $n,n-1, \ldots,2,1$, so we find
+    $\chi^{(n)}=n!/(n\cdot n-1 \cdots 2\cdot 1)=1$ which is reassuring. For
+    small partitions like $\lambda=(3,2)$, which has hook graph
+    $\smalltableau{431,21}$, we can again verify that $5!/(4\cdot 3\cdot 1\cdot
+    2\cdot 1)=5$ is the cardinality of the set of standard tableau
+    \[\text{Std}((3,2))=\left\{\tableau{123,45} \,,\, \tableau{124,35} \,,\,
+    \tableau{125,34} \,,\, \tableau{134,25} \,,\, \tableau{135,24}\right\}.\]
+    For larger examples like $(8,6,5,4,2,1)\vdash 26$, it will perhaps take more
+    than an hour to list all 1,366,443,828,750 ($=26!/(13\cdot 11 \cdot 9 \cdots
+    3 \cdot 1 \cdot 1 )$) standard tableau.
+\end{example}
+
+\section{Induction and restriction}
+There are many, many combinatorial algorithms to compute various tensor
+products, inductions, and restrictions of the Specht modules. We will briefly
+look at one of these, namely, the \emph{branching rule}.
+
+Work over $\bbC$. How do $\sym n$-modules relate to $\sym {n-1}$-modules?
+Recall, if $V_n$ is the natural $n$-dimensional permutation representation of
+$\sym n$, then $(V_n)\downarrow^{\sym n}_{\sym {n-1}}\simeq V_{n-1}\oplus
+\bbOne_{\sym {n-1}}$. The branching rule computes analogous restrictions for all
+irreducible representations $S^\lambda$.
+
+\begin{theorem}[(Branching rule)]
+    \label{thm:branchingrule}
+    For $\lambda\vdash n$, we have $(S^\lambda)\!\!\downarrow^{\sym n}_{\sym
+    {n-1}}\simeq \bigoplus_{\mu} S^\mu$, where the direct sum is over all
+    $\mu\vdash (n-1)$ that can be obtained by removing a single box from the
+    Young diagram of $\lambda$.
+\end{theorem}
+
+\begin{remark}
+    What about the more general problem of restricting the
+    $\sym{n}$-representation $(S^\lambda)$ to $\sym{n-r}\times \sym{r}$? The
+    \emph{Littlewood--Richardson rule} 
+    is an algorithm (analogous to the branching rule) for calculating this; the
+    result has gained notoriety because of the number of fallacious proofs there
+    are of it. There is a great quotation due to Gordon James about it, he says
+    that ``Unfortunately the Littlewood--Richardson rule is much harder to prove
+    than was at first suspected. I was once told that the Littlewood--Richardson
+    rule helped to get men on the moon, but was not proved until after they got
+    there.''
+\end{remark}
+
+Proving the branching rule is, fortunately, simpler than proving the
+Littlewood--Richardson rule. We discuss a proof due to Peel.
+
+\begin{proof}[Proof of~\cref{thm:branchingrule}]
+    Let $w_1<\cdots < w_r$ be integers such that a box can be removed from the
+    $w_i$th row of $[\lambda]$ to leave a Young diagram (see example below), and write $\mu^i\vdash
+    (n-1)$ for the partition thus obtained.
+    \[{
+        \tableau{
+            {\hspace{-5em}{$w_1=1$}}{}{}{}{*(Salmon)},
+            {\hspace{-5em}{$w_2=2$}}{}{}{*(Salmon)},
+            {}{}{},
+            {\hspace{-5em}{$w_3=4$}}{}{*(Salmon)},
+            {*(Salmon) \hspace{-5em}{$w_4=5$}}
+        }
+    }\]
+    
+    Write $F^iS^\lambda$ for the span of all standard polytabloids $e_t$ such
+    that $n\in \bigcup_{j\leq i} \mathsf{R}_{w_j}(t)$, and note that this is
+    $\sym {n-1}$-invariant. Thus we have a filtration of $\bbC \sym
+    {n-1}$-modules \[0=F^0S^\lambda\subset F^1S^\lambda \subset \cdots \subset F^rS^\lambda = (S^\lambda)\downarrow_{\sym {n-1}}^{\sym n}.\]
+    Claim that the $i$th subquotient $F^i S^\lambda / F^{i-1}S^\lambda$ is
+    precisely $S^{\mu^i}$, the result clearly follows from this since $\bbC \sym
+    {n-1}$ is a semisimple algebra. To prove the claim, we define a map
+    \begin{align*}
+        \vartheta_i\colon (M^\lambda)\downarrow_{\sym {n-1}}^{\sym
+        n}\longrightarrow M^{\mu ^ i}, \qquad 
+        \vartheta_i\{t\} = \begin{cases}
+            \{\ol t\}, &n\in \mathsf{R}_{w_i}(t) \\
+            0, &n\notin \mathsf{R}_{w_i}(t) \\ 
+        \end{cases}
+    \end{align*}
+    where $\ol t$ is obtained by removing $n$ from $t$. Note $\{\ol t\}$ in this
+    case remains a tabloid since the $w_i$ were precisely defined such that the
+    strict inequality $|\mathsf{R}_{w_i}(t)| >
+    |\mathsf{R}_{w_i+1}(t)|$ holds. Likewise if $t$ is standard, then $\ol t$ is
+    also a (standard) tabloid, and we compute that  $\vartheta_i(e_t)=e_{\ol t}$
+    if $n\in \mathsf{R}_{w_i}(t)$ and $\vartheta_i(e_t)=0$ otherwise.
+
+    Clearly $F^{i-1}S^\lambda\subseteq \ker\vartheta_i$, so we can refine the
+    filtration to obtain 
+    \[0=F^0S^\lambda\subseteq (F^1S^\lambda\cap \ker\vartheta_1)\subseteq
+    F^1S^\lambda \subseteq (F^2S^\lambda\cap \ker\vartheta_2)\subseteq \cdots
+    \subseteq F^rS^\lambda = (S^\lambda)\downarrow_{\sym {n-1}}^{\sym n}.\]
+    But it is also clear that $F^iS^\lambda/(F^iS^\lambda\cap \ker
+    \theta_i)\simeq \vartheta_i(F^iS^\lambda)$ is isomorphic to $S^{\mu^i}$.
+    Furthermore, the standard basis theorem readily shows $\sum_{i=1}^r\dim
+    S^{\mu^i}=\dim S^\lambda$, and hence the subquotients $(F^iS^\lambda\cap
+    \ker\vartheta_i)/F^{i-1}S^\lambda$ must vanish. The claim is then immediate.
+\end{proof}
+
+\begin{example}
+    We have $(S^{(5,4,3,3,1)})\downarrow_{\sym {16}}^{\sym
+    {15}}\quad =S^{(4,4,3,3,1)}\oplus S^{(5,3,3,3,1)}\oplus S^{(5,3,3,2,1)} \oplus
+    S^{(5,4,3,3)}.$
+\end{example}
+
+\begin{remark}
+    Let $\mu\vdash (n-1)$ and $\lambda\vdash n$. By Frobenius reciprocity, the
+    multiplicity of $S^\lambda$ in $(S^\mu)\uparrow_{\sym {n-1}}^{\sym n}$ is
+    equal to that of $S^\mu$ in $(S^\lambda)\downarrow_{\sym {n-1}}^{\sym n}$,
+    which is $1$ if $[\mu]$ is contained in $[\lambda]$ and is $0$ otherwise. In
+    this form the branching rule is sometimes known as \emph{Pieri's rule}.
+\end{remark}
+
+\paragraph{The Young graph.} The branching rules allows for a completely
+different approach to examining the Specht modules simultaneously.
+
+\begin{definition} 
+    The \emph{Young (branching) graph} $\bbY$ is the graph with vertex set equal
+    to the set $\bigcup_{n\geq 0}\mathcal{P}(n)$ of all partitions, and an edge
+    $\lambda$--$\mu$ if the Young diagrams of $\lambda,\mu$ differ by a single
+    box. We say $\mathcal{P}(n)$ is the \emph{$n$th layer} of $\bbY$, and a path
+    in the graph is \emph{upward} if it starts at $\varnothing$ doesn't visit
+    the same layer twice. 
+    \[
+        \begin{tikzcd}[column sep={2.8em,between origins}, row sep={2.5em,between origins}]
+            & & & & & \dots \\
+            & & & & \smalltableau{{}{}{}{}} & \\
+            & & & \smalltableau{{}{}{}} \arrow[dr, no head] \arrow[ur, no head] & & \dots \\
+            & & \smalltableau{{}{}} \arrow[dr, no head] \arrow[ur, no head] & & \smalltableau{{}{}{},{}}  & \\
+            \varnothing \arrow[r, no head, very thick] & \smalltableau{{}} \arrow[dr, no
+            head, very thick] \arrow[ur, no head] & & \smalltableau{{}{},{}} \arrow[dr, no
+            head] \arrow[ur, no head, very thick] \arrow[r, no head] & \smalltableau{{}{},{}{}} & \dots \\
+            & & \smalltableau{{},{}} \arrow[dr, no head] \arrow[ur, no head,
+            very thick] & & \smalltableau{{}{},{},{}}  & \\
+            & & & \smalltableau{{},{},{}} \arrow[dr, no head] \arrow[ur, no head] & & \dots \\
+            & & & & \smalltableau{{},{},{},{}} & \\
+            & & & & & \dots 
+        \end{tikzcd}
+    \]
+\end{definition}
+
+There is a bijection between standard $\lambda$-tableaux and `upward' (i.e.\
+rightward in the above diagram) paths --- for instance the thickened path above
+corresponds to the following construction of a standard $(3,1)$-tableau
+\[
+    \varnothing \longrightarrow \tableau{1} \longrightarrow \tableau{1,2} \longrightarrow
+    \tableau{13,2}\longrightarrow \tableau{134,2}.
+\]
+Thus, for example, we can count dimensions of Specht modules by counting upward
+paths terminating in a given vertex. There are other applications of such
+diagrammatic calculi that we won't dive into.
+
+
+\section{On representations of the general linear group}
+\marginpar{Lecture 13, 23/11/26} 
+Let $G$ be the algebraic group $\mathsf{GL}(n,\bbC)$. Again, a representation of
+$G$ on a $\bbC$-vector space $V$ is a group homomorphism $\rho\colon G\to
+\mathsf{GL}(V)$; if $V$ is $m$-dimensional then after choosing a basis of $V$
+this can equivalently be described as a homomorphism $\rho\colon G\to
+\mathsf{GL}(m,\bbC)$.  Now for every non-singular matrix $M=(m_{ij})\in G$, the
+matrix $\rho(M)=(\rho_{rs}M)$ is non-singular. These functions $M\mapsto
+\rho_{rs}M$ could, in principle, be chaotic. 
+
+\begin{definition}
+    An $m$-dimensional representation of $G$ given by $\rho\colon G\to
+    \mathsf{GL}(m,\bbC)$ is \emph{algebraic} if the matrix entries $M\mapsto
+    \rho_{rs}(M)$ are regular functions on the algebraic variety $G$.
+\end{definition}
+
+What does this mean?  View $G=\mathsf{GL}(n,\bbC)$ as an open subvariety of
+$\bbA^{n\times n}$, obtained as the complement of the hypersurface $\{M\;|\;\det
+M = 0\}$. The coordinate ring of $G$ is thus the localisation
+\[\bbC[G]=\bbC[\underbrace{x_{11},x_{12},\ldots,x_{nn}}_{X},y]/(y\cdot
+\det X=1)\]
+and regular functions on $G$ thus have form $P(X)/(\det X)^r$ for some
+polynomial $P$, and some $r\geq 0$. An algebraic representation is one for which
+every matrix entry has this form.
+
+Be warned that polynomial representations of $G$ form a \emph{strictly}
+smaller subclass of the algebraic ones. 
+
+\begin{example}
+    The identity function (defined by the coordinate entries $\rho_{rs} M = m_{rs}$)
+    is the \emph{defining} (or \emph{tautological}) representation on $\bbC^n$. Its
+    tensor powers $(\bbC^n)^{\otimes r}$ are polynomial, with entries given by
+    degree $r$ monomials in matrix entries. Likewise the
+    representations $\det^{\pm}\colon M\mapsto \det(M)^\pm$ are algebraic. More
+    generally, $M\mapsto (M^{-1})^\mathsf{T}$ is a representation (the dual of
+    the tautological representation), where we note that if $n>1$ then the
+    entries of $M^{-1}$ are necessarily not polynomials. 
 \end{example}
 
 \begin{example}
-    Suppose $\text{char}(\bbk)=2$, $n=2$, and the partitions $\lambda=(1^2)$ and
-    $\mu=(2)$. Now $S^{(1^2)}=\sgn$ is the sign representation, which over a
-    field of characteristic two coincides with $\bbOne_{\sym{2}} = M^{(2)}$.
-    Thus $\Hom_{\sym{2}}(S^\lambda, M^\mu)\neq 0$. On the other hand $M^\lambda$
-    is generated by the tabloids $|1|2|$ and $|2|1|$ (horizontally), so if
-    $\varphi\colon M^\lambda\to M^\mu$ is $\sym{2}$-linear then
-    $\varphi(|1|2|)=(1\quad 2)\varphi(|2|1|)=\varphi(|2|1|)$. In particular,
-    $\varphi(e_{\ytableaushort{1, 2}})=\varphi(|1|2|)-\varphi(|2|1|)=0$. That
-    is, for all $\varphi\in \Hom(M^\lambda, M^\mu)$, the restriction
-    $\varphi|_{S^\lambda}=0$. Thus not all hom
+    The group $\mathsf{GL}(1,\bbC)$, whose
+    coordinate ring is $\bbC[t^{\pm 1}]$, has one-dimensional algebraic representations given by monomials $t\mapsto
+    t^\lambda$ ($\lambda\in \bbZ$). The choices $\lambda\geq 0$ correspond to
+    polynomial representations. More generally, irreducible algebraic representations of
+    tori $(\bbC^\times)^n$ can be indexed by dominant integral weights
+    $\lambda=(\lambda_1,\ldots,\lambda_n)$ for $\lambda_1\geq \cdots\geq
+    \lambda_n$. The polynomial ones correspond precisely to the case
+    $\lambda_n\geq 0$.
 \end{example}
+
+Note that as an abstract group, $G$ has many representations (which may or
+may not be polynomial, analytic, smooth, differentiable, or continuous). For
+example, the group $\mathsf{GL}(1,\bbC)$ has a representation given by $z\mapsto
+\mat{1 & \log |z| \\ 0 & 1}$, this is smooth but very non-algebraic. By exploiting the fact that $G$ has additional structure of
+an algebraic variety, and only allowing homomorphisms $G\to
+\mathsf{GL}(m,\bbC)$ that are also morphisms of algebraic varieties, we
+obtain a restricted but nicer and more thorough theory.
+
+\begin{theorem}
+    Algebraic representations of $G=\mathsf{GL}(n,\bbC)$ are semisimple.
+    \begin{proof}
+        This is essentially Weyl's unitary trick. Let $U=\mathsf{U}(n,\bbC)$ be
+        the unitary subgroup of $G$; this is compact so has a Haar measure $dg$.
+        If $V$ is an algebraic representation of $G$ and $\langle -,-
+        \rangle^\circ$ is any hermitian form on $V$, then we can average it over
+        $U$ to get a non-degenerate $U$-invariant hermitian form \[\langle
+        v,w\rangle = \int_{U}\langle gv,gw\rangle^\circ \; dg.\]
+        Thus for any $G$-subrepresentation $W\subset V$, we can take the
+        orthogonal space $W\orth$ with respect to $\langle-,-\rangle$ to obtain
+        a decomposition $V=W\oplus W\orth$, where each summand is
+        $U$-stable. 
+
+        Consider the subset of $G$ given by group elements $M$ that preserve
+        this decomposition. This is a closed subset; one way to see this is to
+        choose bases $\{v_1,\ldots,v_i\}\in W$ and $\{v_{i+1},\ldots,v_n\}\in
+        W\orth$, let $\rho_{rs}(M)\in \bbC[G]$ denote the matrix entries for this basis of $V$, and note that $M$ preserves the decomposition if and only if
+        the matrix $(\rho_{rs}M)$ has a block diagonal form. Furthermore, this
+        closed subset contains the unitary group $U$ by construction. 
+
+
+        But $U$ is Zariski-dense\footnote{
+            Note that $\mathsf{U}(n,\bbC)$ is \emph{not} a complex-algebraic subvariety of $\mathsf{GL}(n,\bbC)$. Here we are simply referring to it as a Zariski-dense sub\emph{set}, in the sense that any regular function on $\mathsf{GL}(n,\bbC)$ that vanishes on unitary matrices necessarily vanishes everywhere.
+        } in $G$, so in fact the summands are also $G$-stable and $V$ decomposes. 
+    \end{proof}
+\end{theorem}
+
+Thus it makes sense to ask, what are irreducible algebraic representations of
+$G$?
+
+\begin{lemma}
+    Let $V$ be an irreducible algebraic representation of $G$. Then there exists
+    an $m\in \bbZ$, $r\in \bbN$, and an irreducible subrepresentation $W$ of
+    $(\bbC^n)^{\otimes r}$ such that $V\simeq W\otimes \det^{\otimes m}$.
+\end{lemma}
+
+
+\marginpar{Lecture 14, 25/11/26} 
+
